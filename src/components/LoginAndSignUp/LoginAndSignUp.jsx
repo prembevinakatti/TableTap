@@ -44,7 +44,7 @@ const LoginAndSignUp = () => {
             </div>
             <div>
               <label className="font-semibold text-tertiary">Password</label>
-              <InputBox />
+              <InputBox type="password" />
             </div>
             <div>
               <label className="font-semibold text-tertiary">
