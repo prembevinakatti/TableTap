@@ -5,7 +5,7 @@ import InputBox from "../InputBox/InputBox";
 import Button from "../Button/Button";
 import OTPBox from "../OTPBox/OTPBox";
 
-const LoginAndSignUp = () => {
+const SignUp = () => {
   const handleOtpChange = (otp) => {
     console.log("Entered OTP:", otp);
   };
@@ -81,4 +81,4 @@ const LoginAndSignUp = () => {
   );
 };
 
-export default LoginAndSignUp;
+export default SignUp;
