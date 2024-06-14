@@ -1,5 +1,6 @@
 import React from "react";
 import { IoMdMenu } from "react-icons/io";
+import Button from "../Button/Button";
 
 const Navbar = () => {
   return (
@@ -24,14 +25,23 @@ const Navbar = () => {
                 aria-label="close sidebar"
                 className="drawer-overlay"
               ></label>
-              <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+              <ul className="menu  p-4 w-80  flex flex-col items-center gap-3 min-h-full bg-base-200 ">
                 {/* Sidebar content here */}
-                <li>
-                  <a>Sidebar Item 1</a>
-                </li>
-                <li>
-                  <a>Sidebar Item 2</a>
-                </li>
+
+                <div>
+                  <Button details="btn-wide" info="Profile" />
+                </div>
+                <div className="flex btn btn-wide bg-secondary text-primary hover:text-primary hover:bg-secondary">
+                  Open
+                  <input
+                    type="checkbox"
+                    className="toggle toggle-warning z-10"
+                  />
+                  Close
+                </div>
+                <div>
+                  <Button details="btn-wide" info="Logout" />
+                </div>
               </ul>
             </div>
           </div>

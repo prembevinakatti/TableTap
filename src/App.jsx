@@ -8,6 +8,8 @@ import RoomType from "./components/RoomType/RoomType";
 import ResTiming from "./components/ResTiming/ResTiming";
 import Navbar from "./components/Navbar/Navbar";
 import ResProfilePage from "./components/ResProfilePage/ResProfilePage";
+import ResPayment from "./components/ResPayment/ResPayment";
+import ResReservation from "./components/ResReservation/ResReservation";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -20,7 +22,9 @@ function App() {
       {/* <RoomType /> */}
       {/* <ResTiming /> */}
       {/* <Navbar /> */}
-      <ResProfilePage />
+      {/* <ResProfilePage /> */}
+      {/* <ResPayment /> */}
+      <ResReservation />
     </>
   );
 }

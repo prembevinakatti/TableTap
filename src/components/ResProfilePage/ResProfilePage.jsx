@@ -82,8 +82,36 @@ const ResProfilePage = () => {
           <div className="analytics w-3/4 rounded-lg shadow-sm h-full flex items-center justify-center border">
             <p className="text-4xl font-semibold text-tertiary">Analytics</p>
           </div>
-          <div className="analytics w-1/4 rounded-lg shadow-sm h-full flex items-center justify-center border">
-            <p className="text-4xl font-semibold text-tertiary">Ratings</p>
+          <div className="analytics w-1/4 rounded-lg shadow-sm h-full flex flex-col gap-5 items-center justify-center border">
+            <p className="text-3xl font-semibold text-tertiary">Average Ratings</p>
+            <div className="rating rating-lg">
+              <input
+                type="radio"
+                name="rating-8"
+                className="mask mask-star-2 bg-orange-400"
+              />
+              <input
+                type="radio"
+                name="rating-8"
+                className="mask mask-star-2 bg-orange-400"
+                checked
+              />
+              <input
+                type="radio"
+                name="rating-8"
+                className="mask mask-star-2 bg-orange-400"
+              />
+              <input
+                type="radio"
+                name="rating-8"
+                className="mask mask-star-2 bg-orange-400"
+              />
+              <input
+                type="radio"
+                name="rating-8"
+                className="mask mask-star-2 bg-orange-400"
+              />
+            </div>
           </div>
         </div>
       </div>
