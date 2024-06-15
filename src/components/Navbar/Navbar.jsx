@@ -43,7 +43,7 @@ const Navbar = () => {
                     Close
                   </div>
                   <div>
-                    <Button details="btn-wide" info="Logout" />
+                    <Button details="btn-wide" info="Logout"  />
                   </div>
                 </ul>
               </div>

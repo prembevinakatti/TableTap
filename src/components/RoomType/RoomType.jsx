@@ -1,32 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import ProfileNav from "../ProfileNav/ProfileNav";
 import { IoIosArrowDown } from "react-icons/io";
 import Button from "../Button/Button";
 
 const RoomType = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedRoomType, setSelectedRoomType] = useState("");
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleRoomTypeChange = (roomType) => {
+    setSelectedRoomType(roomType);
+    setIsOpen(false); // Close dropdown after selection
+    console.log(selectedRoomType)
+  };
+
   return (
     <div>
-      <div>
-        <ProfileNav />
-      </div>
+      <ProfileNav />
       <div className="Roomtype flex flex-col gap-3 items-center justify-center">
         <div>
-          <details className="dropdown">
-            <summary className="m-1 btn btn-wide bg-secondary text-primary">
+          <details className="dropdown" open={isOpen}>
+            <summary
+              className="m-1 btn btn-wide bg-secondary text-primary"
+              onClick={toggleDropdown}
+            >
               Select Room Type <IoIosArrowDown />
             </summary>
             <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-200 rounded-box w-52">
               <li>
-                <a>Item 1</a>
+                <a onClick={() => handleRoomTypeChange("Item 1")}>Item 1</a>
               </li>
               <li>
-                <a>Item 2</a>
+                <a onClick={() => handleRoomTypeChange("Item 2")}>Item 2</a>
               </li>
               <li>
-                <a>Item 2</a>
+                <a onClick={() => handleRoomTypeChange("Item 3")}>Item 3</a>
               </li>
               <li>
-                <a>Item 2</a>
+                <a onClick={() => handleRoomTypeChange("Item 4")}>Item 4</a>
               </li>
             </ul>
           </details>
