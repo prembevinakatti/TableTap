@@ -23,7 +23,7 @@ function App() {
   return (
     <>
       {/* <SignUp /> */}
-      <Login />
+      {/* <Login /> */}
       {/* <Photos /> */}
       {/* <ResDetails /> */}
       {/* <RoomType /> */}
@@ -34,7 +34,7 @@ function App() {
       {/* <ResReservation /> */}
       {/* <UserHomePage /> */}
       {/* <PostPage /> */}
-      {/* <UserBookingPage /> */}
+      <UserBookingPage />
       {/* <UserProfilePage /> */}
       {/* <LandingPage /> */}
     </>
