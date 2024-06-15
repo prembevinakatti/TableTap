@@ -43,7 +43,7 @@ const OTPBox = ({ length = 4, onChange }) => {
           />
         ))}
       </div>
-      <p className='w-full text-center text-tertiary font-semibold cursor-pointer mt-2'>Resend OTP</p>
+
     </div>
   );
 };
