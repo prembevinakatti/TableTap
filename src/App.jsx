@@ -38,8 +38,9 @@ function App() {
       {/* <PostPage /> */}
       {/* <UserBookingPage /> */}
       {/* <UserProfilePage /> */}
-      {/* <LandingPage /> */}
-      <Layout/>
+      <LandingPage />
+      {/* <Otpverify/> */}
+      {/* <Layout/> */}
     </>
   );
 }
