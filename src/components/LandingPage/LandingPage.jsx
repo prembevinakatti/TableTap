@@ -15,7 +15,7 @@ const LandingPage = () => {
             <div className="bg-primary -rotate-90 relative top-20 right-10 text-xl text-white font-semibold p-2 rounded-sm w-fit">
               RESERVE NOW
             </div>
-            <div className="video absolute right-5 w-[45vh] h-[60vh] border">
+            <div className="video absolute right-5 w-[45vh] h-[60vh] ">
               <video
                 className="w-full h-full object-cover"
                 src="src/assets/TableTap.mp4"
