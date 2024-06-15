@@ -46,8 +46,9 @@ const SignUp = () => {
   return (
     <div>
       <ProfileNav />
-      <div className="ProfilePage w-full flex flex-col items-center">
-        <div className="PageForm">
+      <div className="ProfilePage w-full  flex flex-col items-center">
+        <div className="PageForm border p-10 rounded-lg shadow-lg">
+          <h1 className='w-full text-center text-4xl text-primary mb-10'>Sign Up</h1>
           <form onSubmit={handleSubmit(handleSignUp)} className="flex flex-col items-center gap-3">
             <div>
               <label className="font-semibold text-tertiary">Restaurant Name</label>

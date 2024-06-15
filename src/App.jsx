@@ -24,7 +24,23 @@ function App() {
 
   return (
     <>
-      <Layout/>
+      {/* <SignUp /> */}
+      {/* <Login /> */}
+      {/* <Photos /> */}
+      {/* <ResDetails /> */}
+      {/* <RoomType /> */}
+      {/* <ResTiming /> */}
+      {/* <Navbar /> */}
+      {/* <ResProfilePage /> */}
+      {/* <ResPayment /> */}
+      {/* <ResReservation /> */}
+      {/* <UserHomePage /> */}
+      {/* <PostPage /> */}
+      {/* <UserBookingPage /> */}
+      {/* <UserProfilePage /> */}
+      <LandingPage />
+      {/* <Otpverify/> */}
+      {/* <Layout/> */}
     </>
   );
 }

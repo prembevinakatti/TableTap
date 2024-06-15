@@ -25,12 +25,11 @@ function Otpverify() {
         userId: data.$id,
         email: data.email,
       });
-      
+
       let timer = setInterval(() => {
         setCountdown((prev) => prev - 1);
       }, 1000);
 
-     
       setTimeout(() => {
         clearInterval(timer);
         setCountdown(60);
@@ -57,26 +56,35 @@ function Otpverify() {
 
   if (!verified) {
     return (
-      <div className="w-full h-full flex flex-col justify-center items-center">
-        <div className="text-5xl text-primary">Verify your OTP</div>
-        <button
-          className={`w-full btn p-1 rounded-lg font-semibold text-lg hover:bg-tertiary bg-secondary text-primary ${
-            countdown !== 60 ? "disabled:opacity-50 disabled:pointer-events-none" : ""
-          }`}
-          onClick={handleGetOtp}
-          disabled={countdown !== 60}
-        >
-          {buttonText}
-        </button>
-        {buttonText === "Get otp" ? null : <OTPBox length={6} onChange={handleOtpChange} />}
+      <div className="w-full h-[90vh] flex justify-center items-center">
+        <div className="flex flex-col border p-10 rounded-lg shadow-lg items-center gap-10">
+          <div className="text-2xl font-semibold text-primary">Verify your OTP</div>
+          <button
+            className={`btn btn-wide p-1 rounded-lg font-semibold text-lg hover:bg-tertiary bg-secondary text-primary ${
+              countdown !== 60
+                ? "disabled:opacity-50 disabled:pointer-events-none"
+                : ""
+            }`}
+            onClick={handleGetOtp}
+            disabled={countdown !== 60}
+          >
+            {buttonText}
+          </button>
+          {buttonText === "Get otp" ? null : (
+            <OTPBox length={6} onChange={handleOtpChange} />
+          )}
 
-        <div>
-          <span className="countdown font-mono text-6xl">
-            <span style={{ "--value": countdown }}></span>
-          </span>
-        </div>
-        <div className="w-full btn p-1 rounded-lg font-semibold text-lg hover:bg-tertiary bg-secondary text-primary" onClick={handleOtpSubmit}>
-          Verify
+          <div>
+            <span className="countdown font-mono text-2xl">
+              <span style={{ "--value": countdown }}></span>
+            </span>
+          </div>
+          <div
+            className="btn-wide btn p-1 rounded-lg font-semibold text-lg hover:bg-tertiary bg-secondary text-primary"
+            onClick={handleOtpSubmit}
+          >
+            Verify
+          </div>
         </div>
       </div>
     );

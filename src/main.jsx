@@ -29,6 +29,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   reverseOrder={false}
 />
   <RouterProvider router={router}/>
-  </React.StrictMode>,
+  </React.StrictMode>
   </Provider>
 )
