@@ -16,7 +16,9 @@ import UserBookingPage from "./components/UserBookingPage/UserBookingPage";
 import UserProfilePage from "./components/UserProfilePage/UserProfilePage";
 import LandingPage from "./components/LandingPage/LandingPage";
 import Login from "./components/LoginAndSignUp/Login";
+import Otpverify from "./components/LoginAndSignUp/otpverification";
 
+import Layout from "./components/others/outlet";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -34,9 +36,10 @@ function App() {
       {/* <ResReservation /> */}
       {/* <UserHomePage /> */}
       {/* <PostPage /> */}
-      <UserBookingPage />
+      {/* <UserBookingPage /> */}
       {/* <UserProfilePage /> */}
       {/* <LandingPage /> */}
+      <Layout/>
     </>
   );
 }

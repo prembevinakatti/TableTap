@@ -1,64 +1,110 @@
-import React from "react";
-import ProfileNav from "../ProfileNav/ProfileNav";
-import { TbCameraPlus } from "react-icons/tb";
-import InputBox from "../InputBox/InputBox";
-import Button from "../Button/Button";
-import OTPBox from "../OTPBox/OTPBox";
+import React from 'react';
+import ProfileNav from '../ProfileNav/ProfileNav';
+import { useForm } from 'react-hook-form';
+import InputBox from '../InputBox/InputBox';
+import Button from '../Button/Button';
+import authService from '../../appwrite/authservices';
+import { useDispatch } from 'react-redux';
+import { login } from '../../store/authslice'
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
-  const handleOtpChange = (otp) => {
-    console.log("Entered OTP:", otp);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { register, handleSubmit, formState: { errors } } = useForm();
+
+  const convertSlug = (slug) => {
+    return slug
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
   };
+
+  const handleSignUp = async (data) => {
+    try {
+      data.restaurantName = convertSlug(data.restaurantName);
+      console.log(data);
+
+      const signUpData = await authService.createAccount({
+        email: data.email,
+        password: data.password,
+        name: data.restaurantName,
+        phonenumber: data.phoneNumber,
+        location: data.location,
+      });
+
+      if (signUpData) {
+        console.log(signUpData);
+        dispatch(login({ userData: signUpData })); // Ensure the payload matches the expected structure
+        navigate('/otpverification');
+      }
+    } catch (error) {
+      console.error('Error during signup:', error);
+    }
+  };
+
   return (
     <div>
       <ProfileNav />
       <div className="ProfilePage w-full flex flex-col items-center">
-        <div className="profilePhoto mb-5">
-          <div className=" relative image flex flex-col items-center ">
-            <img
-              className="w-36 h-36 rounded-full"
-              src="https://imgs.search.brave.com/jLTwrBSRPcoyhBJs1uPbMl500isS1N2O0JlI3BLUQoY/rs:fit:500:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJzLmNvbS9p/bWFnZXMvZmVhdHVy/ZWQvY29vbC1wcm9m/aWxlLXBpY3R1cmUt/ODdoNDZnY29iamw1/ZTR4dS5qcGc"
-              alt=""
-            />
-            <div className="absolute bg-slate-600 rounded-full p-2 bottom-2 right-0 text-xl text-primary">
-              <TbCameraPlus />
-            </div>
-          </div>
-        </div>
-
         <div className="PageForm">
-          <form className="flex flex-col items-center gap-3">
+          <form onSubmit={handleSubmit(handleSignUp)} className="flex flex-col items-center gap-3">
             <div>
-              <label className="font-semibold text-tertiary">
-                Restaurant Name
-              </label>
-              <InputBox />
+              <label className="font-semibold text-tertiary">Restaurant Name</label>
+              <InputBox
+                {...register('restaurantName', { required: 'Restaurant Name is required' })}
+              />
+              {errors.restaurantName && <p className="text-red-500">{errors.restaurantName.message}</p>}
             </div>
             <div>
               <label className="font-semibold text-tertiary">Location</label>
-              <InputBox />
+              <InputBox
+                {...register('location', { required: 'Location is required' })}
+              />
+              {errors.location && <p className="text-red-500">{errors.location.message}</p>}
             </div>
             <div>
               <label className="font-semibold text-tertiary">Email</label>
-              <InputBox />
+              <InputBox
+                {...register('email', {
+                  required: 'Email is required',
+                  pattern: {
+                    value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                    message: 'Invalid email address',
+                  },
+                })}
+              />
+              {errors.email && <p className="text-red-500">{errors.email.message}</p>}
             </div>
             <div>
               <label className="font-semibold text-tertiary">Password</label>
-              <InputBox type="password" />
+              <InputBox
+                type="password"
+                {...register('password', {
+                  required: 'Password is required',
+                  minLength: {
+                    value: 6,
+                    message: 'Password must be at least 6 characters long',
+                  },
+                })}
+              />
+              {errors.password && <p className="text-red-500">{errors.password.message}</p>}
             </div>
             <div>
-              <label className="font-semibold text-tertiary">
-                Phone Number
-              </label>
-              <InputBox />
+              <label className="font-semibold text-tertiary">Phone Number</label>
+              <InputBox
+                {...register('phoneNumber', {
+                  required: 'Phone Number is required',
+                  pattern: {
+                    value: /^[0-9]{10}$/,
+                    message: 'Invalid phone number',
+                  },
+                })}
+              />
+              {errors.phoneNumber && <p className="text-red-500">{errors.phoneNumber.message}</p>}
             </div>
 
-            <button className="w-full btn p-1 rounded-lg font-semibold text-lg hover:bg-tertiary bg-secondary text-primary">
-              Get OTP
-            </button>
-            <OTPBox length={4} onChange={handleOtpChange} />
-
-            <Button details=" btn-wide " info="Save Changes" />
+            <Button details="btn-wide" info="Sign Up" />
 
             <div className="count flex items-center m-2 gap-1">
               <div className="w-8 h-8 border cursor-pointer bg-secondary text-primary border-gray-300 flex items-center justify-center rounded-lg">
