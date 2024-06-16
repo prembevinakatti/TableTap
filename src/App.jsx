@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import SignUp from "./components/LoginAndSignUp/SignUp";
@@ -19,8 +19,31 @@ import Login from "./components/LoginAndSignUp/Login";
 import Otpverify from "./components/LoginAndSignUp/otpverification";
 
 import Layout from "./components/others/outlet";
+import authService from "./appwrite/authservices";
+import { useDispatch } from "react-redux";
+import { varifed } from "./store/authslice";
 function App() {
   const [count, setCount] = useState(0);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const getCurrentUser = async() => {
+      try {
+        const userData = await authService.getCurrentUser()
+        console.log(userData)
+        if(userData.emailVerification == true){
+          dispatch(varifed({ userData: userData }));
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    getCurrentUser()
+  }, [])
+
+
+  
 
   return (
     <>
@@ -37,10 +60,10 @@ function App() {
       {/* <UserHomePage /> */}
       {/* <PostPage /> */}
       {/* <UserBookingPage /> */}
-      {/* <UserProfilePage /> */}
+      <UserProfilePage />
       {/* <LandingPage /> */}
       {/* <Otpverify/> */}
-      <Layout/>
+      {/* <Layout/> */}
     </>
   );
 }

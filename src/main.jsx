@@ -10,6 +10,9 @@ import Otpverify from './components/LoginAndSignUp/otpverification.jsx'
 import ResDetails from './components/ResDetails/ResDetails.jsx'
 import { Toaster } from 'react-hot-toast'
 import RoomType from './components/RoomType/RoomType.jsx'
+import UserBookingPage from './components/UserBookingPage/UserBookingPage.jsx'
+import UserHomePage from './components/UserHomePage/UserHomePage.jsx'
+import PostPage from './components/PostPage/PostPage.jsx'
 const router=createBrowserRouter(
   createRoutesFromElements(
      <Route path='/' element={<App/>}>
@@ -17,6 +20,8 @@ const router=createBrowserRouter(
       <Route path='/otpverification' element={<Otpverify/>}/>
       <Route path='/ResDetails' element={<ResDetails/>}/>
       <Route path='/roomview' element={<RoomType/>}/>
+      <Route path='/bookings' element={<UserBookingPage/>}/>
+      <Route path='/userhome' element={<UserHomePage/>}/>
     </Route>
   )
  

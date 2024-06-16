@@ -4,7 +4,7 @@ const DetailsBox = () => {
   return (
     <div>
       <div
-        className={`border-2 border-[#CECECE] w-[23vw] h-11 px-2 rounded-md `}
+        className={`border-2 border-[#CECECE] xl:w-[23vw] w-[60vw] h-11 px-2 rounded-md `}
       ></div>
     </div>
   );

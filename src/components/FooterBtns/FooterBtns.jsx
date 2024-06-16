@@ -6,10 +6,10 @@ const FooterBtns = (props) => {
   const verified=useSelector((state)=>(state.auth.verified))
   if (verified){
     return (
-      <div className=" absolute w-full bottom-0 border-t flex itemce justify-between p-3 border-primary">
-        <Button details="btn-wide" info="Reservations" />
-        <Button details="btn-wide" info="Payments" />
-        <Button details="btn-wide" info="Profile" />
+      <div className="absolute w-full bottom-0 border-t flex itemce justify-between p-3 border-primary">
+        <Button details="xl:btn-wide" info="Reservations" />
+        <Button details="xl:btn-wide" info="Payments" />
+        <Button details="xl:btn-wide" info="Profile" />
       </div>
     );
   }
