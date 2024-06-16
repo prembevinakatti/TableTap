@@ -14,10 +14,9 @@ import UserHomePage from "./components/UserHomePage/UserHomePage";
 import PostPage from "./components/PostPage/PostPage";
 import UserBookingPage from "./components/UserBookingPage/UserBookingPage";
 import UserProfilePage from "./components/UserProfilePage/UserProfilePage";
-import LandingPage from "./components/LandingPage/LandingPage";
+
 import Login from "./components/LoginAndSignUp/Login";
 import Otpverify from "./components/LoginAndSignUp/otpverification";
-
 import Layout from "./components/others/outlet";
 import authService from "./appwrite/authservices";
 import { useDispatch } from "react-redux";
@@ -60,10 +59,10 @@ function App() {
       {/* <UserHomePage /> */}
       {/* <PostPage /> */}
       {/* <UserBookingPage /> */}
-      <UserProfilePage />
+      {/* <UserProfilePage /> */}
       {/* <LandingPage /> */}
       {/* <Otpverify/> */}
-      {/* <Layout/> */}
+      <Layout/>
     </>
   );
 }

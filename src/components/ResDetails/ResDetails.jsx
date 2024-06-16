@@ -1,10 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProfileNav from "../ProfileNav/ProfileNav";
-import SmallInput from "../SmallInput/SmallInput";
 import Button from "../Button/Button";
 import toast from "react-hot-toast";
+import profileService from "../../appwrite/profileservices";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { updateProfile } from "../../store/profileslice";
 
-const ResDetails = () => {
+
+const ResDetails = (editdata) => {
+  const userdata=useSelector((state)=>(state.auth.userData))
+  const dispatch=useDispatch()
+  const navigate=useNavigate()
   const [formValues, setFormValues] = useState({
     numberOfRooms: "",
     groups: [
@@ -38,7 +45,24 @@ const ResDetails = () => {
       },
     ],
   });
-
+    useEffect(()=>{
+        if(editdata){
+          const getCurrentUser = async() => {
+            try {
+              const userData = await profileService.getUser(editdata.$id)
+              if(userData){
+                let  data=JSON.parse(userData.roomdetaisl) 
+                  setFormValues(data)
+              }
+             
+            } catch (error) {
+              console.error(error)
+            }
+          }
+      
+          getCurrentUser()
+        }
+    },[])
   const handleChange = (e, groupIndex, key) => {
     const { value } = e.target;
     if (key === "includes") {
@@ -80,6 +104,37 @@ const ResDetails = () => {
     );
     if (parseInt(formValues.numberOfRooms, 10) === totalRooms) {
       console.log("Form is valid:", formValues);
+      if(editdata){
+        async function updatedata(){
+          try 
+          {
+            isedited=await profileService.updateroomdetails({slug:editdata.$id,roomdetaisl:JSON.stringify(formValues)})
+            if(isedited){
+              toast.success("room details edited sucessfuly")
+            }
+            
+          } catch (error) {
+            console.log(error)
+          }
+
+        }
+       updatedata()
+      }else{
+        async function creatprofile(){
+          try {
+                const isprofile=await profileService.createProfile({name:userdata.name,slug:userdata.namem,UserId:userdata.$id,roomdetaisl:JSON.stringify(formValues)})
+                if (isprofile){
+                  console.log(isprofile)
+                  dispatch(updateProfile({ userData: isprofile }));
+                  navigate('roomview')
+                  
+                }
+            
+          } catch (error) {
+            console.log(error)
+          }
+        }
+      }
       
     } else {
       console.log("Form is invalid: Number of rooms mismatch");
@@ -169,25 +224,11 @@ const ResDetails = () => {
         </div>
 
         <div className="Buttons mt-10  flex items-center justify-center gap-20">
-          <Button
-            details="btn-wide border border-secondary bg-transparent text-secondary"
-            info="Go Back"
-          />
+         
           <Button details="btn-wide " info="Save Changes" />
         </div>
 
-        <div className="count flex items-center justify-center mt-20 gap-1">
-          {[1, 2, 3, 4].map((number) => (
-            <div
-              key={number}
-              className={`w-8 h-8 border cursor-pointer ${
-                number === 3 ? "bg-secondary text-primary" : ""
-              } border-gray-300 flex items-center justify-center rounded-lg`}
-            >
-              <p className="font-semibold">{number}</p>
-            </div>
-          ))}
-        </div>
+       
       </form>
     </div>
   );

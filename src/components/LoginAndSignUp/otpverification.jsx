@@ -5,7 +5,7 @@ import authService from "../../appwrite/authservices";
 import { varifed } from "../../store/authslice";
 import { useNavigate } from "react-router-dom";
 
-function Otpverify() {
+function Otpverify({flag}) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const verified = useSelector((state) => state.auth.verified);
@@ -48,6 +48,14 @@ function Otpverify() {
       });
       if (session) {
         dispatch(varifed({ userData: session }));
+        if(flag===true){
+
+          navigate('/Resroomsetup')
+        }
+        else{
+          navigate('/userhomepage')
+        }
+        
       }
     } catch (error) {
       console.log(error);
@@ -56,7 +64,9 @@ function Otpverify() {
 
   if (!verified) {
     return (
+      
       <div className="w-full h-[90vh] flex justify-center items-center">
+                    <div className='w-full text-6xl text-gray-600 text-center'>{flag===true?"Restorent Verification":"User Verification"}</div>
         <div className="flex flex-col border p-10 rounded-lg shadow-lg items-center gap-10">
           <div className="text-2xl font-semibold text-primary">Verify your OTP</div>
           <button

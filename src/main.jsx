@@ -13,14 +13,20 @@ import RoomType from './components/RoomType/RoomType.jsx'
 import UserBookingPage from './components/UserBookingPage/UserBookingPage.jsx'
 import UserHomePage from './components/UserHomePage/UserHomePage.jsx'
 import PostPage from './components/PostPage/PostPage.jsx'
+import LandingPage from './pages/LandingPage/LandingPage.jsx'
+import Ressinguppage from './pages/restorent/Singuppage.jsx'
+import Login from './components/LoginAndSignUp/Login.jsx'
+import Resverification from './pages/restorent/Resverification.jsx'
+import Resloginpage from './pages/restorent/Resloginpage.jsx'
+import Resroomsetup from './pages/restorent/Resroomsetup.jsx'
 const router=createBrowserRouter(
   createRoutesFromElements(
      <Route path='/' element={<App/>}>
-      <Route path='/' element={<SignUp/>}/>
-      <Route path='/otpverification' element={<Otpverify/>}/>
-      <Route path='/ResDetails' element={<ResDetails/>}/>
-      <Route path='/roomview' element={<RoomType/>}/>
-      <Route path='/bookings' element={<UserBookingPage/>}/>
+      <Route path='/' element={<LandingPage/>}/>
+      <Route path='/Ressinguppage' element={<Ressinguppage/>}/>
+      <Route path='/resloginpage' element={<Resloginpage/>}/>
+      <Route path='/Resverification' element={<Resverification/>}/>
+      <Route path='/Resroomsetup' element={<Resroomsetup/>}/>
       <Route path='/userhome' element={<UserHomePage/>}/>
     </Route>
   )

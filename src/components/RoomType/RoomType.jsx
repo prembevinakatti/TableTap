@@ -18,7 +18,7 @@ const RoomType = () => {
   };
 
   const data = {
-    numberOfRooms: "13",
+    numberOfRooms: "10",
     groups: [
       {
         name: "Rooms Includes AC",
@@ -106,25 +106,8 @@ const RoomType = () => {
             </div>
           )}
         </div>
-        <div className="Buttons mt-10 flex items-center justify-center gap-20">
-          <Button
-            details="btn-wide border border-secondary bg-transparent text-secondary"
-            info="Go Back"
-          />
-          <Button details="btn-wide" info="Save Changes" />
-        </div>
-        <div className="count flex items-center justify-center mt-2 gap-2">
-          {[1, 2, 3, 4].map((num) => (
-            <div
-              key={num}
-              className={`w-8 h-8 border cursor-pointer ${
-                num === 4 ? "bg-secondary text-primary" : ""
-              } border-gray-300 flex items-center justify-center rounded-lg`}
-            >
-              <p className="font-semibold">{num}</p>
-            </div>
-          ))}
-        </div>
+     
+        
       </div>
     </div>
   );

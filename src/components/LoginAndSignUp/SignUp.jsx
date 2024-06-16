@@ -1,14 +1,17 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import ProfileNav from '../ProfileNav/ProfileNav';
 import { useForm } from 'react-hook-form';
 import InputBox from '../InputBox/InputBox';
 import Button from '../Button/Button';
 import authService from '../../appwrite/authservices';
 import { useDispatch } from 'react-redux';
-import { login } from '../../store/authslice'
+import { login } from '../../store/authslice';
 import { useNavigate } from 'react-router-dom';
+import { Flag } from 'appwrite';
 
-const SignUp = () => {
+const SignUp = ({flag}) => {
+ 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -35,8 +38,8 @@ const SignUp = () => {
 
       if (signUpData) {
         console.log(signUpData);
-        dispatch(login({ userData: signUpData })); // Ensure the payload matches the expected structure
-        navigate('/otpverification');
+        dispatch(login({ userData: signUpData }));
+        navigate('/Resverification');
       }
     } catch (error) {
       console.error('Error during signup:', error);
@@ -45,13 +48,13 @@ const SignUp = () => {
 
   return (
     <div>
-      <ProfileNav />
-      <div className="ProfilePage w-full  flex flex-col items-center">
+            <div className='w-full text-6xl text-gray-600 text-center'>{flag===true?"Restorent singup":"User singup"}</div>
+      <div className="ProfilePage w-full flex flex-col items-center">
         <div className="PageForm border p-10 rounded-lg shadow-lg">
           <h1 className='w-full text-center text-4xl text-primary mb-10'>Sign Up</h1>
           <form onSubmit={handleSubmit(handleSignUp)} className="flex flex-col items-center gap-3">
             <div>
-              <label className="font-semibold text-tertiary">Restaurant Name</label>
+              <label className="font-semibold text-tertiary">{flag===true?"Restorent Name":"User Name"}</label>
               <InputBox
                 {...register('restaurantName', { required: 'Restaurant Name is required' })}
               />
@@ -106,22 +109,10 @@ const SignUp = () => {
             </div>
 
             <Button details="btn-wide" info="Sign Up" />
-
-            <div className="count flex items-center m-2 gap-1">
-              <div className="w-8 h-8 border cursor-pointer bg-secondary text-primary border-gray-300 flex items-center justify-center rounded-lg">
-                <p className="font-semibold">1</p>
-              </div>
-              <div className="w-8 h-8 border cursor-pointer border-gray-300 flex items-center justify-center rounded-lg">
-                <p className="font-semibold">2</p>
-              </div>
-              <div className="w-8 h-8 border cursor-pointer border-gray-300 flex items-center justify-center rounded-lg">
-                <p className="font-semibold">3</p>
-              </div>
-              <div className="w-8 h-8 border cursor-pointer border-gray-300 flex items-center justify-center rounded-lg">
-                <p className="font-semibold">4</p>
-              </div>
-            </div>
           </form>
+          <div className="mt-4 text-center">
+            <p className="text-tertiary">Already have an account? <Link to={flag===true?"/resloginpage":"/userloginpage"} className="text-primary">Log In</Link></p>
+          </div>
         </div>
       </div>
     </div>
