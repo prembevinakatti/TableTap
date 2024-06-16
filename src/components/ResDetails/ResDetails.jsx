@@ -80,7 +80,7 @@ const ResDetails = () => {
     );
     if (parseInt(formValues.numberOfRooms, 10) === totalRooms) {
       console.log("Form is valid:", formValues);
-      // Further logic for submitting the form data
+      
     } else {
       console.log("Form is invalid: Number of rooms mismatch");
      toast.error("Form is invalid: Number of rooms mismatch")

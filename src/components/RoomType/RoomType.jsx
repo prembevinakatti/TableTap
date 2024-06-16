@@ -1,72 +1,129 @@
 import React, { useState } from "react";
 import ProfileNav from "../ProfileNav/ProfileNav";
-import { IoIosArrowDown } from "react-icons/io";
 import Button from "../Button/Button";
 
 const RoomType = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedRoomType, setSelectedRoomType] = useState("");
+  const [type, setType] = useState("Room Includes Normal Room");
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
+  const selectData = [
+    "Rooms Includes AC",
+    "Room Includes Normal Room",
+    "Room Includes Party Room",
+    "Room Includes Custom Room"
+  ];
+
+  const handleSelectChange = (e) => {
+    setType(e.target.value);
+    console.log(e.target.value);
   };
 
-  const handleRoomTypeChange = (roomType) => {
-    setSelectedRoomType(roomType);
-    setIsOpen(false); // Close dropdown after selection
-    console.log(selectedRoomType)
+  const data = {
+    numberOfRooms: "13",
+    groups: [
+      {
+        name: "Rooms Includes AC",
+        includes: "Yes",
+        numRooms: "4",
+        numTables: "4",
+        numChairsPerTable: "4",
+      },
+      {
+        name: "Room Includes Normal Room",
+        includes: "Yes",
+        numRooms: "4",
+        numTables: "4",
+        numChairsPerTable: "4",
+      },
+      {
+        name: "Room Includes Party Room",
+        includes: "Yes",
+        numRooms: "1",
+        numTables: "8",
+        numChairsPerTable: "4",
+      },
+      {
+        name: "Room Includes Custom Room",
+        includes: "Yes",
+        numRooms: "4",
+        numTables: "8",
+        numChairsPerTable: "4",
+      },
+    ],
   };
 
   return (
     <div>
       <ProfileNav />
-      <div className="Roomtype flex flex-col gap-3 items-center justify-center">
+      <div className="flex flex-col gap-6 items-center justify-center p-4">
         <div>
-          <details className="dropdown" open={isOpen}>
-            <summary
-              className="m-1 btn btn-wide bg-secondary text-primary"
-              onClick={toggleDropdown}
-            >
-              Select Room Type <IoIosArrowDown />
-            </summary>
-            <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-200 rounded-box w-52">
-              <li>
-                <a onClick={() => handleRoomTypeChange("Item 1")}>Item 1</a>
-              </li>
-              <li>
-                <a onClick={() => handleRoomTypeChange("Item 2")}>Item 2</a>
-              </li>
-              <li>
-                <a onClick={() => handleRoomTypeChange("Item 3")}>Item 3</a>
-              </li>
-              <li>
-                <a onClick={() => handleRoomTypeChange("Item 4")}>Item 4</a>
-              </li>
-            </ul>
-          </details>
+          <select
+            className="m-1 btn btn-wide bg-secondary text-primary"
+            onChange={handleSelectChange}
+            value={type}
+          >
+            {selectData.map((data, index) => (
+              <option key={index} value={data} className="text-black">
+                {data}
+              </option>
+            ))}
+          </select>
         </div>
-        <div className="room w-[70vw] h-[63vh] rounded-xl bg-base-300"></div>
-        <div className="Buttons mt-10  flex items-center   justify-center gap-20">
+        <div className="room w-[70vw] h-[63vh] rounded-xl bg-gray-100 p-4 overflow-y-auto">
+          {data.numberOfRooms !== 0 ? (
+            data.groups.map((subgroup) =>
+              subgroup.name === type ? (
+                [...Array(parseInt(subgroup.numRooms))].map((_, roomIndex) => (
+                  <div key={roomIndex} className="room-item bg-white p-4 m-2 rounded-xl shadow-md">
+                    <h2 className="text-xl font-bold mb-4">Room {roomIndex + 1}</h2>
+                    <div className="tables grid grid-cols-2 gap-6">
+                      {[...Array(parseInt(subgroup.numTables))].map((_, tableIndex) => (
+                        <div key={tableIndex} className="table relative bg-gray-200 p-4 rounded-lg shadow-sm w-40 h-40">
+                          <div className="table-top w-full h-full bg-gray-300 rounded-lg flex items-center justify-center">
+                            Table {tableIndex + 1}
+                          </div>
+                          <div className="chairs absolute w-full h-full flex justify-around items-center">
+                            <div className="flex items-center justify-center space-x-2">
+                              {[...Array(parseInt(subgroup.numChairsPerTable / 2))].map((_, chairIndex) => (
+                                <div key={chairIndex} className="chair w-8 h-8 bg-blue-500 rounded-lg"></div>
+                              ))}
+                            </div>
+                            <div className="flex items-center justify-center space-x-2">
+                              {[...Array(parseInt(subgroup.numChairsPerTable / 2))].map((_, chairIndex) => (
+                                <div key={chairIndex} className="chair w-8 h-8 bg-blue-500 rounded-lg"></div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))
+              ) : null
+            )
+          ) : (
+            <div className="text-black">
+              NO rooms for reservations
+            </div>
+          )}
+        </div>
+        <div className="Buttons mt-10 flex items-center justify-center gap-20">
           <Button
             details="btn-wide border border-secondary bg-transparent text-secondary"
             info="Go Back"
           />
-          <Button details="btn-wide " info="Save Changes" />
+          <Button details="btn-wide" info="Save Changes" />
         </div>
-
-        <div className="count flex items-center justify-center mt-2 gap-1">
-          <div className="w-8 h-8 border cursor-pointer  border-gray-300 flex items-center justify-center rounded-lg">
-            <p className="font-semibold">1</p>
-          </div>
-          <div className="w-8 h-8 border cursor-pointer  border-gray-300 flex items-center justify-center rounded-lg">
-            <p className="font-semibold">2</p>
-          </div>
-          <div className="w-8 h-8 border cursor-pointer  border-gray-300 flex items-center justify-center rounded-lg">
-            <p className="font-semibold">3</p>
-          </div>
-          <div className="w-8 h-8 border cursor-pointer bg-secondary text-primary border-gray-300 flex items-center justify-center rounded-lg">
-            <p className="font-semibold">4</p>
-          </div>
+        <div className="count flex items-center justify-center mt-2 gap-2">
+          {[1, 2, 3, 4].map((num) => (
+            <div
+              key={num}
+              className={`w-8 h-8 border cursor-pointer ${
+                num === 4 ? "bg-secondary text-primary" : ""
+              } border-gray-300 flex items-center justify-center rounded-lg`}
+            >
+              <p className="font-semibold">{num}</p>
+            </div>
+          ))}
         </div>
       </div>
     </div>
