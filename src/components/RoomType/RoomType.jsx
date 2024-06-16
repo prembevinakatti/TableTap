@@ -25,7 +25,7 @@ const RoomType = () => {
         includes: "Yes",
         numRooms: "4",
         numTables: "4",
-        numChairsPerTable: "4",
+        numChairsPerTable: "8",
       },
       {
         name: "Room Includes Normal Room",
@@ -68,28 +68,28 @@ const RoomType = () => {
             ))}
           </select>
         </div>
-        <div className="room w-[70vw] h-[63vh] rounded-xl bg-gray-100 p-4 overflow-y-auto">
+        <div className="room w-[70vw]  h-[63vh] rounded-xl bg-gray-100 p-4 overflow-y-auto">
           {data.numberOfRooms !== 0 ? (
             data.groups.map((subgroup) =>
               subgroup.name === type ? (
                 [...Array(parseInt(subgroup.numRooms))].map((_, roomIndex) => (
-                  <div key={roomIndex} className="room-item bg-white p-4 m-2 rounded-xl shadow-md">
+                  <div key={roomIndex} className="room-item bg-white p-10 m-2 rounded-xl shadow-md">
                     <h2 className="text-xl font-bold mb-4">Room {roomIndex + 1}</h2>
-                    <div className="tables grid grid-cols-2 gap-6">
+                    <div className="tables relative w-full h-fit flex flex-wrap items-center justify-around  gap-20">
                       {[...Array(parseInt(subgroup.numTables))].map((_, tableIndex) => (
-                        <div key={tableIndex} className="table relative bg-gray-200 p-4 rounded-lg shadow-sm w-40 h-40">
-                          <div className="table-top w-full h-full bg-gray-300 rounded-lg flex items-center justify-center">
+                        <div key={tableIndex} className="table  relative bg-gray-200 p-4 rounded-lg shadow-sm w-52 h-40">
+                          <div className="table-top  w-full h-full bg-gray-300 rounded-lg flex items-center justify-center">
                             Table {tableIndex + 1}
                           </div>
-                          <div className="chairs absolute w-full h-full flex justify-around items-center">
-                            <div className="flex items-center justify-center space-x-2">
+                          <div className="chairs absolute top-0 -left-10 w-[18vw] h-full flex  justify-between items-center">
+                            <div className="flex flex-col items-center justify-center gap-5">
                               {[...Array(parseInt(subgroup.numChairsPerTable / 2))].map((_, chairIndex) => (
                                 <div key={chairIndex} className="chair w-8 h-8 bg-blue-500 rounded-lg"></div>
                               ))}
                             </div>
-                            <div className="flex items-center justify-center space-x-2">
+                            <div className="flex flex-col  items-center justify-center gap-5">
                               {[...Array(parseInt(subgroup.numChairsPerTable / 2))].map((_, chairIndex) => (
-                                <div key={chairIndex} className="chair w-8 h-8 bg-blue-500 rounded-lg"></div>
+                                <div key={chairIndex} className="chair  w-8 h-8 bg-blue-500 rounded-lg"></div>
                               ))}
                             </div>
                           </div>
