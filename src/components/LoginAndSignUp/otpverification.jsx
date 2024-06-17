@@ -50,7 +50,7 @@ function Otpverify({flag}) {
         dispatch(varifed({ userData: session }));
         if(flag===true){
 
-          navigate('/Resroomsetup')
+          navigate('/resprofilecreatepage')
         }
         else{
           navigate('/userhomepage')

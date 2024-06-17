@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import SignUp from "./components/LoginAndSignUp/SignUp";
-import Photos from "./components/ProfileAndResPhoto/Photos";
+
 import ResDetails from "./components/ResDetails/ResDetails";
 import RoomType from "./components/RoomType/RoomType";
 import ResTiming from "./components/ResTiming/ResTiming";
@@ -22,6 +22,8 @@ import Layout from "./components/others/outlet";
 import authService from "./appwrite/authservices";
 import { useDispatch } from "react-redux";
 import { varifed } from "./store/authslice";
+import AddPhotos from "./components/ProfileAndResPhoto/Photos";
+import Profilecreate from "./components/profilecreat/Profilecreat";
 function App() {
   const [count, setCount] = useState(0);
   const dispatch = useDispatch();
@@ -64,7 +66,9 @@ function App() {
       {/* <UserProfilePage /> */}
       {/* <LandingPage /> */}
       {/* <Otpverify/> */}
-      <Layout/>
+      {/* <Layout/> */}
+      <AddPhotos/>
+      {/* <Profilecreate/> */}
     </>
   );
 }

@@ -17,7 +17,10 @@ class ProfileServices {
     UserId,
     name,
     slug,
-    roomdetaisl,
+    locaton,
+    phone,
+    isres,
+    imageid
   }) {
     try {
       return await this.databases.createDocument(
@@ -26,8 +29,11 @@ class ProfileServices {
         slug,
         {
           name,
-          roomdetaisl,
+          locaton,
+          phone,
           UserId,
+          isres,
+          imageid
           
         }
       );
@@ -37,6 +43,24 @@ class ProfileServices {
     }
   }
 
+  async createroomdetails(
+   
+    {  slug, roomdetaisl, }
+  ) {
+    try {
+      return await this.databases.updateDocument(
+        conf.databaseid,
+        conf.collectionid,
+        slug,
+        {
+            roomdetaisl
+        }
+      );
+    } catch (error) {
+      console.log("Appwrite service :: createroomdetails :: error", error);
+      throw error;
+    }
+  }
   async updateroomdetails(
    
     {  slug, roomdetaisl, }
@@ -48,6 +72,24 @@ class ProfileServices {
         slug,
         {
             roomdetaisl
+        }
+      );
+    } catch (error) {
+      console.log("Appwrite service :: updateProfile :: error", error);
+      throw error;
+    }
+  }
+  async updategropimges(
+   
+    {  slug, gropimg }
+  ) {
+    try {
+      return await this.databases.updateDocument(
+        conf.databaseid,
+        conf.collectionid,
+        slug,
+        {
+          gropimg
         }
       );
     } catch (error) {

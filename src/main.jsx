@@ -19,6 +19,8 @@ import Login from './components/LoginAndSignUp/Login.jsx'
 import Resverification from './pages/restorent/Resverification.jsx'
 import Resloginpage from './pages/restorent/Resloginpage.jsx'
 import Resroomsetup from './pages/restorent/Resroomsetup.jsx'
+import Resprofilecreatepage from './pages/restorent/Resprofilecreatepage.jsx'
+import Resphotouploed from './pages/restorent/Resphotouploed.jsx'
 const router=createBrowserRouter(
   createRoutesFromElements(
      <Route path='/' element={<App/>}>
@@ -26,8 +28,10 @@ const router=createBrowserRouter(
       <Route path='/Ressinguppage' element={<Ressinguppage/>}/>
       <Route path='/resloginpage' element={<Resloginpage/>}/>
       <Route path='/Resverification' element={<Resverification/>}/>
+      <Route path='/resprofilecreatepage' element={<Resprofilecreatepage/>}/>
+      <Route path='/resphotouploedpage' element={<Resphotouploed/>}/>
       <Route path='/Resroomsetup' element={<Resroomsetup/>}/>
-      <Route path='/userhome' element={<UserHomePage/>}/>
+      <Route path='/res' element={<RoomType/>}/>
       <Route path='/bookings' element={<UserBookingPage/>}/>
     </Route>
   )

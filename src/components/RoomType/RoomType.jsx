@@ -1,55 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProfileNav from "../ProfileNav/ProfileNav";
-import Button from "../Button/Button";
+import { useSelector } from "react-redux";
+import profileService from "../../appwrite/profileservices";
+
 
 const RoomType = () => {
   const [type, setType] = useState("Room Includes Normal Room");
-
+  const profiledata=useSelector((state)=>(state.profile.profiledata))
   const selectData = [
     "Rooms Includes AC",
     "Room Includes Normal Room",
     "Room Includes Party Room",
     "Room Includes Custom Room"
   ];
+  const [data,setdata]=useState()
 
   const handleSelectChange = (e) => {
     setType(e.target.value);
     console.log(e.target.value);
   };
+    useEffect(()=>{
+   async function  getroomdetails(){
+      try {
+          let roomdata=await profileService.getUser(profiledata.$id)
+          if (roomdata){
+            console.log(roomdata)
+            const roomdetails=JSON.parse(roomdata.roomdetaisl||"[ ]")
+            setdata(roomdetails)
 
-  const data = {
-    numberOfRooms: "10",
-    groups: [
-      {
-        name: "Rooms Includes AC",
-        includes: "Yes",
-        numRooms: "4",
-        numTables: "4",
-        numChairsPerTable: "8",
-      },
-      {
-        name: "Room Includes Normal Room",
-        includes: "Yes",
-        numRooms: "4",
-        numTables: "4",
-        numChairsPerTable: "4",
-      },
-      {
-        name: "Room Includes Party Room",
-        includes: "Yes",
-        numRooms: "1",
-        numTables: "8",
-        numChairsPerTable: "4",
-      },
-      {
-        name: "Room Includes Custom Room",
-        includes: "Yes",
-        numRooms: "4",
-        numTables: "8",
-        numChairsPerTable: "4",
-      },
-    ],
-  };
+
+          }
+
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getroomdetails()
+    },[])
 
   return (
     <div>

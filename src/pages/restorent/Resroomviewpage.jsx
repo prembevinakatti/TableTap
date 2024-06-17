@@ -2,6 +2,7 @@ import React from 'react'
 import RoomType from '../../components/RoomType/RoomType'
 
 function resroomviewpage() {
+  const profiledata=useSelector((state)=>(state.profile.profiledata))
   return (
         <>
         <RoomType/>
@@ -9,8 +10,11 @@ function resroomviewpage() {
           <Button
             details="btn-wide border border-secondary bg-transparent text-secondary"
             info="Go Back"
+            onClick={() => navigate(`resroomedit`)} 
           />
-          <Button details="btn-wide" info="Save Changes" />
+          <Button details="btn-wide" info="Save Changes"
+           onClick={() => navigate(`resprofilepage`)}
+           />
         </div>
         </>
   )

@@ -10,6 +10,7 @@ import { updateProfile } from "../../store/profileslice";
 
 const ResDetails = (editdata) => {
   const userdata=useSelector((state)=>(state.auth.userData))
+  const profiledata=useSelector((state)=>(state.profile.profiledata))
   const dispatch=useDispatch()
   const navigate=useNavigate()
   const [formValues, setFormValues] = useState({
@@ -51,7 +52,7 @@ const ResDetails = (editdata) => {
             try {
               const userData = await profileService.getUser(editdata.$id)
               if(userData){
-                let  data=JSON.parse(userData.roomdetaisl) 
+                let  data=JSON.parse(userData.roomdetaisl||"[ ]") 
                   setFormValues(data)
               }
              
@@ -108,9 +109,10 @@ const ResDetails = (editdata) => {
         async function updatedata(){
           try 
           {
-            isedited=await profileService.updateroomdetails({slug:editdata.$id,roomdetaisl:JSON.stringify(formValues)})
+           let isedited=await profileService.updateroomdetails({slug:editdata.$id,roomdetaisl:JSON.stringify(formValues)})
             if(isedited){
               toast.success("room details edited sucessfuly")
+              navigate('Resroomview')
             }
             
           } catch (error) {
@@ -122,11 +124,11 @@ const ResDetails = (editdata) => {
       }else{
         async function creatprofile(){
           try {
-                const isprofile=await profileService.createProfile({name:userdata.name,slug:userdata.namem,UserId:userdata.$id,roomdetaisl:JSON.stringify(formValues)})
+           let isprofile=await profileService.createroomdetails({slug:profiledata.$id,roomdetaisl:JSON.stringify(formValues)})
                 if (isprofile){
                   console.log(isprofile)
-                  dispatch(updateProfile({ userData: isprofile }));
-                  navigate('roomview')
+                  
+                  navigate('Resroomview')
                   
                 }
             
