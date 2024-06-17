@@ -81,7 +81,7 @@ const RoomType = () => {
                           <div className="table-top  w-full h-full bg-gray-300 rounded-lg flex items-center justify-center">
                             Table {tableIndex + 1}
                           </div>
-                          <div className="chairs absolute top-0 -left-10 w-[18vw] h-full flex  justify-between items-center">
+                          <div className="chairs absolute top-0 -left-10  xl:w-[18vw]  md:w-[31vw]  lg:w-[24vw] w-[58vw] h-full flex  justify-between items-center">
                             <div className="flex flex-col items-center justify-center gap-5">
                               {[...Array(parseInt(subgroup.numChairsPerTable / 2))].map((_, chairIndex) => (
                                 <div key={chairIndex} className="chair w-8 h-8 bg-blue-500 rounded-lg"></div>

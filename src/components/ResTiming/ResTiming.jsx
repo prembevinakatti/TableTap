@@ -10,7 +10,7 @@ const ResTiming = () => {
       <div>
         <ProfileNav />
       </div>
-      <div className="flex gap-5  flex-col items-center justify-center">
+      <div className="flex gap-5 w-full h-[65vh]  flex-col items-center justify-center">
         <div className="Timing shadow-lg w-[70vw] flex flex-col gap-10 items-center justify-center h-[30vh] border rounded-lg">
           <div>
             <p className="font-semibold text-tertiary">
@@ -39,10 +39,10 @@ const ResTiming = () => {
 
       <div className="Buttons mt-10  flex items-center   justify-center gap-20">
         <Button
-          details="btn-wide border border-secondary bg-transparent text-secondary"
+          details="xl:btn-wide border border-secondary bg-transparent text-secondary"
           info="Go Back"
         />
-        <Button details="btn-wide " info="Save Changes" />
+        <Button details="xl:btn-wide " info="Save Changes" />
       </div>
 
       <div className="count flex items-center justify-center mt-20 gap-1">

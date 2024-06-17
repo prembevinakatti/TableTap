@@ -35,7 +35,7 @@ const LandingPage = () => {
               />
             </div>
           </div>
-          <div className="detailsContent xl:w-[55vw] w-fit h-fit p-10 flex flex-col mt-16 items-center justify-center gap-10 xl:h-[70vh] border shadow-xl">
+          <div className="detailsContent xl:w-[55vw] w-fit h-fit p-10 flex flex-col mt-16 xl:mt-0 items-center justify-center gap-10 xl:h-[70vh] border shadow-xl">
             <h1 className="w-full text-3xl font-semibold text-center">
               TableTap
             </h1>

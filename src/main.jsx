@@ -28,6 +28,7 @@ const router=createBrowserRouter(
       <Route path='/Resverification' element={<Resverification/>}/>
       <Route path='/Resroomsetup' element={<Resroomsetup/>}/>
       <Route path='/userhome' element={<UserHomePage/>}/>
+      <Route path='/bookings' element={<UserBookingPage/>}/>
     </Route>
   )
  

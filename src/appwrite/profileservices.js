@@ -1,5 +1,5 @@
 
-import conf from "../configuration/config";
+import conf from "../conf/config";
 import { Client, ID, Databases, Storage } from "appwrite";
 
 class ProfileServices {
