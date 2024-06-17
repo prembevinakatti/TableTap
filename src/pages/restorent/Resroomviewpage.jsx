@@ -1,8 +1,10 @@
 import React from 'react'
 import RoomType from '../../components/RoomType/RoomType'
+import { useSelector } from 'react-redux'
+import Button from '../../components/Button/Button'
 
-function resroomviewpage() {
-  const profiledata=useSelector((state)=>(state.profile.profiledata))
+function Resroomviewpage() {
+  const profileData = useSelector((state) => state.profile.profiledata);
   return (
         <>
         <RoomType/>
@@ -20,4 +22,4 @@ function resroomviewpage() {
   )
 }
 
-export default resroomviewpage
+export default Resroomviewpage

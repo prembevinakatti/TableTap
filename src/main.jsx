@@ -21,6 +21,7 @@ import Resloginpage from './pages/restorent/Resloginpage.jsx'
 import Resroomsetup from './pages/restorent/Resroomsetup.jsx'
 import Resprofilecreatepage from './pages/restorent/Resprofilecreatepage.jsx'
 import Resphotouploed from './pages/restorent/Resphotouploed.jsx'
+import Resroomviewpage from './pages/restorent/Resroomviewpage.jsx'
 const router=createBrowserRouter(
   createRoutesFromElements(
      <Route path='/' element={<App/>}>
@@ -30,7 +31,7 @@ const router=createBrowserRouter(
       <Route path='/Resverification' element={<Resverification/>}/>
       <Route path='/resprofilecreatepage' element={<Resprofilecreatepage/>}/>
       <Route path='/resphotouploedpage' element={<Resphotouploed/>}/>
-      <Route path='/Resroomsetup' element={<Resroomsetup/>}/>
+      <Route path='/resroomviewpage' element={<Resroomviewpage/>}/>
       <Route path='/res' element={<RoomType/>}/>
       <Route path='/bookings' element={<UserBookingPage/>}/>
     </Route>

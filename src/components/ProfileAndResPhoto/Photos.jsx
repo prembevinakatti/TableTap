@@ -4,16 +4,13 @@ import { FaPlus } from "react-icons/fa6";
 import Button from "../Button/Button";
 import profileService from "../../appwrite/profileservices";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const AddPhotos = () => {
-  const navigate=useNavigate()
-  const profiledata=useSelector((state)=>(state.profile.profiledata))
+  const navigate = useNavigate();
+  const profileData = useSelector((state) => state.profile.profiledata);
   const [restaurantImagesPreview, setRestaurantImagesPreview] = useState([]);
-  const {
-    handleSubmit,
-    setValue,
-    watch,
-  } = useForm();
+  const { handleSubmit, setValue, watch } = useForm();
   const maxImages = 4;
 
   const onSubmit = async (data) => {
@@ -22,22 +19,25 @@ const AddPhotos = () => {
     try {
       const imageIds = [];
       for (let img of allImages) {
-        const fileId = await profileService.uploadFile(img[0]);
+        const fileId = await profileService.uploadFile({ file: img });
         if (fileId) {
           imageIds.push(fileId);
         }
       }
-     let  uploedimgid=await profileService.updategropimges({slug:profiledata.$id,gropimg:JSON.stringify(imageIds)})
-      if (uploedimgid){
-        navigate('/Resroomsetup')
-        
-      }
-      console.log("Uploaded image IDs:", imageIds);
+      console.log(imageIds)
 
-      // Optionally, handle success or navigate to the next step
+      const uploadImgId = await profileService.updategropimges({
+        slug: profileData.$id,
+        gropimg: JSON.stringify(imageIds),
+      });
+
+      if (uploadImgId) {
+        navigate('/Resroomsetup');
+      }
+
+      console.log("Uploaded image IDs:", imageIds);
     } catch (error) {
       console.error("Error uploading images:", error);
-      // Optionally, handle error state or display error message
     }
   };
 

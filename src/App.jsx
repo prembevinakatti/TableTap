@@ -1,74 +1,41 @@
 import { useEffect, useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import SignUp from "./components/LoginAndSignUp/SignUp";
-
-import ResDetails from "./components/ResDetails/ResDetails";
-import RoomType from "./components/RoomType/RoomType";
-import ResTiming from "./components/ResTiming/ResTiming";
-import Navbar from "./components/Navbar/Navbar";
-import ResProfilePage from "./components/ResProfilePage/ResProfilePage";
-import ResPayment from "./components/ResPayment/ResPayment";
-import ResReservation from "./components/ResReservation/ResReservation";
-import UserHomePage from "./components/UserHomePage/UserHomePage";
-import PostPage from "./components/PostPage/PostPage";
-import UserBookingPage from "./components/UserBookingPage/UserBookingPage";
-import UserProfilePage from "./components/UserProfilePage/UserProfilePage";
-import LandingPage from "./pages/LandingPage/LandingPage";
-import Login from "./components/LoginAndSignUp/Login";
-import Otpverify from "./components/LoginAndSignUp/otpverification";
-
-import Layout from "./components/others/outlet";
-import authService from "./appwrite/authservices";
 import { useDispatch } from "react-redux";
 import { varifed } from "./store/authslice";
-import AddPhotos from "./components/ProfileAndResPhoto/Photos";
-import Profilecreate from "./components/profilecreat/Profilecreat";
+import { updateProfile } from "./store/profileslice";
+import authService from "./appwrite/authservices";
+import profileService from "./appwrite/profileservices";
+import Layout from "./components/others/outlet";
+
+
 function App() {
-  const [count, setCount] = useState(0);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const getCurrentUser = async() => {
+    const getCurrentUser = async () => {
       try {
-        const userData = await authService.getCurrentUser()
-        console.log(userData)
-        if(userData.emailVerification == true){
+        const userData = await authService.getCurrentUser();
+        console.log(userData);
+        if (userData.emailVerification === true) {
           dispatch(varifed({ userData: userData }));
+          const profileData = await profileService.getUser(userData.name);
+          if (profileData) {
+            console.log(profileData)
+            dispatch(updateProfile({ profiledata: profileData }))
+          }
         }
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
-    }
+    };
 
-    getCurrentUser()
-  }, [])
-
-
-  
+    getCurrentUser();
+  }, [dispatch]);
 
   return (
     <>
-      {/* <SignUp /> */}
-      {/* <Login /> */}
-      {/* <Photos /> */}
-      {/* <ResDetails /> */}
-
-      {/* <RoomType /> */}
-      {/* <ResTiming /> */}
-      {/* <Navbar /> */}
-      {/* <ResProfilePage /> */}
-      {/* <ResPayment /> */}
-      {/* <ResReservation /> */}
-      {/* <UserHomePage /> */}
-      {/* <PostPage /> */}
-      {/* <UserBookingPage /> */}
-      {/* <UserProfilePage /> */}
-      {/* <LandingPage /> */}
-      {/* <Otpverify/> */}
-      {/* <Layout/> */}
-      <AddPhotos/>
-      {/* <Profilecreate/> */}
+      
+      <Layout />
+     
     </>
   );
 }

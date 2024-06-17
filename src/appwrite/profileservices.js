@@ -125,7 +125,7 @@ class ProfileServices {
     return this.storage.getFilePreview(conf.storageid, fileId);
   }
 
-  async uploadFile(file) {
+  async uploadFile({file}) {
     try {
       return await this.storage.createFile(conf.storageid, ID.unique(), file);
     } catch (error) {
@@ -134,73 +134,11 @@ class ProfileServices {
     }
   }
 
-  async updatependingSection(slug, pendingSection) {
-    try {
-      return await this.databases.updateDocument(
-        conf.databaseid,
-        conf.collectionid,
-        slug,
-        pendingSection
-      );
-    } catch (error) {
-      console.log("Appwrite service :: updatePendingSection :: error", error);
-      throw error;
-    }
-  }
 
-  async updateapprovedSection(slug, approvedSection) {
-    try {
-      return await this.databases.updateDocument(
-        conf.databaseid,
-        conf.collectionid,
-        slug,
-        approvedSection
-      );
-    } catch (error) {
-      console.log("Appwrite service :: updateApprovedSection :: error", error);
-      throw error;
-    }
-  }
 
-  async updatedeliveredSection(slug, deliveredSection) {
-    try {
-      return await this.databases.updateDocument(
-        conf.databaseid,
-        conf.collectionid,
-        slug,
-        deliveredSection
-      );
-    } catch (error) {
-      console.log("Appwrite service :: updateDeliveredSection :: error", error);
-      throw error;
-    }
-  }
-  async updatefeedback(slug, feedback) {
-    try {
-      return await this.databases.updateDocument(
-        conf.databaseid,
-        conf.collectionid,
-        slug,
-        { feedback }
-      );
-    } catch (error) {
-      console.log("Appwrite service :: updateDeliveredSection :: error", error);
-      throw error;
-    }
-  }
-  async updatecharts(slug, charts) {
-    try {
-      return await this.databases.updateDocument(
-        conf.databaseid,
-        conf.collectionid,
-        slug,
-        charts
-      );
-    } catch (error) {
-      console.log("Appwrite service :: updateDeliveredSection :: error", error);
-      throw error;
-    }
-  }
+
+
+
 }
 
 const profileService = new ProfileServices();

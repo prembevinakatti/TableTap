@@ -4,63 +4,71 @@ import { FaPlus } from "react-icons/fa6";
 import Button from "../Button/Button";
 import InputBox from "../InputBox/InputBox";
 import profileService from "../../appwrite/profileservices";
-import { useSelector } from "react-redux"; 
-import { Navigate, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux"; 
+import { useNavigate } from "react-router-dom";
+import { updateProfile } from "../../store/profileslice";
 
-const ProfileDetails = ({flag}) => {
+
+const ProfileDetails = ({ flag }) => {
   const userData = useSelector((state) => state.auth.userData);
-  const navigate=useNavigate()
-  const {
-    handleSubmit,
-    register,
-    setValue,
-    formState: { errors },
-  } = useForm();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { handleSubmit, register, setValue, formState: { errors } } = useForm();
   const [profileImagePreview, setProfileImagePreview] = useState(null);
+  const [profileImageFile, setProfileImageFile] = useState(null);
 
   const onSubmit = async (data) => {
     try {
       console.log("Profile Data:", data);
 
-     
-      const fileData = await profileService.uploadFile(data.profileImage[0]);
+      if (!profileImageFile) {
+        console.error("Profile image file is missing.");
+        throw new Error("Profile image file is required.");
+      }
 
+      console.log("Uploading file:", profileImageFile);
+
+      const fileData = await profileService.uploadFile({ file: profileImageFile });
+
+      console.log("File uploaded:", fileData);
 
       if (fileData) {
-        const createprofile=await profileService.createProfile({
-            imageid:fileData, isres:flag,locaton:data.location,name:userData.name,phone:data.phoneNumber,slug:userData.name,UserId:userData.$id
-        })
-            if (createprofile){
-                if(flag===true){
-                    dispatch(updateProfile({ profiledata: createprofile }));
-                    navigate('resphotouploedpage')
-                    
-                }
-                else{
-                    dispatch(updateProfile({ profiledata: createprofile }));
-                    navigate('userhomepage')
-                }
-            }
-       
+        const createProfile = await profileService.createProfile({
+          imageid: fileData.$id,
+          isres: flag,
+          locaton: data.location,
+          name: userData.name,
+          phone: data.phoneNumber,
+          slug: userData.name,
+          UserId: userData.$id
+        });
+
+        console.log("Profile created:", createProfile);
+
+        if (createProfile) {
+          dispatch(updateProfile({ profiledata: createProfile }));
+          navigate(flag ? '/resphotouploedpage' : '/userhomepage');
+        }
       }
     } catch (error) {
       console.error("Error while creating profile:", error);
-      
     }
   };
 
   const handleProfileImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      console.log("Profile image selected:", file);
       setProfileImagePreview(URL.createObjectURL(file));
+      setProfileImageFile(file);
       setValue("profileImage", file);
     }
   };
 
   return (
-    
     <div className="flex flex-col items-center gap-5 justify-center">
-           <div className='w-full text-6xl text-gray-600 text-center'>{flag===true?"Restorent profilecreate":"User profilecreate"}</div>
+      <div className='w-full text-6xl text-gray-600 text-center'>{flag ? "Restaurant Profile Create" : "User Profile Create"}</div>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center gap-5 justify-center">
         <div className="profileImg">
           <div className="relative flex flex-col items-center">
