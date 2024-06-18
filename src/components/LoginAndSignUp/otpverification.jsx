@@ -65,8 +65,8 @@ function Otpverify({flag}) {
   if (!verified) {
     return (
       
-      <div className="w-full h-[90vh] flex justify-center items-center">
-                    <div className='w-full text-6xl text-gray-600 text-center'>{flag===true?"Restorent Verification":"User Verification"}</div>
+      <div className="w-full h-[90vh] flex flex-col gap-10 justify-center items-center">
+                    <div className='w-full text-6xl text-gray-600 text-center'>{flag===true?"Restaurant Verification":"User Verification"}</div>
         <div className="flex flex-col border p-10 rounded-lg shadow-lg items-center gap-10">
           <div className="text-2xl font-semibold text-primary">Verify your OTP</div>
           <button

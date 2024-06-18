@@ -4,17 +4,21 @@ import { FaPlus } from "react-icons/fa6";
 import Button from "../Button/Button";
 import InputBox from "../InputBox/InputBox";
 import profileService from "../../appwrite/profileservices";
-import { useSelector, useDispatch } from "react-redux"; 
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { updateProfile } from "../../store/profileslice";
-
 
 const ProfileDetails = ({ flag }) => {
   const userData = useSelector((state) => state.auth.userData);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { handleSubmit, register, setValue, formState: { errors } } = useForm();
+  const {
+    handleSubmit,
+    register,
+    setValue,
+    formState: { errors },
+  } = useForm();
   const [profileImagePreview, setProfileImagePreview] = useState(null);
   const [profileImageFile, setProfileImageFile] = useState(null);
 
@@ -29,7 +33,9 @@ const ProfileDetails = ({ flag }) => {
 
       console.log("Uploading file:", profileImageFile);
 
-      const fileData = await profileService.uploadFile({ file: profileImageFile });
+      const fileData = await profileService.uploadFile({
+        file: profileImageFile,
+      });
 
       console.log("File uploaded:", fileData);
 
@@ -41,14 +47,14 @@ const ProfileDetails = ({ flag }) => {
           name: userData.name,
           phone: data.phoneNumber,
           slug: userData.name,
-          UserId: userData.$id
+          UserId: userData.$id,
         });
 
         console.log("Profile created:", createProfile);
 
         if (createProfile) {
           dispatch(updateProfile({ profiledata: createProfile }));
-          navigate(flag ? '/resphotouploedpage' : '/userhomepage');
+          navigate(flag ? "/resphotouploedpage" : "/userhomepage");
         }
       }
     } catch (error) {
@@ -68,28 +74,35 @@ const ProfileDetails = ({ flag }) => {
 
   return (
     <div className="flex flex-col items-center gap-5 justify-center">
-      <div className='w-full text-6xl text-gray-600 text-center'>{flag ? "Restaurant Profile Create" : "User Profile Create"}</div>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center gap-5 justify-center">
-        <div className="profileImg">
-          <div className="relative flex flex-col items-center">
-            <img
-              className="w-52 h-52 rounded-full overflow-hidden"
-              src={profileImagePreview || "https://via.placeholder.com/150"}
-              alt="Profile"
-            />
-            <label className="btn absolute bottom-3 right-2 rounded-full border-none cursor-pointer bg-secondary text-primary">
-              <FaPlus />
-              <input
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={handleProfileImageChange}
+      <div className="w-full  text-6xl text-gray-600 text-center">
+        {flag ? "Restaurant Profile Create" : "User Profile Create"}
+      </div>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col items-center gap-10 border p-5 shadow-lg rounded-lg justify-center"
+      >
+        <div>
+          <div className="profileImg ">
+            <div className="relative flex flex-col items-center">
+              <img
+                className="w-52 h-52 rounded-full overflow-hidden"
+                src={profileImagePreview || "https://via.placeholder.com/150"}
+                alt="Profile"
               />
-            </label>
+              <label className="btn absolute bottom-3 right-2 rounded-full border-none cursor-pointer bg-secondary text-primary">
+                <FaPlus />
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleProfileImageChange}
+                />
+              </label>
+            </div>
           </div>
         </div>
 
-        <div className="w-full px-5">
+        <div className="w-full flex flex-col gap-5 px-5">
           <InputBox
             {...register("phoneNumber", {
               required: "Phone Number is required",
@@ -100,13 +113,17 @@ const ProfileDetails = ({ flag }) => {
             })}
             placeholder="Phone Number"
           />
-          {errors.phoneNumber && <p className="text-red-500">{errors.phoneNumber.message}</p>}
+          {errors.phoneNumber && (
+            <p className="text-red-500">{errors.phoneNumber.message}</p>
+          )}
 
           <InputBox
             {...register("location", { required: "Location is required" })}
             placeholder="Location"
           />
-          {errors.location && <p className="text-red-500">{errors.location.message}</p>}
+          {errors.location && (
+            <p className="text-red-500">{errors.location.message}</p>
+          )}
         </div>
 
         <div className="Buttons w-full mt-1 flex items-center justify-evenly">

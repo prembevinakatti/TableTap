@@ -58,9 +58,9 @@ const AddPhotos = () => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-5 justify-center">
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center gap-5 justify-center">
-        <div className="ResImg">
+    <div className="flex flex-col  m-10 p-5 items-center gap-5 justify-center">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center border p-10 rounded-lg shadow-lg gap-5 justify-center">
+        <div className="ResImg ">
           <div className="w-[60vw] h-[40vh] flex items-center justify-center rounded-xl bg-[#c5c5c5]">
             <label className="btn btn-wide bg-secondary text-primary border-none">
               <div className="text-2xl">

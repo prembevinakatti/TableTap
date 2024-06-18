@@ -33,6 +33,7 @@ const router=createBrowserRouter(
       <Route path='/resphotouploedpage' element={<Resphotouploed/>}/>
       <Route path='/resroomviewpage' element={<Resroomviewpage/>}/>
       <Route path='/res' element={<RoomType/>}/>
+      <Route path='/resroomsetup' element={<Resroomsetup/>}/>
       <Route path='/bookings' element={<UserBookingPage/>}/>
     </Route>
   )
