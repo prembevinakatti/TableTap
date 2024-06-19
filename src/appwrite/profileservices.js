@@ -142,7 +142,7 @@ class ProfileServices {
     }
   }
 
-  getFilePreview(fileId) {
+  getFilePreview({fileId}) {
     return this.storage.getFilePreview(conf.storageid, fileId);
   }
 

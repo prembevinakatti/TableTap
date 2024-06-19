@@ -1,14 +1,7 @@
-import React, { useEffect, useState } from "react";
-import ProfileNav from "../ProfileNav/ProfileNav";
-import { useSelector } from "react-redux";
-import profileService from "../../appwrite/profileservices";
+import React, { useState } from "react";
 
-const RoomType = () => {
+const RoomType = ({ roomData, loading, error }) => {
   const [selectedType, setSelectedType] = useState("Room Includes Normal Room");
-  const userData = useSelector((state) => state.auth.userData);
-  const [roomData, setRoomData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   const selectData = [
     "Rooms Includes AC",
@@ -17,37 +10,12 @@ const RoomType = () => {
     "Room Include Custom Room"
   ];
 
-  useEffect(() => {
-    const fetchRoomDetails = async () => {
-      setLoading(true);
-      setError(null);
-      
-      try {
-        const fetchedRoomData = await profileService.getUser(userData.name || "ffjif");
-        if (fetchedRoomData) {
-          const parsedRoomData = JSON.parse(fetchedRoomData.roomdetaisl || "[]");
-          setRoomData(parsedRoomData.groups || []);
-        } else {
-          setRoomData([]);
-        }
-      } catch (error) {
-        console.error("Error fetching room data:", error);
-        setError("Error fetching room data. Please try again later.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchRoomDetails();
-  }, [userData]);
-
   const handleSelectChange = (e) => {
     setSelectedType(e.target.value);
   };
 
   return (
     <div>
-     
       <div className="flex flex-col gap-6 items-center justify-center p-4">
         <div>
           <select

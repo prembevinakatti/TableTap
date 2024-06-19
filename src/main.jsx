@@ -35,7 +35,7 @@ const router=createBrowserRouter(
       <Route path='/resphotouploedpage' element={<Resphotouploed/>}/>
       <Route path='/resroomviewpage' element={<Resroomviewpage/>}/>
       <Route path='/restiming' element={<ResTiming/>}/>
-      <Route path='/resprofilepage' element={<ResProfilePage/>}/>
+      <Route path='/resprofilepage/:slug' element={<ResProfilePage/>}/>
       <Route path='/resroomsetup' element={<Resroomsetup/>}/>
       <Route path='/bookings' element={<UserBookingPage/>}/>
     </Route>

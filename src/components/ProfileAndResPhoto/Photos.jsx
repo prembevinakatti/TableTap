@@ -3,10 +3,11 @@ import { useForm } from "react-hook-form";
 import { FaPlus } from "react-icons/fa6";
 import Button from "../Button/Button";
 import profileService from "../../appwrite/profileservices";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const AddPhotos = () => {
+  
   const navigate = useNavigate();
   const profileData = useSelector((state) => state.profile.profiledata);
   const [restaurantImagesPreview, setRestaurantImagesPreview] = useState([]);
@@ -21,7 +22,7 @@ const AddPhotos = () => {
       for (let img of allImages) {
         const fileId = await profileService.uploadFile({ file: img });
         if (fileId) {
-          imageIds.push(fileId);
+          imageIds.push(fileId.$id);
         }
       }
       console.log(imageIds)
