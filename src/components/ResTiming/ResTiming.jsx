@@ -24,7 +24,7 @@ const ResTiming = () => {
       };
      const timeuploded= await profileService.updatetimings(timingData);
      if(timeuploded){
-      navigate(`resprofile/${profiledata.$id}`)
+      navigate(`/resprofile/${profiledata.$id}`)
      }
     } catch (error) {
       console.error("Error updating timings:", error);

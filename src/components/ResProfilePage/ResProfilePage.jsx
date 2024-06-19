@@ -3,11 +3,29 @@ import Navbar from "../Navbar/Navbar";
 import Button from "../Button/Button";
 import { IoIosArrowDown } from "react-icons/io";
 import FooterBtns from "../FooterBtns/FooterBtns";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const ResProfilePage = () => {
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 1500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+  };
+
+  const images = [
+    "src/assets/image1.jpg",
+    "src/assets/image2.jpg",
+    "src/assets/image3.jpg",
+  ];
+
   return (
     <div>
-   
       <div className="profilePage flex flex-col items-center justify-center gap-5">
         <div className="profile w-[80vw] flex items-center justify-around  gap-10 h-[20vw] rounded-lg border mt-5 shadow-md">
           <div className="profileImg">
@@ -32,10 +50,27 @@ const ResProfilePage = () => {
             </p>
           </div>
         </div>
-        <div className="flex w-[80vw] items-center justify-between ">
+        <div className="flex  w-[80vw] items-center justify-between ">
           <Button details="btn-wide" info="Edit Profile" />
           <Button details="btn-wide" info="Edit Time" />
         </div>
+      </div>
+
+      <div>
+        <h1 className="text-4xl text-tertiary w-full text-center  my-5">Restaurant Images</h1>
+      </div>
+      <div className="w-full px-20 flex h-[70vh] overflow-hidden flex-col justify-center">
+        <Slider {...settings}>
+          {images.map((url, index) => (
+            <div key={index}>
+              <img
+                className="w-full h-full object-cover"
+                src={url}
+                alt={`Slide ${index + 1}`}
+              />
+            </div>
+          ))}
+        </Slider>
       </div>
 
       <h1 className="w-full text-center text-4xl mt-10 text-tertiary">
@@ -81,7 +116,9 @@ const ResProfilePage = () => {
             <p className="text-4xl font-semibold text-tertiary">Analytics</p>
           </div>
           <div className="analytics w-1/4 rounded-lg shadow-sm h-full flex flex-col gap-5 items-center justify-center border">
-            <p className="text-3xl font-semibold text-tertiary">Average Ratings</p>
+            <p className="text-3xl font-semibold text-tertiary">
+              Average Ratings
+            </p>
             <div className="rating rating-lg">
               <input
                 type="radio"
