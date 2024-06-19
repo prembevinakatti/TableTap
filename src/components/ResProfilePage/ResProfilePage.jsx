@@ -7,9 +7,7 @@ import FooterBtns from "../FooterBtns/FooterBtns";
 const ResProfilePage = () => {
   return (
     <div>
-      <div>
-        <Navbar />
-      </div>
+   
       <div className="profilePage flex flex-col items-center justify-center gap-5">
         <div className="profile w-[80vw] flex items-center justify-around  gap-10 h-[20vw] rounded-lg border mt-5 shadow-md">
           <div className="profileImg">

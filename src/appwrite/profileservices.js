@@ -97,6 +97,27 @@ class ProfileServices {
       throw error;
     }
   }
+  async updatetimings(
+   
+    {  slug, opentime,closetime, startinterval,closeinterval}
+  ) {
+    try {
+      return await this.databases.updateDocument(
+        conf.databaseid,
+        conf.collectionid,
+        slug,
+        {
+          opentime,
+          closetime,
+          startinterval,
+          closeinterval
+        }
+      );
+    } catch (error) {
+      console.log("Appwrite service :: updateProfile :: error", error);
+      throw error;
+    }
+  }
 
   async getUser(slug) {
     try {
