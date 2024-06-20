@@ -15,9 +15,10 @@ function Resroomviewpage() {
     const fetchRoomDetails = async () => {
       setLoading(true);
       setError(null);
-
+      console.log(profileData)
       try {
         const fetchedRoomData = await profileService.getUser(profileData.$id || "ffjif");
+        
         if (fetchedRoomData) {
           const parsedRoomData = JSON.parse(fetchedRoomData.roomdetaisl || "[]");
           setRoomData(parsedRoomData.groups || []);
@@ -33,7 +34,7 @@ function Resroomviewpage() {
     };
 
     fetchRoomDetails();
-  }, [profileData.$id]);
+  }, [profileData]);
 
   return (
     <>

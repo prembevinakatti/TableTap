@@ -74,12 +74,12 @@ const ProfileDetails = ({ flag }) => {
 
   return (
     <div className="flex flex-col items-center gap-5 justify-center">
-      <div className="w-full  text-6xl text-gray-600 text-center">
+      <div className="w-full  xl:text-4xl text-2xl mt-2 text-gray-600 text-center">
         {flag ? "Restaurant Profile Create" : "User Profile Create"}
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col items-center gap-10 border p-5 shadow-lg rounded-lg justify-center"
+        className="flex px-16 py-28 md:w-fit md:p-32 flex-col items-center gap-10 border shadow-lg rounded-lg justify-center"
       >
         <div>
           <div className="profileImg ">
@@ -102,8 +102,9 @@ const ProfileDetails = ({ flag }) => {
           </div>
         </div>
 
-        <div className="w-full flex flex-col gap-5 px-5">
+        <div className="w-full flex flex-col gap-5 ">
           <InputBox
+          info="w-full"
             {...register("phoneNumber", {
               required: "Phone Number is required",
               pattern: {
@@ -118,6 +119,7 @@ const ProfileDetails = ({ flag }) => {
           )}
 
           <InputBox
+          info="w-full"
             {...register("location", { required: "Location is required" })}
             placeholder="Location"
           />

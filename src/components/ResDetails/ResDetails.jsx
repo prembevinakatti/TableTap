@@ -87,7 +87,10 @@ const ResDetails = ({ editdata }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const totalRooms = formValues.groups.reduce(
-      (total, group) => (group.includes === "Yes" ? total + parseInt(group.numRooms || 0, 10) : total),
+      (total, group) =>
+        group.includes === "Yes"
+          ? total + parseInt(group.numRooms || 0, 10)
+          : total,
       0
     );
 
@@ -123,27 +126,34 @@ const ResDetails = ({ editdata }) => {
 
   return (
     <div>
-   
       <form onSubmit={handleSubmit}>
         <div className="ResDetails w-full flex flex-col items-center justify-center">
-          <div className="flex items-center gap-2">
-            <p className="text-tertiary font-semibold text-lg">Number Of Rooms For Reservation</p>
+          <div className="xl:flex items-center gap-2 my-3">
+            <p className="text-tertiary font-semibold text-lg">
+              Number Of Rooms For Reservation
+            </p>
             <input
               type="text"
               value={formValues.numberOfRooms}
-              onChange={(e) => setFormValues({ ...formValues, numberOfRooms: e.target.value })}
+              onChange={(e) =>
+                setFormValues({ ...formValues, numberOfRooms: e.target.value })
+              }
               className="border px-3 py-1 rounded-lg"
             />
           </div>
 
           {formValues.groups.map((group, index) => (
             <div key={index}>
-              <div className="flex items-center mt-5 gap-5">
-                <label className="text-tertiary font-semibold text-lg">{group.name}</label>
+              <div className=" flex items-center mt-5 gap-5">
+                <label className="text-tertiary font-semibold text-lg">
+                  {group.name}
+                </label>
                 <div className="flex items-center gap-4">
                   {["Yes", "No"].map((option) => (
                     <div key={option} className="flex items-center gap-2">
-                      <p className="text-tertiary font-semibold text-lg">{option}</p>
+                      <p className="text-tertiary font-semibold text-lg">
+                        {option}
+                      </p>
                       <input
                         type="radio"
                         value={option}
@@ -156,48 +166,58 @@ const ResDetails = ({ editdata }) => {
                 </div>
               </div>
               <div
-                className={`border mt-2 p-3 px-10 rounded
--lg flex gap-20 items-center ${group.includes === "No" ? "opacity-50 pointer-events-none" : ""}`}>
-<div className="flex items-center gap-3">
-<p className="text-tertiary font-semibold">Number Of Rooms</p>
-<input
-type="text"
-value={group.numRooms}
-onChange={(e) => handleChange(e, index, "numRooms")}
-disabled={group.includes === "No"}
-className="border px-3 py-1 rounded-lg"
-/>
-</div>
-<div className="flex items-center gap-3">
-<p className="text-tertiary font-semibold">Number Of Tables</p>
-<input
-type="text"
-value={group.numTables}
-onChange={(e) => handleChange(e, index, "numTables")}
-disabled={group.includes === "No"}
-className="border px-3 py-1 rounded-lg"
-/>
-</div>
-<div className="flex items-center gap-3">
-<p className="text-tertiary font-semibold">Number Of Chairs Per Table</p>
-<input
-type="text"
-value={group.numChairsPerTable}
-onChange={(e) => handleChange(e, index, "numChairsPerTable")}
-disabled={group.includes === "No"}
-className="border px-3 py-1 rounded-lg"
-/>
-</div>
-</div>
-</div>
-))}
-</div>
-<div className="Buttons mt-10 flex items-center justify-center gap-20">
-<Button details="btn-wide" info="Save Changes" />
-</div>
-</form>
-</div>
-);
+                className={`border mt-2  p-3 px-10 rounded-lg lg:flex lg:flex-row flex flex-col lg:gap-20 lg:my-5 gap-5 items-center ${
+                  group.includes === "No"
+                    ? "opacity-50 pointer-events-none"
+                    : ""
+                }`}
+              >
+                <div className="xl:flex items-center gap-3">
+                  <p className="text-tertiary font-semibold">Number Of Rooms</p>
+                  <input
+                    type="text"
+                    value={group.numRooms}
+                    onChange={(e) => handleChange(e, index, "numRooms")}
+                    disabled={group.includes === "No"}
+                    className="border px-3 py-1 rounded-lg"
+                  />
+                </div>
+                <div className="xl:flex items-center gap-3">
+                  <p className="text-tertiary font-semibold">
+                    Number Of Tables
+                  </p>
+                  <input
+                    type="text"
+                    value={group.numTables}
+                    onChange={(e) => handleChange(e, index, "numTables")}
+                    disabled={group.includes === "No"}
+                    className="border px-3 py-1 rounded-lg"
+                  />
+                </div>
+                <div className="xl:flex items-center gap-3">
+                  <p className="text-tertiary font-semibold">
+                    Number Of Chairs Per Table
+                  </p>
+                  <input
+                    type="text"
+                    value={group.numChairsPerTable}
+                    onChange={(e) =>
+                      handleChange(e, index, "numChairsPerTable")
+                    }
+                    disabled={group.includes === "No"}
+                    className="border px-3 py-1 rounded-lg"
+                  />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="Buttons mt-10 flex items-center justify-center gap-20">
+          <Button details="btn-wide" info="Save Changes" />
+        </div>
+      </form>
+    </div>
+  );
 };
 
 export default ResDetails;

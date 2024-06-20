@@ -63,7 +63,7 @@ const AddPhotos = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center border p-10 rounded-lg shadow-lg gap-5 justify-center">
         <div className="ResImg ">
           <div className="w-[60vw] h-[40vh] flex items-center justify-center rounded-xl bg-[#c5c5c5]">
-            <label className="btn btn-wide bg-secondary text-primary border-none">
+            <label className="btn xl:btn-wide bg-secondary text-primary border-none">
               <div className="text-2xl">
                 <FaPlus />
               </div>
@@ -88,7 +88,7 @@ const AddPhotos = () => {
                 />
                 <button
                   type="button"
-                  className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
+                  className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-6 h-6 m-1 flex items-center justify-center"
                   onClick={() => removeRestaurantImage(index)}
                 >
                   x

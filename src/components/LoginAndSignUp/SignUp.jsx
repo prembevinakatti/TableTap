@@ -48,28 +48,31 @@ const SignUp = ({flag}) => {
 
   return (
     <div>
-            <div className='w-full text-6xl text-gray-600 text-center'>{flag===true?"Restorent singup":"User singup"}</div>
-      <div className="ProfilePage w-full flex flex-col items-center">
-        <div className="PageForm border p-10 rounded-lg shadow-lg">
+            <div className='w-full xl:text-4xl text-2xl my-5 text-gray-600 text-center'>{flag===true?"Restaurant Singup":"User Singup"}</div>
+      <div className="ProfilePage xl:w-full  flex flex-col xl:items-center ">
+        <div className="PageForm border p-10 px-20 rounded-lg shadow-lg">
           <h1 className='w-full text-center text-4xl text-primary mb-10'>Sign Up</h1>
           <form onSubmit={handleSubmit(handleSignUp)} className="flex flex-col items-center gap-3">
-            <div>
+            <div className='w-full '>
               <label className="font-semibold text-tertiary">{flag===true?"Restorent Name":"User Name"}</label>
-              <InputBox
+              <InputBox 
+              info="w-full"
                 {...register('restaurantName', { required: 'Restaurant Name is required' })}
               />
               {errors.restaurantName && <p className="text-red-500">{errors.restaurantName.message}</p>}
             </div>
-            <div>
+            <div className='w-full '>
               <label className="font-semibold text-tertiary">Location</label>
-              <InputBox
+              <InputBox 
+              info="w-full"
                 {...register('location', { required: 'Location is required' })}
               />
               {errors.location && <p className="text-red-500">{errors.location.message}</p>}
             </div>
-            <div>
+            <div className='w-full '>
               <label className="font-semibold text-tertiary">Email</label>
-              <InputBox
+              <InputBox 
+              info="w-full"
                 {...register('email', {
                   required: 'Email is required',
                   pattern: {
@@ -80,9 +83,10 @@ const SignUp = ({flag}) => {
               />
               {errors.email && <p className="text-red-500">{errors.email.message}</p>}
             </div>
-            <div>
+            <div className='w-full '>
               <label className="font-semibold text-tertiary">Password</label>
-              <InputBox
+              <InputBox 
+              info="w-full"
                 type="password"
                 {...register('password', {
                   required: 'Password is required',
@@ -94,9 +98,10 @@ const SignUp = ({flag}) => {
               />
               {errors.password && <p className="text-red-500">{errors.password.message}</p>}
             </div>
-            <div>
+            <div className='w-full '>
               <label className="font-semibold text-tertiary">Phone Number</label>
-              <InputBox
+              <InputBox 
+              info="w-full"
                 {...register('phoneNumber', {
                   required: 'Phone Number is required',
                   pattern: {

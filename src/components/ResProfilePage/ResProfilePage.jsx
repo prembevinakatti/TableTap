@@ -25,7 +25,9 @@ const ResProfilePage = () => {
         const profileData = await profileService.getUser(slug);
         if (profileData) {
           setProfileData(profileData);
-          setRoomDetails(JSON.parse(profileData.roomdetaisl || "[]").groups || []);
+          setRoomDetails(
+            JSON.parse(profileData.roomdetaisl || "[]").groups || []
+          );
         } else {
           setRoomDetails([]);
         }
@@ -51,11 +53,11 @@ const ResProfilePage = () => {
   };
 
   const images = JSON.parse(profileData.gropimg || "[]");
-  console.log(images)
+  console.log(images);
 
   return (
     <div>
-      <div className="profilePage flex flex-col items-center justify-center gap-5">
+      <div className="profilePage overflow-x-hidden flex flex-col items-center justify-center gap-5">
         {loading ? (
           <div className="flex flex-col gap-4 w-52">
             <div className="flex gap-4 items-center">
@@ -68,12 +70,14 @@ const ResProfilePage = () => {
             <div className="skeleton h-32 w-full"></div>
           </div>
         ) : (
-          <div className="profile w-[80vw] flex items-center justify-around gap-10 h-[20vw] rounded-lg border mt-5 shadow-md">
+          <div className="profile lg:w-[80vw] lg:flex lg:flex-row flex flex-col items-center justify-around gap-10 lg:h-[20vw] rounded-lg border mt-5  shadow-md">
             <div className="profileImg">
               <img
-                className="w-56 bg-red-500 h-56 rounded-full"
+                className="w-56 h-56 rounded-full"
                 src={
-                  profileService.getFilePreview({fileId: profileData.imageid || ""}) ||
+                  profileService.getFilePreview({
+                    fileId: profileData.imageid || "",
+                  }) ||
                   "https://static.vecteezym/resources/previews/019/776/467/non_2x/user-icon-fake-photo-sign-profile-button-simple-style-social-media-poster-background-symbol-user-brand-logo-design-element-user-t-shirt-printing-for-sticker-free-vector.jpg"
                 }
                 alt="profilephoto"
@@ -81,32 +85,21 @@ const ResProfilePage = () => {
             </div>
             <div className="ResInfo">
               <p className="text-2xl font-semibold m-2 text-secondary">
-                Restaurant Name: {profileData.name||""}
+                Restaurant Name: {profileData.name || ""}
               </p>
               <p className="text-2xl font-semibold m-2 text-secondary">
-                Restaurant Location: {profileData.locaton||""}
+                Restaurant Location: {profileData.locaton || ""}
               </p>
+
               <p className="text-2xl font-semibold m-2 text-secondary">
-                Restaurant Opening: {profileData.opentime||""}
-              </p>
-              <p className="text-2xl font-semibold m-2 text-secondary">
-                Restaurant Closing: {profileData.closetime||""}
-              </p>
-              <p className="text-2xl font-semibold m-2 text-secondary">
-                Restaurant Open Interval: {profileData.openinterval||""}
-              </p>
-              <p className="text-2xl font-semibold m-2 text-secondary">
-                Restaurant Close Interval: {profileData.closeinterval||""}
-              </p>
-              <p className="text-2xl font-semibold m-2 text-secondary">
-                Restaurant Contact: {profileData.phone||""}
+                Restaurant Contact: {profileData.phone || ""}
               </p>
             </div>
           </div>
         )}
-        <div className="flex w-[80vw] items-center justify-between">
-          <Button details="btn-wide" info="Edit Profile" />
-          <Button details="btn-wide" info="Edit Time" />
+        <div className="flex lg:w-[80vw] gap-10 items-center justify-between">
+          <Button details="lg:btn-wide" info="Edit Profile" />
+          <Button details="lg:btn-wide" info="Edit Time" />
         </div>
       </div>
 
@@ -115,13 +108,13 @@ const ResProfilePage = () => {
           Restaurant Images
         </h1>
       </div>
-      <div className="w-full px-20 flex h-[70vh] overflow-hidden flex-col justify-center">
+      <div className="skeleton w-full px-20 flex lg:h-[70vh] overflow-hidden flex-col justify-center">
         <Slider {...settings}>
           {images.map((url, index) => (
-            <div key={index}>
+            <div className="" key={index}>
               <img
                 className="w-full h-full object-cover"
-                src={profileService.getFilePreview({fileId:url})}
+                src={profileService.getFilePreview({ fileId: url })}
                 alt={`Slide ${index + 1}`}
               />
             </div>
@@ -134,18 +127,18 @@ const ResProfilePage = () => {
       </h1>
       <RoomType roomData={roomDetails} loading={loading} error={error} />
 
-      <Button details="btn-wide absolute right-36" info="Edit Table" />
+      <Button details="lg:btn-wide absolute right-36" info="Edit Table" />
 
       <h1 className="w-full text-center text-4xl mt-20 text-tertiary">
         Analytics And Ratings
       </h1>
 
       <div className="Analytics w-full flex mt-5 items-center justify-center">
-        <div className="w-[80vw] flex items-start justify-center p-3 m-3 gap-5 h-[30vw] rounded-lg border mt-5 shadow-md">
-          <div className="analytics w-3/4 rounded-lg shadow-sm h-full flex items-center justify-center border">
+        <div className="w-[80vw] lg:flex lg:flex-row  flex flex-col items-start justify-center p-3 m-3 gap-5 lg:h-[30vw]  rounded-lg border mt-5 shadow-md">
+          <div className="analytics lg:w-3/4 w-full rounded-lg shadow-sm h-[30vh] lg:h-full flex items-center justify-center border">
             <p className="text-4xl font-semibold text-tertiary">Analytics</p>
           </div>
-          <div className="analytics w-1/4 rounded-lg shadow-sm h-full flex flex-col gap-5 items-center justify-center border">
+          <div className="ratings lg:w-1/4 w-full rounded-lg shadow-sm h-full flex flex-col gap-5 items-center justify-center border p-3">
             <p className="text-3xl font-semibold text-tertiary">
               Average Ratings
             </p>
