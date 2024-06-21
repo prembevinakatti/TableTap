@@ -20,7 +20,8 @@ class ProfileServices {
     locaton,
     phone,
     isres,
-    imageid
+    imageid,
+    state="InitiationPhase"
   }) {
     try {
       return await this.databases.createDocument(
@@ -33,7 +34,40 @@ class ProfileServices {
           phone,
           UserId,
           isres,
-          imageid
+          imageid,
+          state
+          
+        }
+      );
+    } catch (error) {
+      console.log("Appwrite service :: createProfile :: error", error);
+      throw error;
+    }
+  }
+
+  async updateprofile({
+    UserId,
+    name,
+    slug,
+    locaton,
+    phone,
+    isres,
+    imageid,
+    state
+  }) {
+    try {
+      return await this.databases.createDocument(
+        conf.databaseid,
+        conf.collectionid,
+        slug,
+        {
+          name,
+          locaton,
+          phone,
+          UserId,
+          isres,
+          imageid,
+          state
           
         }
       );
@@ -45,15 +79,17 @@ class ProfileServices {
 
   async createroomdetails(
    
-    {  slug, roomdetaisl, }
+    {  slug, roomdetaisl, state="createdroom"}
   ) {
     try {
       return await this.databases.updateDocument(
         conf.databaseid,
         conf.collectionid,
         slug,
+        
         {
-            roomdetaisl
+            roomdetaisl,
+            state
         }
       );
     } catch (error) {
@@ -63,15 +99,18 @@ class ProfileServices {
   }
   async updateroomdetails(
    
-    {  slug, roomdetaisl, }
+    {  slug, roomdetaisl,state }
   ) {
     try {
       return await this.databases.updateDocument(
         conf.databaseid,
         conf.collectionid,
         slug,
+
+        
         {
-            roomdetaisl
+            roomdetaisl,
+            state
         }
       );
     } catch (error) {
@@ -81,15 +120,17 @@ class ProfileServices {
   }
   async updategropimges(
    
-    {  slug, gropimg }
+    {  slug, gropimg ,state}
   ) {
     try {
       return await this.databases.updateDocument(
         conf.databaseid,
         conf.collectionid,
         slug,
+
         {
-          gropimg
+          gropimg,
+          state
         }
       );
     } catch (error) {

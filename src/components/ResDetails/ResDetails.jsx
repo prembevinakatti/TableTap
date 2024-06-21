@@ -104,10 +104,13 @@ const ResDetails = ({ editdata }) => {
         const isEdited = await profileService.updateroomdetails({
           slug: editdata.$id,
           roomdetaisl: JSON.stringify(formValues),
+          state:editdata.state
+
+        
         });
         if (isEdited) {
           toast.success("Room details edited successfully");
-          navigate("resroomviewpage");
+          navigate(`/resprofilepage/${editdata.$id}`);
         }
       } else {
         const isProfileCreated = await profileService.createroomdetails({

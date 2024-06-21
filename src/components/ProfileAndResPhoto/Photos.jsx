@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaPlus } from "react-icons/fa6";
+import { FaPlus } from "react-icons/fa";
 import Button from "../Button/Button";
 import profileService from "../../appwrite/profileservices";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const AddPhotos = () => {
-  
+const AddPhotos = ({ edit }) => {
+  console.log(edit);
   const navigate = useNavigate();
   const profileData = useSelector((state) => state.profile.profiledata);
   const [restaurantImagesPreview, setRestaurantImagesPreview] = useState([]);
@@ -25,15 +25,16 @@ const AddPhotos = () => {
           imageIds.push(fileId.$id);
         }
       }
-      console.log(imageIds)
+      console.log(imageIds);
 
       const uploadImgId = await profileService.updategropimges({
         slug: profileData.$id,
         gropimg: JSON.stringify(imageIds),
+        state: edit ? "photouploedphase" : edit?.state || "none",
       });
 
       if (uploadImgId) {
-        navigate('/Resroomsetup');
+        edit ? navigate(`/resprofilepage/${profileData.$id}`) : navigate("/Resroomsetup");
       }
 
       console.log("Uploaded image IDs:", imageIds);
@@ -59,9 +60,9 @@ const AddPhotos = () => {
   };
 
   return (
-    <div className="flex flex-col  m-10 p-5 items-center gap-5 justify-center">
+    <div className="flex flex-col m-10 p-5 items-center gap-5 justify-center">
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center border p-10 rounded-lg shadow-lg gap-5 justify-center">
-        <div className="ResImg ">
+        <div className="ResImg">
           <div className="w-[60vw] h-[40vh] flex items-center justify-center rounded-xl bg-[#c5c5c5]">
             <label className="btn xl:btn-wide bg-secondary text-primary border-none">
               <div className="text-2xl">

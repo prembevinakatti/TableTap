@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { updateProfile } from "../../store/profileslice";
 
-const ProfileDetails = ({ flag }) => {
+const ProfileDetails = ({ flag ,edit }) => {
   const userData = useSelector((state) => state.auth.userData);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -32,31 +32,62 @@ const ProfileDetails = ({ flag }) => {
       }
 
       console.log("Uploading file:", profileImageFile);
-
-      const fileData = await profileService.uploadFile({
-        file: profileImageFile,
-      });
-
-      console.log("File uploaded:", fileData);
-
-      if (fileData) {
-        const createProfile = await profileService.createProfile({
-          imageid: fileData.$id,
-          isres: flag,
-          locaton: data.location,
-          name: userData.name,
-          phone: data.phoneNumber,
-          slug: userData.name,
-          UserId: userData.$id,
+      if (edit){
+        
+        const fileData = await profileService.uploadFile({
+          file: profileImageFile,
         });
-
-        console.log("Profile created:", createProfile);
-
-        if (createProfile) {
-          dispatch(updateProfile({ profiledata: createProfile }));
-          navigate(flag ? "/resphotouploedpage" : "/userhomepage");
+  
+        console.log("File uploaded:", fileData);
+  
+        if (fileData) {
+          const createProfile = await profileService.updateprofile({
+            imageid: fileData.$id,
+            isres: flag,
+            locaton: data.location,
+            name: userData.name,
+            phone: data.phoneNumber,
+            slug: userData.name,
+            UserId: userData.$id,
+            state:edit.state
+          });
+  
+          console.log("Profile updated:", createProfile);
+  
+          if (createProfile) {
+            dispatch(updateProfile({ profiledata: createProfile }));
+            navigate(flag ? `/resprofilepage/${edit.$id}` : `/userhomepage/${edit.$id}`);
+          }
         }
+
+      }else{
+        const fileData = await profileService.uploadFile({
+          file: profileImageFile,
+        });
+  
+        console.log("File uploaded:", fileData);
+  
+        if (fileData) {
+          const createProfile = await profileService.createProfile({
+            imageid: fileData.$id,
+            isres: flag,
+            locaton: data.location,
+            name: userData.name,
+            phone: data.phoneNumber,
+            slug: userData.name,
+            UserId: userData.$id,
+          });
+  
+          console.log("Profile created:", createProfile);
+  
+          if (createProfile) {
+            dispatch(updateProfile({ profiledata: createProfile }));
+            navigate(flag ? "/resphotouploedpage" : "/userhomepage");
+          }
+        }
+
       }
+  
     } catch (error) {
       console.error("Error while creating profile:", error);
     }

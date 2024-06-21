@@ -20,7 +20,7 @@ const ResTiming = () => {
         slug: profiledata.$id,
         startinterval: intervalEnabled ? data.startinterval : "",
         closeinterval: intervalEnabled ? data.closeinterval : "",
-        state:"semicompleted"
+        state:"completed"
       };
      const timeuploded= await profileService.updatetimings(timingData);
      if(timeuploded){

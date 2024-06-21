@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import profileService from "../../appwrite/profileservices";
 
-function Resroomviewpage() {
+function Resroomviewpage({edit}) {
   const navigate = useNavigate();
   const profileData = useSelector((state) => state.profile.profiledata);
   const [roomData, setRoomData] = useState([]);
@@ -48,7 +48,7 @@ function Resroomviewpage() {
         </button>
         <button
           className="btn-wide border border-secondary bg-transparent text-secondary"
-          onClick={() => navigate("/restiming")}
+          onClick={() => edit?navigate(-1):navigate("/restiming")}
         >
           Save Changes
         </button>

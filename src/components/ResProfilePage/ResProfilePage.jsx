@@ -6,7 +6,7 @@ import FooterBtns from "../FooterBtns/FooterBtns";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import profileService from "../../appwrite/profileservices";
 import RoomType from "../RoomType/RoomType";
 
@@ -16,6 +16,7 @@ const ResProfilePage = () => {
   const [roomDetails, setRoomDetails] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getCurrentUser = async () => {
@@ -53,10 +54,10 @@ const ResProfilePage = () => {
   };
 
   const images = JSON.parse(profileData.gropimg || "[]");
-  console.log(images);
 
   return (
     <div>
+   
       <div className="profilePage overflow-x-hidden flex flex-col items-center justify-center gap-5">
         {loading ? (
           <div className="flex flex-col gap-4 w-52">
@@ -70,7 +71,7 @@ const ResProfilePage = () => {
             <div className="skeleton h-32 w-full"></div>
           </div>
         ) : (
-          <div className="profile lg:w-[80vw] lg:flex lg:flex-row flex flex-col items-center justify-around gap-10 lg:h-[20vw] rounded-lg border mt-5  shadow-md">
+          <div className="profile lg:w-[80vw] lg:flex lg:flex-row flex flex-col items-center justify-around gap-10 lg:h-[20vw] rounded-lg border mt-5 shadow-md">
             <div className="profileImg">
               <img
                 className="w-56 h-56 rounded-full"
@@ -78,7 +79,7 @@ const ResProfilePage = () => {
                   profileService.getFilePreview({
                     fileId: profileData.imageid || "",
                   }) ||
-                  "https://static.vecteezym/resources/previews/019/776/467/non_2x/user-icon-fake-photo-sign-profile-button-simple-style-social-media-poster-background-symbol-user-brand-logo-design-element-user-t-shirt-printing-for-sticker-free-vector.jpg"
+                  "https://static.vecteezy.com/resources/previews/019/776/467/non_2x/user-icon-fake-photo-sign-profile-button-simple-style-social-media-poster-background-symbol-user-brand-logo-design-element-user-t-shirt-printing-for-sticker-free-vector.jpg"
                 }
                 alt="profilephoto"
               />
@@ -90,7 +91,6 @@ const ResProfilePage = () => {
               <p className="text-2xl font-semibold m-2 text-secondary">
                 Restaurant Location: {profileData.locaton || ""}
               </p>
-
               <p className="text-2xl font-semibold m-2 text-secondary">
                 Restaurant Contact: {profileData.phone || ""}
               </p>
@@ -98,8 +98,16 @@ const ResProfilePage = () => {
           </div>
         )}
         <div className="flex lg:w-[80vw] gap-10 items-center justify-between">
-          <Button details="lg:btn-wide" info="Edit Profile" />
-          <Button details="lg:btn-wide" info="Edit Time" />
+          <Button
+            details="lg:btn-wide"
+            info="Edit Profile"
+            onClick={() => navigate(`/resprofileedit`)}
+          />
+          <Button
+            details="lg:btn-wide"
+            info="Edit Time"
+            onClick={() => navigate(`/restiming`)}
+          />
         </div>
       </div>
 
@@ -111,7 +119,7 @@ const ResProfilePage = () => {
       <div className="skeleton w-full px-20 flex lg:h-[70vh] overflow-hidden flex-col justify-center">
         <Slider {...settings}>
           {images.map((url, index) => (
-            <div className="" key={index}>
+            <div key={index}>
               <img
                 className="w-full h-full object-cover"
                 src={profileService.getFilePreview({ fileId: url })}
@@ -127,14 +135,18 @@ const ResProfilePage = () => {
       </h1>
       <RoomType roomData={roomDetails} loading={loading} error={error} />
 
-      <Button details="lg:btn-wide absolute right-36" info="Edit Table" />
+      <Button
+        details="lg:btn-wide absolute right-36"
+        info="Edit Table"
+        onClick={() => navigate(`/resroomedit/${slug}`)}
+      />
 
       <h1 className="w-full text-center text-4xl mt-20 text-tertiary">
         Analytics And Ratings
       </h1>
 
       <div className="Analytics w-full flex mt-5 items-center justify-center">
-        <div className="w-[80vw] lg:flex lg:flex-row  flex flex-col items-start justify-center p-3 m-3 gap-5 lg:h-[30vw]  rounded-lg border mt-5 shadow-md">
+        <div className="w-[80vw] lg:flex lg:flex-row flex flex-col items-start justify-center p-3 m-3 gap-5 lg:h-[30vw] rounded-lg border mt-5 shadow-md">
           <div className="analytics lg:w-3/4 w-full rounded-lg shadow-sm h-[30vh] lg:h-full flex items-center justify-center border">
             <p className="text-4xl font-semibold text-tertiary">Analytics</p>
           </div>

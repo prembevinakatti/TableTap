@@ -24,6 +24,8 @@ import Resphotouploed from './pages/restorent/Resphotouploed.jsx'
 import Resroomviewpage from './pages/restorent/Resroomviewpage.jsx'
 import ResTiming from './components/ResTiming/ResTiming.jsx'
 import ResProfilePage from './components/ResProfilePage/ResProfilePage.jsx'
+import Resprofileedit from './pages/restorent/Resprofileedit.jsx'
+import Resroomedit from './pages/restorent/Resroomedit.jsx'
 const router=createBrowserRouter(
   createRoutesFromElements(
      <Route path='/' element={<App/>}>
@@ -37,6 +39,8 @@ const router=createBrowserRouter(
       <Route path='/restiming' element={<ResTiming/>}/>
       <Route path='/resprofilepage/:slug' element={<ResProfilePage/>}/>
       <Route path='/resroomsetup' element={<Resroomsetup/>}/>
+      <Route path='/resprofileedit' element={<Resprofileedit/>}/>
+      <Route path='/resresroomedit' element={<Resroomedit/>}/>
       <Route path='/bookings' element={<UserBookingPage/>}/>
     </Route>
   )
