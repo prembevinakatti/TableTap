@@ -72,17 +72,17 @@ const RoomType = ({ roomData, loading, error }) => {
                         <div className="table-top w-full h-full bg-gray-300 rounded-lg flex items-center justify-center">
                           Table {tableIndex + 1}
                         </div>
-                        <div className="chairs absolute top-0 left-1/2 transform -translate-x-1/2 flex justify-between items-center gap-2">
-                          <div className="flex flex-col items-center justify-center gap-2">
+                        <div className="chairs absolute top-8  left-1/2 transform -translate-x-1/2 flex justify-between items-center gap-10">
+                          <div className="flex  flex-col items-center justify-center gap-5">
                             {[...Array(Math.ceil(numChairsPerTable / 2))].map((_, chairIndex) => (
-                              <div key={chairIndex} className="chair w-8 h-8 border border-black rounded-lg">
+                              <div key={chairIndex} className="chair w-fit h-fit p-2 border border-black rounded-lg">
                                 {subgroup.name.split(" ")[2][0] + selectedRoom + (tableIndex + 1) + (chairIndex + 1)}
                               </div>
                             ))}
                           </div>
-                          <div className="flex flex-col items-center justify-center gap-2">
+                          <div className="flex flex-col items-center justify-center gap-5">
                             {[...Array(Math.floor(numChairsPerTable / 2))].map((_, chairIndex) => (
-                              <div key={chairIndex} className="chair w-8 h-8 border border-black rounded-lg">
+                              <div key={chairIndex} className="chair w-fit h-fit p-2 border border-black rounded-lg">
                                 {subgroup.name.split(" ")[2][0] + selectedRoom + (tableIndex + 1) + (Math.ceil(numChairsPerTable / 2) + chairIndex + 1)}
                               </div>
                             ))}

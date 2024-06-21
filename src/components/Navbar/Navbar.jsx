@@ -17,7 +17,7 @@ const Navbar = () => {
         <h1>Logo</h1>
         <div>
           {profiledata && profiledata.state !== "incomplete" ? (
-            <div className="drawer drawer-end">
+            <div className="drawer z-30 drawer-end">
               <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
               <div className="drawer-content">
                 <label

@@ -11,7 +11,7 @@ const FooterBtns = (props) => {
   }
 
   return (
-    <div className="absolute w-full bottom-0 border-t flex items-center justify-between p-3 border-primary">
+    <div className="fixed w-full bottom-0 border-t flex items-center justify-between p-3 bg-white border-primary">
       <Button details="xl:btn-wide" info="Reservations" />
       <Button details="xl:btn-wide" info="Payments" />
       <Button details="xl:btn-wide" info="Profile" />
