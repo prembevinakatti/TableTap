@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { updateProfile } from "../../store/profileslice";
 
-const ProfileDetails = ({ flag ,edit }) => {
+const ProfileDetails = ({ flag, edit }) => {
   const userData = useSelector((state) => state.auth.userData);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -32,114 +32,75 @@ const ProfileDetails = ({ flag ,edit }) => {
       }
 
       console.log("Uploading file:", profileImageFile);
-      if (edit){
-        
-        const fileData = await profileService.uploadFile({
-          file: profileImageFile,
-        });
-  
-        console.log("File uploaded:", fileData);
-  
-        if (fileData) {
-        if (flag===true){
-          const createProfile = await profileService.updateprofile({
-            imageid: fileData.$id,
-            isres: flag,
-            locaton: data.location,
-            name: userData.name,
-            phone: data.phoneNumber,
-            slug: userData.name,
-            UserId: userData.$id,
-            state:edit.state
-          });
-  
-          console.log("Profile updated:", createProfile);
-  
-          if (createProfile) {
-            dispatch(updateProfile({ profiledata: createProfile }));
-            navigate(`/resprofilepage/${edit.$id}`);
+      const fileData = await profileService.uploadFile({
+        file: profileImageFile,
+      });
+
+      console.log("File uploaded:", fileData);
+
+      if (fileData) {
+        let createOrUpdateProfile;
+        if (edit) {
+          if (flag === true) {
+            createOrUpdateProfile = await profileService.updateprofile({
+              imageid: fileData.$id,
+              isres: flag,
+              locaton: data.locaton,
+              name: userData.name,
+              phone: data.phoneNumber,
+              slug: userData.name,
+              UserId: userData.$id,
+              state: edit.state,
+            });
+          } else {
+            createOrUpdateProfile = await profileService.updateuserProfile({
+              imageid: fileData.$id,
+              isres: flag,
+              locaton: data.locaton,
+              name: userData.name,
+              phone: data.phoneNumber,
+              slug: userData.name,
+              UserId: userData.$id,
+              state: edit.state,
+            });
           }
-        }else{
-          const createProfile = await profileService.updateuserProfile({
-            imageid: fileData.$id,
-            isres: flag,
-            locaton: data.location,
-            name: userData.name,
-            phone: data.phoneNumber,
-            slug: userData.name,
-            UserId: userData.$id,
-            state:edit.state
-          });
-  
-          console.log("Profile updated:", createProfile);
-  
-          if (createProfile) {
-            dispatch(updateProfile({ profiledata: createProfile }));
-            navigate(`/userhomepage/${edit.$id}`);
-          }
-
-
-
-        }
-        }
-
-      }else{
-       if(flag===true){
-        const fileData = await profileService.uploadFile({
-          file: profileImageFile,
-        });
-  
-        console.log("File uploaded:", fileData);
-  
-        if (fileData) {
-          const createProfile = await profileService.createProfile({
-            imageid: fileData.$id,
-            isres: flag,
-            locaton: data.location,
-            name: userData.name,
-            phone: data.phoneNumber,
-            slug: userData.name,
-            UserId: userData.$id,
-          });
-  
-          console.log("Profile created:", createProfile);
-  
-          if (createProfile) {
-            dispatch(updateProfile({ profiledata: createProfile }));
-            navigate( "/resphotouploedpage");
+        } else {
+          if (flag === true) {
+            createOrUpdateProfile = await profileService.createProfile({
+              imageid: fileData.$id,
+              isres: flag,
+              locaton: data.locaton,
+              name: userData.name,
+              phone: data.phoneNumber,
+              slug: userData.name,
+              UserId: userData.$id,
+            });
+          } else {
+            createOrUpdateProfile = await profileService.createuserProfile({
+              imageid: fileData.$id,
+              isres: flag,
+              locaton: data.locaton,
+              name: userData.name,
+              phone: data.phoneNumber,
+              slug: userData.name,
+              UserId: userData.$id,
+            });
           }
         }
-       }else{
-        const fileData = await profileService.uploadFile({
-          file: profileImageFile,
-        });
-  
-        console.log("File uploaded:", fileData);
-  
-        if (fileData) {
-          const createProfile = await profileService.createuserProfile({
-            imageid: fileData.$id,
-            isres: flag,
-            locaton: data.location,
-            name: userData.name,
-            phone: data.phoneNumber,
-            slug: userData.name,
-            UserId: userData.$id,
-          });
-  
-          console.log("Profile created:", createProfile);
-  
-          if (createProfile) {
-            dispatch(updateProfile({ profiledata: createProfile }));
-            navigate(`/userhomepage${createProfile.$id}`);
+
+        console.log("Profile created/updated:", createOrUpdateProfile);
+
+        if (createOrUpdateProfile) {
+          dispatch(updateProfile({ profiledata: createOrUpdateProfile }));
+          if (edit) {
+            navigate(flag ? `/resprofilepage/${edit.$id}` : `/userhomepage/${edit.$id}`);
+          } else {
+            navigate(flag ? "/resphotouploedpage" : `/userprofilepage/${createOrUpdateProfile.$id}`);
           }
         }
-       }
-
       }
-  
     } catch (error) {
-      console.error("Error while creating profile:", error);
+      console.error("Error while creating/updating profile:", error);
     }
   };
 
@@ -155,7 +116,7 @@ const ProfileDetails = ({ flag ,edit }) => {
 
   return (
     <div className="flex flex-col items-center gap-5 justify-center">
-      <div className="w-full  xl:text-4xl text-2xl mt-2 text-gray-600 text-center">
+      <div className="w-full xl:text-4xl text-2xl mt-2 text-gray-600 text-center">
         {flag ? "Restaurant Profile Create" : "User Profile Create"}
       </div>
       <form
@@ -163,7 +124,7 @@ const ProfileDetails = ({ flag ,edit }) => {
         className="flex px-16 py-28 md:w-fit md:p-32 flex-col items-center gap-10 border shadow-lg rounded-lg justify-center"
       >
         <div>
-          <div className="profileImg ">
+          <div className="profileImg">
             <div className="relative flex flex-col items-center">
               <img
                 className="w-52 h-52 rounded-full overflow-hidden"
@@ -183,9 +144,9 @@ const ProfileDetails = ({ flag ,edit }) => {
           </div>
         </div>
 
-        <div className="w-full flex flex-col gap-5 ">
+        <div className="w-full flex flex-col gap-5">
           <InputBox
-          info="w-full"
+            info="w-full"
             {...register("phoneNumber", {
               required: "Phone Number is required",
               pattern: {
@@ -200,8 +161,8 @@ const ProfileDetails = ({ flag ,edit }) => {
           )}
 
           <InputBox
-          info="w-full"
-            {...register("location", { required: "Location is required" })}
+            info="w-full"
+            {...register("locaton", { required: "Location is required" })}
             placeholder="Location"
           />
           {errors.location && (

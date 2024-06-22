@@ -222,6 +222,42 @@ class ProfileServices {
       throw error;
     }
   }
+  async updatebankdetails(
+   
+    {  slug, bankdetails}
+  ) {
+    try {
+      return await this.databases.updateDocument(
+        conf.databaseid,
+        conf.collectionid,
+        slug,
+        {
+          bankdetails
+        }
+      );
+    } catch (error) {
+      console.log("Appwrite service :: updateProfile :: error", error);
+      throw error;
+    }
+  }
+  async updatestatus(
+   
+    {  slug, isopen}
+  ) {
+    try {
+      return await this.databases.updateDocument(
+        conf.databaseid,
+        conf.collectionid,
+        slug,
+        {
+          isopen
+        }
+      );
+    } catch (error) {
+      console.log("Appwrite service :: updateProfile :: error", error);
+      throw error;
+    }
+  }
 
   async getUser(slug) {
     try {
