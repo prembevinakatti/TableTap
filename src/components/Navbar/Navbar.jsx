@@ -46,6 +46,9 @@ const Navbar = () => {
                   <div>
                     <Button details="btn-wide" info="Logout" />
                   </div>
+                  <div>
+                    <Button details="btn-wide" info="Logout" />
+                  </div>
                 </ul>
               </div>
             </div>

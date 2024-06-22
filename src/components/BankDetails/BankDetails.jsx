@@ -20,14 +20,9 @@ export const BankDetails = () => {
             >
               <InputBox info="w-[95vw] md:w-[50vw] lg:w-[40vw]" placeholder="Enter Your Name" />
               <InputBox info="w-[95vw] md:w-[50vw] lg:w-[40vw]" placeholder="Enter Bank Name" />
+              <InputBox info="w-[95vw] md:w-[50vw] lg:w-[40vw]" placeholder="Enter Account  Number" />
               <InputBox info="w-[95vw] md:w-[50vw] lg:w-[40vw]" placeholder="Enter Branch Name" />
               <InputBox info="w-[95vw] md:w-[50vw] lg:w-[40vw]" placeholder="Enter IFSC CODE" />
-              <InputBox info="w-[95vw] md:w-[50vw] lg:w-[40vw]" type="password" placeholder="Enter CARD Number" />
-              <div className="flex items-center gap-2">
-                <InputBox info="xl:w-[8vw] " placeholder="CVC" />
-                <InputBox info="xl:w-[8vw] " placeholder="MM/YY" />
-              </div>
-
               <Button details="btn-wide mt-4" info="Save" />
             </form>
           </div>
