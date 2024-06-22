@@ -1,4 +1,5 @@
 import React from 'react'
+import Otpverify from '../../components/LoginAndSignUp/otpverification'
 
 function Userverification() {
   return (
