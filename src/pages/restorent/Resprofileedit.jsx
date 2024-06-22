@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ProfileDetails from '../../components/profilecreat/Profilecreat';
 import profileService from '../../appwrite/profileservices' // Assuming you have this service
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function Resprofileedit() {
     const oldprofiledata = useSelector((state) => state.profile.profiledata);

@@ -138,7 +138,7 @@ const ResProfilePage = () => {
       <Button
         details="lg:btn-wide absolute right-36"
         info="Edit Table"
-        onClick={() => navigate(`/resroomedit/${slug}`)}
+        onClick={() => navigate(`/resresroomedit`)}
       />
 
       <h1 className="w-full text-center text-4xl mt-20 text-tertiary">
