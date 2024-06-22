@@ -26,6 +26,7 @@ import ResTiming from './components/ResTiming/ResTiming.jsx'
 import ResProfilePage from './components/ResProfilePage/ResProfilePage.jsx'
 import Resprofileedit from './pages/restorent/Resprofileedit.jsx'
 import Resroomedit from './pages/restorent/Resroomedit.jsx'
+import { BankDetails } from './components/BankDetails/BankDetails.jsx'
 const router=createBrowserRouter(
   createRoutesFromElements(
      <Route path='/' element={<App/>}>
@@ -42,6 +43,7 @@ const router=createBrowserRouter(
       <Route path='/resprofileedit' element={<Resprofileedit/>}/>
       <Route path='/resresroomedit' element={<Resroomedit/>}/>
       <Route path='/bookings' element={<UserBookingPage/>}/>
+      <Route path='/bankDetails' element={<BankDetails/>}/>
     </Route>
   )
  
