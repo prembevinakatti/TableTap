@@ -12,11 +12,15 @@ const Login = ({flag}) => {
   const navigate=useNavigate()
   async function handleLogin(data){
     try {
+    
       const userData= await authService.login({email:data.email,password:data.password})
       if(userData.emailVerification == true){
         dispatch(varifed({ userData: userData }));
         if(flag===true){
-          navigate('/reshomepage')
+          navigate(`resprofilepage/${userData.name}`)
+        }
+        else{
+          navigate(`resprofilepage/${userData.name}`)
         }
       }
       else{

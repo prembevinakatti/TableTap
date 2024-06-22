@@ -44,6 +44,68 @@ class ProfileServices {
       throw error;
     }
   }
+  async createuserProfile({
+    UserId,
+    name,
+    slug,
+    locaton,
+    phone,
+    isres,
+    imageid,
+    state="completed"
+  }) {
+    try {
+      return await this.databases.createDocument(
+        conf.databaseid,
+        conf.collectionid2,
+        slug,
+        {
+          name,
+          locaton,
+          phone,
+          UserId,
+          isres,
+          imageid,
+          state
+          
+        }
+      );
+    } catch (error) {
+      console.log("Appwrite service :: createProfile :: error", error);
+      throw error;
+    }
+  }
+  async updateuserProfile({
+    UserId,
+    name,
+    slug,
+    locaton,
+    phone,
+    isres,
+    imageid,
+    state
+  }) {
+    try {
+      return await this.databases.updateDocument(
+        conf.databaseid,
+        conf.collectionid2,
+        slug,
+        {
+          name,
+          locaton,
+          phone,
+          UserId,
+          isres,
+          imageid,
+          state
+          
+        }
+      );
+    } catch (error) {
+      console.log("Appwrite service :: createProfile :: error", error);
+      throw error;
+    }
+  }
 
   async updateprofile({
     UserId,
@@ -140,7 +202,7 @@ class ProfileServices {
   }
   async updatetimings(
    
-    {  slug, opentime,closetime, startinterval,closeinterval}
+    {  slug, opentime,closetime, startinterval,closeinterval,state}
   ) {
     try {
       return await this.databases.updateDocument(
@@ -151,7 +213,8 @@ class ProfileServices {
           opentime,
           closetime,
           startinterval,
-          closeinterval
+          closeinterval,
+          state
         }
       );
     } catch (error) {
@@ -165,6 +228,18 @@ class ProfileServices {
       return await this.databases.getDocument(
         conf.databaseid,
         conf.collectionid,
+        slug
+      );
+    } catch (error) {
+      console.log("Appwrite service :: getUser :: error", error);
+      throw error;
+    }
+  }
+  async getuseruser(slug) {
+    try {
+      return await this.databases.getDocument(
+        conf.databaseid,
+        conf.collectionid2,
         slug
       );
     } catch (error) {

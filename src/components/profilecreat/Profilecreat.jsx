@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { updateProfile } from "../../store/profileslice";
 
-const ProfileDetails = ({ flag ,edit }) => {
+const ProfileDetails = ({ flag, edit }) => {
   const userData = useSelector((state) => state.auth.userData);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -22,77 +22,6 @@ const ProfileDetails = ({ flag ,edit }) => {
   const [profileImagePreview, setProfileImagePreview] = useState(null);
   const [profileImageFile, setProfileImageFile] = useState(null);
 
-  const onSubmit = async (data) => {
-    try {
-      console.log("Profile Data:", data);
-
-      if (!profileImageFile) {
-        console.error("Profile image file is missing.");
-        throw new Error("Profile image file is required.");
-      }
-
-      console.log("Uploading file:", profileImageFile);
-      if (edit){
-        
-        const fileData = await profileService.uploadFile({
-          file: profileImageFile,
-        });
-  
-        console.log("File uploaded:", fileData);
-  
-        if (fileData) {
-          const createProfile = await profileService.updateprofile({
-            imageid: fileData.$id,
-            isres: flag,
-            locaton: data.location,
-            name: userData.name,
-            phone: data.phoneNumber,
-            slug: userData.name,
-            UserId: userData.$id,
-            state:edit.state
-          });
-  
-          console.log("Profile updated:", createProfile);
-  
-          if (createProfile) {
-            dispatch(updateProfile({ profiledata: createProfile }));
-            navigate(flag ? `/resprofilepage/${edit.$id}` : `/userhomepage/${edit.$id}`);
-          }
-        }
-
-      }else{
-        const fileData = await profileService.uploadFile({
-          file: profileImageFile,
-        });
-  
-        console.log("File uploaded:", fileData);
-  
-        if (fileData) {
-          const createProfile = await profileService.createProfile({
-            imageid: fileData.$id,
-            isres: flag,
-            locaton: data.location,
-            name: userData.name,
-            phone: data.phoneNumber,
-            slug: userData.name,
-            UserId: userData.$id,
-          });
-  
-          console.log("Profile created:", createProfile);
-  
-          if (createProfile) {
-            dispatch(updateProfile({ profiledata: createProfile }));
-            navigate(flag ? "/resphotouploedpage" : "/userhomepage");
-          }
-        }
-
-      }
-  
-    } catch (error) {
-      console.error("Error while creating profile:", error);
-    }
-  };
-
   const handleProfileImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -103,9 +32,50 @@ const ProfileDetails = ({ flag ,edit }) => {
     }
   };
 
+  const handleProfileUpdate = async (fileData, data) => {
+    const profileDetails = {
+      imageid: fileData.$id,
+      isres: flag,
+      locaton: data.location,
+      name: userData.name,
+      phone: data.phoneNumber,
+      slug: userData.name,
+      UserId: userData.$id,
+    };
+
+    try {
+      const createProfile = edit
+        ? await profileService.updateprofile({ ...profileDetails, state: edit.state })
+        : await profileService.createProfile(profileDetails);
+
+      if (createProfile) {
+        dispatch(updateProfile({ profiledata: createProfile }));
+        navigate(flag ? "/resphotouploedpage" : `/userprofilepage/${createProfile.$id}`);
+      }
+    } catch (error) {
+      console.error("Error while creating/updating profile:", error);
+    }
+  };
+
+  const onSubmit = async (data) => {
+    if (!profileImageFile) {
+      console.error("Profile image file is missing.");
+      return;
+    }
+
+    try {
+      const fileData = await profileService.uploadFile({ file: profileImageFile });
+      if (fileData) {
+        handleProfileUpdate(fileData, data);
+      }
+    } catch (error) {
+      console.error("Error while uploading profile image:", error);
+    }
+  };
+
   return (
     <div className="flex flex-col items-center gap-5 justify-center">
-      <div className="w-full  xl:text-4xl text-2xl mt-2 text-gray-600 text-center">
+      <div className="w-full xl:text-4xl text-2xl mt-2 text-gray-600 text-center">
         {flag ? "Restaurant Profile Create" : "User Profile Create"}
       </div>
       <form
@@ -113,7 +83,7 @@ const ProfileDetails = ({ flag ,edit }) => {
         className="flex px-16 py-28 md:w-fit md:p-32 flex-col items-center gap-10 border shadow-lg rounded-lg justify-center"
       >
         <div>
-          <div className="profileImg ">
+          <div className="profileImg">
             <div className="relative flex flex-col items-center">
               <img
                 className="w-52 h-52 rounded-full overflow-hidden"
@@ -133,9 +103,9 @@ const ProfileDetails = ({ flag ,edit }) => {
           </div>
         </div>
 
-        <div className="w-full flex flex-col gap-5 ">
+        <div className="w-full flex flex-col gap-5">
           <InputBox
-          info="w-full"
+            info="w-full"
             {...register("phoneNumber", {
               required: "Phone Number is required",
               pattern: {
@@ -145,18 +115,14 @@ const ProfileDetails = ({ flag ,edit }) => {
             })}
             placeholder="Phone Number"
           />
-          {errors.phoneNumber && (
-            <p className="text-red-500">{errors.phoneNumber.message}</p>
-          )}
+          {errors.phoneNumber && <p className="text-red-500">{errors.phoneNumber.message}</p>}
 
           <InputBox
-          info="w-full"
+            info="w-full"
             {...register("location", { required: "Location is required" })}
             placeholder="Location"
           />
-          {errors.location && (
-            <p className="text-red-500">{errors.location.message}</p>
-          )}
+          {errors.location && <p className="text-red-500">{errors.location.message}</p>}
         </div>
 
         <div className="Buttons w-full mt-1 flex items-center justify-evenly">

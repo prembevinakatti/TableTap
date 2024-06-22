@@ -53,7 +53,7 @@ function Otpverify({flag}) {
           navigate('/resprofilecreatepage')
         }
         else{
-          navigate('/userhomepage')
+          navigate('/userprofilecreatepage')
         }
         
       }

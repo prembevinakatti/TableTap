@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import ProfileNav from '../ProfileNav/ProfileNav';
 import { useForm } from 'react-hook-form';
 import InputBox from '../InputBox/InputBox';
 import Button from '../Button/Button';
@@ -8,7 +7,7 @@ import authService from '../../appwrite/authservices';
 import { useDispatch } from 'react-redux';
 import { login } from '../../store/authslice';
 import { useNavigate } from 'react-router-dom';
-import { Flag } from 'appwrite';
+
 
 const SignUp = ({flag}) => {
  
@@ -17,6 +16,13 @@ const SignUp = ({flag}) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const convertSlug = (slug) => {
+    if(flag==false){
+      return  slug.toLowerCase()
+     .replace(/[^a-z0-9]+/g, '-')
+     .replace(/^-+|-+$/g, '')
+     .concat("-user")
+     
+    }
     return slug
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
@@ -39,7 +45,12 @@ const SignUp = ({flag}) => {
       if (signUpData) {
         console.log(signUpData);
         dispatch(login({ userData: signUpData }));
-        navigate('/Resverification');
+          if(flag==true){
+            navigate('/Resverification');
+          }
+          else{
+            navigate('/userverification');
+          }
       }
     } catch (error) {
       console.error('Error during signup:', error);

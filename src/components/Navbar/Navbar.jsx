@@ -2,11 +2,12 @@ import React from "react";
 import { IoMdMenu } from "react-icons/io";
 import Button from "../Button/Button";
 import { useSelector } from "react-redux";
+import Logout from "../others/logout";
 
 const Navbar = () => {
   const verified = useSelector((state) => state.auth.verified);
   const profiledata = useSelector((state) => state.profile.profiledata);
-
+  console.log(profiledata)
   if (!verified) {
     return null;
   }
@@ -16,7 +17,7 @@ const Navbar = () => {
       <div className="navbar border-b border-primary px-3 p-2 flex items-center justify-between">
         <h1>Logo</h1>
         <div>
-          {profiledata && profiledata.state !== "incomplete" ? (
+          {profiledata && profiledata.state === "completed" ? (
             <div className="drawer z-30 drawer-end">
               <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
               <div className="drawer-content">
@@ -44,7 +45,7 @@ const Navbar = () => {
                     Close
                   </div>
                   <div>
-                    <Button details="btn-wide" info="Logout" />
+                    <Logout/>
                   </div>
                 </ul>
               </div>

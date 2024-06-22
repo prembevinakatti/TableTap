@@ -22,6 +22,7 @@ const UserHomePage = () => {
               <option>Mumbai</option>
               <option>Channai</option>
               <option>Maisur</option>
+              <option>Laxmeshwar</option>
             </select>
           </div>
           <div className="btn w-44 bg-primary text-secondary">
