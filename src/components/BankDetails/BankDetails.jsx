@@ -23,6 +23,7 @@ export const BankDetails = () => {
           navigate(-1)
         }
     }
+    updatedetails()
 
   };
 

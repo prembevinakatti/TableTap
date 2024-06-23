@@ -22,6 +22,7 @@ const ResDetails = ({ editdata }) => {
         numRooms: "",
         numTables: "",
         numChairsPerTable: "",
+        pricePerChair: "",
       },
       {
         name: "Room Includes Normal Room",
@@ -29,6 +30,7 @@ const ResDetails = ({ editdata }) => {
         numRooms: "",
         numTables: "",
         numChairsPerTable: "",
+        pricePerChair: "",
       },
       {
         name: "Room Includes Party Room",
@@ -36,6 +38,7 @@ const ResDetails = ({ editdata }) => {
         numRooms: "",
         numTables: "",
         numChairsPerTable: "",
+        pricePerChair: "",
       },
       {
         name: "Room Include Custom Room",
@@ -43,6 +46,7 @@ const ResDetails = ({ editdata }) => {
         numRooms: "",
         numTables: "",
         numChairsPerTable: "",
+        pricePerChair: "",
       },
     ],
   };
@@ -76,7 +80,7 @@ const ResDetails = ({ editdata }) => {
           ...group,
           [key]: value,
           ...(key === "includes" && value === "No"
-            ? { numRooms: "", numTables: "", numChairsPerTable: "" }
+            ? { numRooms: "", numTables: "", numChairsPerTable: "", pricePerChair: "" }
             : {}),
         };
       });
@@ -171,7 +175,7 @@ const ResDetails = ({ editdata }) => {
                   </div>
                 </div>
                 <div
-                  className={`border mt-2  p-3 px-10 rounded-lg lg:flex lg:flex-row flex flex-col lg:gap-20 lg:my-5 gap-5 items-center ${
+                  className={`border mt-2 p-3 px-10 rounded-lg lg:flex lg:flex-row flex flex-col lg:gap-20 lg:my-5 gap-5 items-center ${
                     group.includes === "No"
                       ? "opacity-50 pointer-events-none"
                       : ""
@@ -211,6 +215,18 @@ const ResDetails = ({ editdata }) => {
                       onChange={(e) =>
                         handleChange(e, index, "numChairsPerTable")
                       }
+                      disabled={group.includes === "No"}
+                      className="border px-3 py-1 rounded-lg"
+                    />
+                  </div>
+                  <div className="xl:flex items-center gap-3">
+                    <p className="text-tertiary font-semibold">
+                      Price Per Chair
+                    </p>
+                    <input
+                      type="text"
+                      value={group.pricePerChair}
+                      onChange={(e) => handleChange(e, index, "pricePerChair")}
                       disabled={group.includes === "No"}
                       className="border px-3 py-1 rounded-lg"
                     />
