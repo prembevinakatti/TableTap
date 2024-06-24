@@ -25,21 +25,30 @@ function Userprofilepage() {
   }, [slug]);
 
   if (loading) {
-    return <div>Loading...</div>; // Show a loading indicator while fetching data
+    return <div>Loading...</div>; 
   }
 
   if (!profileData) {
-    return <div>No profile data found.</div>; // Show a message if no profile data is found
+    return <div>No profile data found.</div>; 
   }
 
-  const profileImageUrl = profileService.getFilePreview(profileData.imageid) || "https://imgs.search.brave.com/jLTwrBSRPcoyhBJs1uPbMl500isS1N2O0JlI3BLUQoY/rs:fit:500:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJzLmNvbS9p/bWFnZXMvZmVhdHVy/ZWQtbHdpbmRvd3Mtc2FtcGxlLWltYWdlLmpwZw";
+
 
   return (
     <div>
       <div className="userProfile w-full h-full p-3">
         <div className="w-full xl:h-[75vh] h-[80vh] border rounded-lg flex flex-col items-center justify-center gap-10 shadow">
           <div className="userProfileImg xl:w-[15vw] w-36 rounded-full mt-5 overflow-hidden">
-            <img src={profileImageUrl} alt="Profile" />
+          <img
+                className="w-56 h-56 rounded-full"
+                src={
+                  profileService.getFilePreview({
+                    fileId: profileData.imageid || "",
+                  }) ||
+                  "https://static.vecteezy.com/resources/previews/019/776/467/non_2x/user-icon-fake-photo-sign-profile-button-simple-style-social-media-poster-background-symbol-user-brand-logo-design-element-user-t-shirt-printing-for-sticker-free-vector.jpg"
+                }
+                alt="profilephoto"
+              />
           </div>
           <div className="profileContent w-full flex flex-col items-center gap-5 lg:h-[40vh] xl:h-[40vh]">
             <div className="flex items-center gap-5">

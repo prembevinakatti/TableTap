@@ -16,6 +16,7 @@ const ResProfilePage = () => {
   const [roomDetails, setRoomDetails] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isopen,setisopen]=useState(false)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,6 +30,9 @@ const ResProfilePage = () => {
           setRoomDetails(
             JSON.parse(profileData.roomdetaisl || "[]").groups || []
           );
+          if (profileData.isopen===true){
+            setisopen(true)
+          }
         } else {
           setRoomDetails([]);
         }
@@ -42,7 +46,18 @@ const ResProfilePage = () => {
 
     getCurrentUser();
   }, [slug]);
-
+  const handleIsOpen = async (e) => {
+    try {
+      const newStatus = e.target.checked;
+      const updatedData = await profileService.updatestatus({
+        isopen: newStatus,
+        slug: profileData.$id,
+      });
+      setisopen(newStatus);
+    } catch (error) {
+      console.error('Error updating status:', error);
+    }
+  };
   const settings = {
     dots: false,
     infinite: true,
@@ -108,6 +123,36 @@ const ResProfilePage = () => {
             info="Edit Time"
             onClick={() => navigate(`/restiming`)}
           />
+          <div className="flex">
+          <p>close</p>
+      
+          <input
+              type="checkbox"
+              checked={isopen}
+              className="toggle toggle-success"
+              onChange={handleIsOpen}
+            />
+                   <p>open</p>
+          </div>
+        
+          
+        <button className="btn" onClick={() => document.getElementById("my_modal_1").showModal()}>{profileData.bankdetails ? "Edit Bank Details" : "Add Bank Details"}</button>
+          <dialog id="my_modal_1" className="modal">
+            <div className="modal-box">
+              <h3 className="font-bold text-lg">Do you want to {profileData.bankdetails ? "Edit Bank Details" : "Add Bank Details"}</h3>
+              <p className="py-4">Press ESC key or click the button below to close</p>
+              <div className="modal-action">
+                <form method="dialog">
+                  <Button
+                    details="lg:btn-wide"
+                    info={profileData.bankdetails ? "Edit Bank Details" : "Add Bank Details"}
+                    onClick={() => navigate(`/resbankdetailspage`)}
+                  />
+                  <button className="btn">Close</button>
+                </form>
+              </div>
+            </div>
+          </dialog>
         </div>
       </div>
 

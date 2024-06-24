@@ -22,6 +22,88 @@ const ProfileDetails = ({ flag, edit }) => {
   const [profileImagePreview, setProfileImagePreview] = useState(null);
   const [profileImageFile, setProfileImageFile] = useState(null);
 
+  const onSubmit = async (data) => {
+    try {
+      console.log("Profile Data:", data);
+
+      if (!profileImageFile) {
+        console.error("Profile image file is missing.");
+        throw new Error("Profile image file is required.");
+      }
+
+      console.log("Uploading file:", profileImageFile);
+      const fileData = await profileService.uploadFile({
+        file: profileImageFile,
+      });
+
+      console.log("File uploaded:", fileData);
+
+      if (fileData) {
+        let createOrUpdateProfile;
+        if (edit) {
+          if (flag === true) {
+            createOrUpdateProfile = await profileService.updateprofile({
+              imageid: fileData.$id,
+              isres: flag,
+              locaton: data.locaton,
+              name: userData.name,
+              phone: data.phoneNumber,
+              slug: userData.name,
+              UserId: userData.$id,
+              state: edit.state,
+            });
+          } else {
+            createOrUpdateProfile = await profileService.updateuserProfile({
+              imageid: fileData.$id,
+              isres: flag,
+              locaton: data.locaton,
+              name: userData.name,
+              phone: data.phoneNumber,
+              slug: userData.name,
+              UserId: userData.$id,
+              state: edit.state,
+            });
+          }
+        } else {
+          if (flag === true) {
+            createOrUpdateProfile = await profileService.createProfile({
+              imageid: fileData.$id,
+              isres: flag,
+              locaton: data.locaton,
+              name: userData.name,
+              phone: data.phoneNumber,
+              slug: userData.name,
+              UserId: userData.$id,
+            });
+          } else {
+            createOrUpdateProfile = await profileService.createuserProfile({
+              imageid: fileData.$id,
+              isres: flag,
+              locaton: data.locaton,
+              name: userData.name,
+              phone: data.phoneNumber,
+              slug: userData.name,
+              UserId: userData.$id,
+            });
+          }
+        }
+
+        console.log("Profile created/updated:", createOrUpdateProfile);
+
+        if (createOrUpdateProfile) {
+          dispatch(updateProfile({ profiledata: createOrUpdateProfile }));
+          if (edit) {
+            navigate(flag ? `/resprofilepage/${edit.$id}` : `/userhomepage/${edit.$id}`);
+          } else {
+            navigate(flag ? "/resphotouploedpage" : `/userprofilepage/${createOrUpdateProfile.$id}`);
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Error while creating/updating profile:", error);
+    }
+  };
+
   const handleProfileImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -29,47 +111,6 @@ const ProfileDetails = ({ flag, edit }) => {
       setProfileImagePreview(URL.createObjectURL(file));
       setProfileImageFile(file);
       setValue("profileImage", file);
-    }
-  };
-
-  const handleProfileUpdate = async (fileData, data) => {
-    const profileDetails = {
-      imageid: fileData.$id,
-      isres: flag,
-      locaton: data.location,
-      name: userData.name,
-      phone: data.phoneNumber,
-      slug: userData.name,
-      UserId: userData.$id,
-    };
-
-    try {
-      const createProfile = edit
-        ? await profileService.updateprofile({ ...profileDetails, state: edit.state })
-        : await profileService.createProfile(profileDetails);
-
-      if (createProfile) {
-        dispatch(updateProfile({ profiledata: createProfile }));
-        navigate(flag ? "/resphotouploedpage" : `/userprofilepage/${createProfile.$id}`);
-      }
-    } catch (error) {
-      console.error("Error while creating/updating profile:", error);
-    }
-  };
-
-  const onSubmit = async (data) => {
-    if (!profileImageFile) {
-      console.error("Profile image file is missing.");
-      return;
-    }
-
-    try {
-      const fileData = await profileService.uploadFile({ file: profileImageFile });
-      if (fileData) {
-        handleProfileUpdate(fileData, data);
-      }
-    } catch (error) {
-      console.error("Error while uploading profile image:", error);
     }
   };
 
@@ -115,14 +156,18 @@ const ProfileDetails = ({ flag, edit }) => {
             })}
             placeholder="Phone Number"
           />
-          {errors.phoneNumber && <p className="text-red-500">{errors.phoneNumber.message}</p>}
+          {errors.phoneNumber && (
+            <p className="text-red-500">{errors.phoneNumber.message}</p>
+          )}
 
           <InputBox
             info="w-full"
-            {...register("location", { required: "Location is required" })}
+            {...register("locaton", { required: "Location is required" })}
             placeholder="Location"
           />
-          {errors.location && <p className="text-red-500">{errors.location.message}</p>}
+          {errors.location && (
+            <p className="text-red-500">{errors.location.message}</p>
+          )}
         </div>
 
         <div className="Buttons w-full mt-1 flex items-center justify-evenly">
