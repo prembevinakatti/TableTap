@@ -54,7 +54,7 @@ function Otpverify({flag}) {
         }
         else{
           navigate('/userprofilecreatepage')
-        }
+        } 
         
       }
     } catch (error) {
