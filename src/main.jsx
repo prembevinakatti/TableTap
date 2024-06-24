@@ -23,8 +23,10 @@ import Userloginpage from './pages/client/Userloginpage.jsx'
 import Userverification from './pages/client/Userverification.jsx'
 import Userprofilecreatepage from './pages/client/Userprofilecreatepage.jsx'
 import Userprofilepage from './pages/client/Userprofilepage.jsx'
-import UserHomePage from './components/UserHomePage/UserHomePage.jsx'
+
 import Resbankdetailspage from './pages/restorent/Resbankdetailspage.jsx'
+import UserHomePage from './pages/client/userhomepage.jsx'
+import UserBookingPage from './components/UserBookingPage/UserBookingPage.jsx'
 const router=createBrowserRouter(
   createRoutesFromElements(
      <Route path='/' element={<App/>}>
@@ -47,6 +49,7 @@ const router=createBrowserRouter(
       <Route path='/userprofilepage/:slug' element={<Userprofilepage/>}/>
       <Route path='/userhomepage' element={<UserHomePage/>}/>
       <Route path='/resbankdetailspage' element={<Resbankdetailspage/>}/>
+   
       
     </Route>
   )

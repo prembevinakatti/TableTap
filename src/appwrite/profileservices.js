@@ -306,7 +306,23 @@ class ProfileServices {
       throw error;
     }
   }
+  async getres(){
+    try {
+        return await this.databases.listDocuments(
+        conf.databaseid,
+        conf.collectionid,
+    
+          
+          
+           
 
+        )
+        
+    } catch (error) {
+       console.log(error)
+      
+    }
+   }
 
 
 
