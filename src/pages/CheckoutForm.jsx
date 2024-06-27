@@ -1,7 +1,7 @@
 import React from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
-const CheckoutForm = ({ handlePayment, disabled, paymentAmount }) => {
+const CheckoutForm = ({ paymentAmount }) => {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -12,41 +12,41 @@ const CheckoutForm = ({ handlePayment, disabled, paymentAmount }) => {
       return;
     }
 
+    const cardElement = elements.getElement(CardElement);
+
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: 'card',
-      card: elements.getElement(CardElement),
+      card: cardElement,
     });
 
     if (error) {
-      console.log('[error]', error);
+      console.error(error);
     } else {
-      handlePayment(paymentMethod);
+      console.log('Received Stripe PaymentMethod:', paymentMethod);
+      // Handle the payment confirmation
+      handlePaymentConfirmation(paymentMethod.id);
+    }
+  };
+
+  const handlePaymentConfirmation = async (paymentMethodId) => {
+    const paymentIntent = await stripe.confirmCardPayment(
+      "sk_test_51PT4pOAM7tB5pG0Hfe0bSHOLAVKlGwchTm9NawLiIXXKSU7cx0NCVMyNYyxll57JZkWALMOy1M7VfsAzHn1msAPs001yUnbLMC", // Replace this with your actual client secret obtained from Stripe API
+      {
+        payment_method: paymentMethodId,
+      }
+    );
+
+    if (paymentIntent.error) {
+      console.error('Payment confirmation error:', paymentIntent.error);
+    } else if (paymentIntent.paymentIntent.status === 'succeeded') {
+      console.log('Payment successful:', paymentIntent.paymentIntent);
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <CardElement
-        options={{
-          style: {
-            base: {
-              fontSize: '16px',
-              color: '#424770',
-              '::placeholder': {
-                color: '#aab7c4',
-              },
-            },
-            invalid: {
-              color: '#9e2146',
-            },
-          },
-        }}
-      />
-      <button
-        type="submit"
-        className="mt-2 p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        disabled={!stripe || disabled}
-      >
+      <CardElement />
+      <button type="submit" disabled={!stripe}>
         Pay ${paymentAmount}
       </button>
     </form>

@@ -298,6 +298,36 @@ class ProfileServices {
       throw error;
     }
   }
+  async createpayment({
+    slug,
+    amount,
+    userid,
+    resid,
+    paymentdetails,
+    
+}) {
+  try {
+    return await this.databases.createDocument(
+      conf.databaseid,
+       conf.collectionid3,
+      slug,
+      {
+        slug,
+        amount,
+        userid,
+        resid,
+        paymentdetails,
+        
+    
+        
+      }
+    );
+  } catch (error) {
+    console.log("Appwrite service :: createProfile :: error", error);
+    throw error;
+  }
+}
+
 
   async getUser(slug) {
     try {
