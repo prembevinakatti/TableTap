@@ -27,6 +27,9 @@ import Userprofilepage from './pages/client/Userprofilepage.jsx'
 import Resbankdetailspage from './pages/restorent/Resbankdetailspage.jsx'
 import UserHomePage from './pages/client/userhomepage.jsx'
 import UserBookingPage from './components/UserBookingPage/UserBookingPage.jsx'
+import Foodmenu from './pages/restorent/Foodmenu.jsx'
+import ResReservation from './components/ResReservation/ResReservation.jsx'
+import Userbookingpage from './pages/client/Userbookingpage.jsx'
 const router=createBrowserRouter(
   createRoutesFromElements(
      <Route path='/' element={<App/>}>
@@ -49,6 +52,8 @@ const router=createBrowserRouter(
       <Route path='/userprofilepage/:slug' element={<Userprofilepage/>}/>
       <Route path='/userhomepage' element={<UserHomePage/>}/>
       <Route path='/resbankdetailspage' element={<Resbankdetailspage/>}/>
+      <Route path='/fooddetailspage' element={<Foodmenu/>}/>
+      <Route path='/userbookingpage/:slug' element={<Userbookingpage/>}/>
    
       
     </Route>

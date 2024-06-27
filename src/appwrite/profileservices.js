@@ -21,7 +21,8 @@ class ProfileServices {
     phone,
     isres,
     imageid,
-    state="InitiationPhase"
+    state="InitiationPhase",
+    type
   }) {
     try {
       return await this.databases.createDocument(
@@ -35,8 +36,8 @@ class ProfileServices {
           UserId,
           isres,
           imageid,
-          state
-          
+          state,
+          type
         }
       );
     } catch (error) {
@@ -115,10 +116,11 @@ class ProfileServices {
     phone,
     isres,
     imageid,
-    state
+    state,
+    type
   }) {
     try {
-      return await this.databases.createDocument(
+      return await this.databases.updateDocument(
         conf.databaseid,
         conf.collectionid,
         slug,
@@ -129,7 +131,8 @@ class ProfileServices {
           UserId,
           isres,
           imageid,
-          state
+          state,
+          type
           
         }
       );
@@ -202,7 +205,7 @@ class ProfileServices {
   }
   async updatetimings(
    
-    {  slug, opentime,closetime, startinterval,closeinterval,state}
+    {  slug, opentime,closetime, startinterval,closeinterval,state,slots}
   ) {
     try {
       return await this.databases.updateDocument(
@@ -214,7 +217,8 @@ class ProfileServices {
           closetime,
           startinterval,
           closeinterval,
-          state
+          state,
+          slots
         }
       );
     } catch (error) {
@@ -251,6 +255,42 @@ class ProfileServices {
         slug,
         {
           isopen
+        }
+      );
+    } catch (error) {
+      console.log("Appwrite service :: updateProfile :: error", error);
+      throw error;
+    }
+  }
+  async updatefoodmenue(
+   
+    {  slug, foodmenue}
+  ) {
+    try {
+      return await this.databases.updateDocument(
+        conf.databaseid,
+        conf.collectionid,
+        slug,
+        {
+          foodmenue
+        }
+      );
+    } catch (error) {
+      console.log("Appwrite service :: updateProfile :: error", error);
+      throw error;
+    }
+  }
+  async updatereservations(
+   
+    {  slug, reservation}
+  ) {
+    try {
+      return await this.databases.updateDocument(
+        conf.databaseid,
+        conf.collectionid,
+        slug,
+        {
+          reservation
         }
       );
     } catch (error) {

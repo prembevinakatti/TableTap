@@ -2,17 +2,23 @@ import React, { useState } from "react";
 import InputBox from "../InputBox/InputBox";
 import { LuPlus } from "react-icons/lu";
 import Button from "../Button/Button";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { useSelector } from "react-redux";
 import profileService from "../../appwrite/profileservices";
 import { useNavigate } from "react-router-dom";
 
 const ResTiming = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, control } = useForm();
   const [intervalEnabled, setIntervalEnabled] = useState(false);
   const profiledata = useSelector((state) => state.profile.profiledata);
-  const navigate=useNavigate()
+  const navigate = useNavigate();
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "slots"
+  });
+
   async function handleTimeData(data) {
+    const slots = JSON.stringify(data.slots);
     try {
       const timingData = {
         closetime: data.closetime,
@@ -20,20 +26,25 @@ const ResTiming = () => {
         slug: profiledata.$id,
         startinterval: intervalEnabled ? data.startinterval : "",
         closeinterval: intervalEnabled ? data.closeinterval : "",
-        state:"completed"
+        slots: slots,
+        state: "completed"
       };
-     const timeuploded= await profileService.updatetimings(timingData);
-     if(timeuploded){
-      navigate(`/resprofilepage/${profiledata.$id}`)
-     }
+      const timeUploaded = await profileService.updatetimings(timingData);
+      if (timeUploaded) {
+        navigate(`/resprofilepage/${profiledata.$id}`);
+      }
     } catch (error) {
       console.error("Error updating timings:", error);
     }
-    console.log(data);
   }
 
   function handleIntervalToggle() {
     setIntervalEnabled((prev) => !prev);
+  }
+
+  function handleAddSlot(e) {
+    e.preventDefault();
+    append({ starttime: "", endtime: "" });
   }
 
   return (
@@ -73,12 +84,43 @@ const ResTiming = () => {
             )}
           </div>
         </div>
+        <div className="w-[70vw] shadow-lg flex flex-col gap-10 items-center justify-center h-[30vh] border rounded-lg">
+          <div className="flex flex-col gap-2">
+            {fields.map((field, index) => (
+              <div key={field.id} className="flex items-center gap-2">
+                <InputBox
+                  type="time"
+                  {...register(`slots[${index}].starttime`)}
+                  placeholder="Start Time"
+                />
+                <InputBox
+                  type="time"
+                  {...register(`slots[${index}].endtime`)}
+                  placeholder="End Time"
+                />
+                <Button
+                  type="button"
+                  onClick={() => remove(index)}
+                  info="Remove"
+                  className="bg-red-500 text-white px-2 py-1 rounded"
+                />
+              </div>
+            ))}
+            <Button
+              type="button"
+              onClick={handleAddSlot}
+              info="Add Slot"
+              className="bg-blue-500 text-white px-2 py-1 rounded mt-2"
+            />
+          </div>
+        </div>
       </div>
       <div className="Buttons mt-10 flex items-center justify-center gap-20">
         <Button
           details="xl:btn-wide border border-secondary bg-transparent text-secondary"
           info="Go Back"
-          onClick={() => navigate(-1)} 
+          type="button"
+          onClick={() => navigate(-1)}
         />
         <Button details="xl:btn-wide" info="Save Changes" type="submit" />
       </div>
