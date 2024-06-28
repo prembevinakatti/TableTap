@@ -23,8 +23,17 @@ import Userloginpage from './pages/client/Userloginpage.jsx'
 import Userverification from './pages/client/Userverification.jsx'
 import Userprofilecreatepage from './pages/client/Userprofilecreatepage.jsx'
 import Userprofilepage from './pages/client/Userprofilepage.jsx'
-import UserHomePage from './components/UserHomePage/UserHomePage.jsx'
+import { Elements } from '@stripe/react-stripe-js';
 import Resbankdetailspage from './pages/restorent/Resbankdetailspage.jsx'
+import UserHomePage from './pages/client/userhomepage.jsx'
+import UserBookingPage from './components/UserBookingPage/UserBookingPage.jsx'
+import Foodmenu from './pages/restorent/Foodmenu.jsx'
+import ResReservation from './components/ResReservation/ResReservation.jsx'
+import Userbookingpage from './pages/client/Userbookingpage.jsx'
+import { useElements } from '@stripe/react-stripe-js'
+import UserBookingPageWrapper from './pages/client/Userbookingpagewraper.jsx'
+
+const stripePromise="pk_test_51PT4pOAM7tB5pG0HD581QBg3nRbKadN9taCSabrmIuQNCX08wF6GOrUFUlVMGx5PVsxoF99xAoE13PfXjkIFCiew004JzB7cCt"
 const router=createBrowserRouter(
   createRoutesFromElements(
      <Route path='/' element={<App/>}>
@@ -47,6 +56,9 @@ const router=createBrowserRouter(
       <Route path='/userprofilepage/:slug' element={<Userprofilepage/>}/>
       <Route path='/userhomepage' element={<UserHomePage/>}/>
       <Route path='/resbankdetailspage' element={<Resbankdetailspage/>}/>
+      <Route path='/fooddetailspage' element={<Foodmenu/>}/>
+      <Route path="/userbookingpage/:slug" element={<UserBookingPageWrapper />} />
+   
       
     </Route>
   )

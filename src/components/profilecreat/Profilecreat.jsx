@@ -51,6 +51,7 @@ const ProfileDetails = ({ flag, edit }) => {
               slug: userData.name,
               UserId: userData.$id,
               state: edit.state,
+              type:data.type
             });
           } else {
             createOrUpdateProfile = await profileService.updateuserProfile({
@@ -74,6 +75,7 @@ const ProfileDetails = ({ flag, edit }) => {
               phone: data.phoneNumber,
               slug: userData.name,
               UserId: userData.$id,
+              type:data.type
             });
           } else {
             createOrUpdateProfile = await profileService.createuserProfile({
@@ -167,6 +169,16 @@ const ProfileDetails = ({ flag, edit }) => {
           />
           {errors.location && (
             <p className="text-red-500">{errors.location.message}</p>
+          )}
+          {flag && (
+            <select
+              {...register("type")}
+              className="border border-gray-300 p-2 rounded"
+            >
+              <option value="veg">Veg</option>
+              <option value="non-veg">Non-Veg</option>
+              <option value="veg-nonveg">Veg, Non-Veg</option>
+            </select>
           )}
         </div>
 

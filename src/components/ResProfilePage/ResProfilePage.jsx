@@ -9,6 +9,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { useNavigate, useParams } from "react-router-dom";
 import profileService from "../../appwrite/profileservices";
 import RoomType from "../RoomType/RoomType";
+import { useSelector } from "react-redux";
 
 const ResProfilePage = () => {
   const [profileData, setProfileData] = useState("");
@@ -18,7 +19,8 @@ const ResProfilePage = () => {
   const [error, setError] = useState(null);
   const [isopen,setisopen]=useState(false)
   const navigate = useNavigate();
-
+  const ownerid = useSelector((state) => state.profile.profiledata);
+  const owner=ownerid.$id===slug
   useEffect(() => {
     const getCurrentUser = async () => {
       setLoading(true);
@@ -112,48 +114,67 @@ const ResProfilePage = () => {
             </div>
           </div>
         )}
-        <div className="flex lg:w-[80vw] gap-10 items-center justify-between">
-          <Button
-            details="lg:btn-wide"
-            info="Edit Profile"
-            onClick={() => navigate(`/resprofileedit`)}
-          />
-          <Button
-            details="lg:btn-wide"
-            info="Edit Time"
-            onClick={() => navigate(`/restiming`)}
-          />
-          <div className="flex">
-          <p>close</p>
-      
-          <input
-              type="checkbox"
-              checked={isopen}
-              className="toggle toggle-success"
-              onChange={handleIsOpen}
+        {
+          owner&&(<div className="flex lg:w-[80vw] gap-10 items-center justify-between">
+            <Button
+              details="lg:btn-wide"
+              info="Edit Profile"
+              onClick={() => navigate(`/resprofileedit`)}
             />
-                   <p>open</p>
-          </div>
+            <Button
+              details="lg:btn-wide"
+              info="Edit Time"
+              onClick={() => navigate(`/restiming`)}
+            />
+            <div className="flex">
+            <p>close</p>
         
-          
-        <button className="btn" onClick={() => document.getElementById("my_modal_1").showModal()}>{profileData.bankdetails ? "Edit Bank Details" : "Add Bank Details"}</button>
-          <dialog id="my_modal_1" className="modal">
-            <div className="modal-box">
-              <h3 className="font-bold text-lg">Do you want to {profileData.bankdetails ? "Edit Bank Details" : "Add Bank Details"}</h3>
-              <p className="py-4">Press ESC key or click the button below to close</p>
-              <div className="modal-action">
-                <form method="dialog">
-                  <Button
-                    details="lg:btn-wide"
-                    info={profileData.bankdetails ? "Edit Bank Details" : "Add Bank Details"}
-                    onClick={() => navigate(`/resbankdetailspage`)}
-                  />
-                  <button className="btn">Close</button>
-                </form>
-              </div>
+            <input
+                type="checkbox"
+                checked={isopen}
+                className="toggle toggle-success"
+                onChange={handleIsOpen}
+              />
+                     <p>open</p>
             </div>
-          </dialog>
-        </div>
+          
+            
+            <button className="btn" onClick={() => document.getElementById("my_modal_1").showModal()}>{profileData.bankdetails ? "Edit Bank Details" : "Add Bank Details"}</button>
+            <dialog id="my_modal_1" className="modal">
+              <div className="modal-box">
+                <h3 className="font-bold text-lg">Do you want to {profileData.bankdetails ? "Edit Bank Details" : "Add Bank Details"}</h3>
+                <p className="py-4">Press ESC key or click the button below to close</p>
+                <div className="modal-action">
+                  <form method="dialog">
+                    <Button
+                      details="lg:btn-wide"
+                      info={profileData.bankdetails ? "Edit Bank Details" : "Add Bank Details"}
+                      onClick={() => navigate(`/resbankdetailspage`)}
+                    />
+                    <button className="btn">Close</button>
+                  </form>
+                </div>
+              </div>
+            </dialog>
+            <button className="btn" onClick={() => document.getElementById("my_modal_2").showModal()}>{profileData.foodmenue ? "Edit foodmenue" : "Add foodmenue"}</button>
+            <dialog id="my_modal_2" className="modal">
+              <div className="modal-box">
+                <h3 className="font-bold text-lg">Do you want to {profileData.foodmenue ? "Edit foodmenue" : "Add foodmenue"}</h3>
+                <p className="py-4">Press ESC key or click the button below to close</p>
+                <div className="modal-action">
+                  <form method="dialog">
+                    <Button
+                      details="lg:btn-wide"
+                      info={profileData.foodmenue ? "Edit foodmenue" : "Add foodmenue"}
+                      onClick={() => navigate(`/fooddetailspage`)}
+                    />
+                    <button className="btn">Close</button>
+                  </form>
+                </div>
+              </div>
+            </dialog>
+          </div>)
+        }
       </div>
 
       <div>
@@ -179,13 +200,22 @@ const ResProfilePage = () => {
         Table View
       </h1>
       <RoomType roomData={roomDetails} loading={loading} error={error} />
+{
+  owner?(
+    <Button
+      details="lg:btn-wide absolute right-36"
+      info="Edit Table"
+      onClick={() => navigate(`/resresroomedit`)}
+    />
+):(
+  <Button
+  details="lg:btn-wide absolute right-36"
+  info="book tabel"
+  onClick={() => navigate(`/userbookingpage/${slug}`)}
+/>
 
-      <Button
-        details="lg:btn-wide absolute right-36"
-        info="Edit Table"
-        onClick={() => navigate(`/resresroomedit`)}
-      />
-
+)
+}
       <h1 className="w-full text-center text-4xl mt-20 text-tertiary">
         Analytics And Ratings
       </h1>
