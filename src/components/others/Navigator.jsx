@@ -1,29 +1,53 @@
-import React from 'react';
+import React from "react";
 
 function Navigator({ pathname }) {
   console.log(pathname);
-  
-  const data = [
+
+  const steps = [
     {
       index: 1,
-      location: "/Ressinguppage"
+      location: "/Ressinguppage",
+      name: "Authentication",
     },
     {
       index: 2,
-      location: "/Resroomsetup"
-    }
+      location: "/resprofilecreatepage",
+      name: "Profile Create ",
+    },
+    {
+      index: 3,
+      location: "/resphotouploedpage",
+      name: "Restaurant Photos",
+    },
+    {
+      index: 4,
+      location: "/Resroomsetup",
+      name: "Room Setup",
+    },
+    {
+      index: 4,
+      location: "/resroomviewpage",
+      name: "Room View",
+    },
+    {
+      index: 4,
+      location: "/restiming",
+      name: "Restaurant Timing",
+    },
   ];
-  
+
   return (
-    <div className="count flex items-center m-2 gap-1">
-      {data.map((minidata) => (
-        <div 
-          key={minidata.index} 
-          className={`w-8 h-8 border ${pathname === minidata.location ? "bg-secondary text-primary border-gray-300 cursor-not-allowed" : "border-gray-300 cursor-pointer"} flex items-center justify-center rounded-lg`}
-        >
-          <p className="font-semibold">{minidata.index}</p>
-        </div>  
-      ))}
+    <div className="count flex items-center justify-center m-2 gap-1">
+      <ul className="steps steps-vertical lg:steps-horizontal">
+        {steps.map((step, idx) => (
+          <li
+            key={step.index}
+            className={`step ${pathname === step.location ? "step-primary" : ""} ${idx < steps.findIndex(s => s.location === pathname) ? "step-primary" : ""}`}
+          >
+            {step.name}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

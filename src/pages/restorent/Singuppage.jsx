@@ -9,8 +9,8 @@ function Ressinguppage() {
   return (
     <>
     
-      <SignUp flag={true} />
       <Navigator pathname={pathname} />
+      <SignUp flag={true} />
     </>
   );
 }

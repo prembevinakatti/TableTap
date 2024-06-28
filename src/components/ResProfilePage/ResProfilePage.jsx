@@ -17,10 +17,11 @@ const ResProfilePage = () => {
   const [roomDetails, setRoomDetails] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [isopen,setisopen]=useState(false)
+  const [isopen, setisopen] = useState(false);
   const navigate = useNavigate();
   const ownerid = useSelector((state) => state.profile.profiledata);
-  const owner=ownerid.$id===slug
+  const owner = ownerid.$id === slug;
+
   useEffect(() => {
     const getCurrentUser = async () => {
       setLoading(true);
@@ -32,8 +33,8 @@ const ResProfilePage = () => {
           setRoomDetails(
             JSON.parse(profileData.roomdetaisl || "[]").groups || []
           );
-          if (profileData.isopen===true){
-            setisopen(true)
+          if (profileData.isopen === true) {
+            setisopen(true);
           }
         } else {
           setRoomDetails([]);
@@ -48,6 +49,7 @@ const ResProfilePage = () => {
 
     getCurrentUser();
   }, [slug]);
+
   const handleIsOpen = async (e) => {
     try {
       const newStatus = e.target.checked;
@@ -57,9 +59,10 @@ const ResProfilePage = () => {
       });
       setisopen(newStatus);
     } catch (error) {
-      console.error('Error updating status:', error);
+      console.error("Error updating status:", error);
     }
   };
+
   const settings = {
     dots: false,
     infinite: true,
@@ -74,7 +77,6 @@ const ResProfilePage = () => {
 
   return (
     <div>
-   
       <div className="profilePage overflow-x-hidden flex flex-col items-center justify-center gap-5">
         {loading ? (
           <div className="flex flex-col gap-4 w-52">
@@ -88,7 +90,7 @@ const ResProfilePage = () => {
             <div className="skeleton h-32 w-full"></div>
           </div>
         ) : (
-          <div className="profile lg:w-[80vw] lg:flex lg:flex-row flex flex-col items-center justify-around gap-10 lg:h-[20vw] rounded-lg border mt-5 shadow-md">
+          <div className="profile lg:w-[80vw] lg:flex flex flex-col items-center justify-around gap-10 lg:h-[40vw] rounded-lg border mt-5 shadow-md">
             <div className="profileImg">
               <img
                 className="w-56 h-56 rounded-full"
@@ -114,8 +116,8 @@ const ResProfilePage = () => {
             </div>
           </div>
         )}
-        {
-          owner&&(<div className="flex lg:w-[80vw] gap-10 items-center justify-between">
+        {owner && (
+          <div className="flex lg:w-[80vw] gap-10 items-center justify-between">
             <Button
               details="lg:btn-wide"
               info="Edit Profile"
@@ -127,40 +129,29 @@ const ResProfilePage = () => {
               onClick={() => navigate(`/restiming`)}
             />
             <div className="flex">
-            <p>close</p>
-        
-            <input
+              <p>close</p>
+              <input
                 type="checkbox"
                 checked={isopen}
                 className="toggle toggle-success"
                 onChange={handleIsOpen}
               />
-                     <p>open</p>
+              <p>open</p>
             </div>
-          
-            
-            <button className="btn" onClick={() => document.getElementById("my_modal_1").showModal()}>{profileData.bankdetails ? "Edit Bank Details" : "Add Bank Details"}</button>
-            <dialog id="my_modal_1" className="modal">
+            <button
+              className="btn"
+              onClick={() =>
+                document.getElementById("my_modal_3").showModal()
+              }
+            >
+              {profileData.foodmenue ? "Edit foodmenue" : "Add foodmenue"}
+            </button>
+            <dialog id="my_modal_3" className="modal">
               <div className="modal-box">
-                <h3 className="font-bold text-lg">Do you want to {profileData.bankdetails ? "Edit Bank Details" : "Add Bank Details"}</h3>
-                <p className="py-4">Press ESC key or click the button below to close</p>
-                <div className="modal-action">
-                  <form method="dialog">
-                    <Button
-                      details="lg:btn-wide"
-                      info={profileData.bankdetails ? "Edit Bank Details" : "Add Bank Details"}
-                      onClick={() => navigate(`/resbankdetailspage`)}
-                    />
-                    <button className="btn">Close</button>
-                  </form>
-                </div>
-              </div>
-            </dialog>
-            <button className="btn" onClick={() => document.getElementById("my_modal_2").showModal()}>{profileData.foodmenue ? "Edit foodmenue" : "Add foodmenue"}</button>
-            <dialog id="my_modal_2" className="modal">
-              <div className="modal-box">
-                <h3 className="font-bold text-lg">Do you want to {profileData.foodmenue ? "Edit foodmenue" : "Add foodmenue"}</h3>
-                <p className="py-4">Press ESC key or click the button below to close</p>
+                <h3 className="font-bold text-lg">
+                  Do you want to {profileData.foodmenue ? "Edit foodmenue" : "Add foodmenue"}
+                </h3>
+
                 <div className="modal-action">
                   <form method="dialog">
                     <Button
@@ -168,13 +159,13 @@ const ResProfilePage = () => {
                       info={profileData.foodmenue ? "Edit foodmenue" : "Add foodmenue"}
                       onClick={() => navigate(`/fooddetailspage`)}
                     />
-                    <button className="btn">Close</button>
+                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                   </form>
                 </div>
               </div>
             </dialog>
-          </div>)
-        }
+          </div>
+        )}
       </div>
 
       <div>
@@ -200,22 +191,19 @@ const ResProfilePage = () => {
         Table View
       </h1>
       <RoomType roomData={roomDetails} loading={loading} error={error} />
-{
-  owner?(
-    <Button
-      details="lg:btn-wide absolute right-36"
-      info="Edit Table"
-      onClick={() => navigate(`/resresroomedit`)}
-    />
-):(
-  <Button
-  details="lg:btn-wide absolute right-36"
-  info="book tabel"
-  onClick={() => navigate(`/userbookingpage/${slug}`)}
-/>
-
-)
-}
+      {owner ? (
+        <Button
+          details="lg:btn-wide absolute right-36"
+          info="Edit Table"
+          onClick={() => navigate(`/resresroomedit`)}
+        />
+      ) : (
+        <Button
+          details="lg:btn-wide absolute right-36"
+          info="book tabel"
+          onClick={() => navigate(`/userbookingpage/${slug}`)}
+        />
+      )}
       <h1 className="w-full text-center text-4xl mt-20 text-tertiary">
         Analytics And Ratings
       </h1>

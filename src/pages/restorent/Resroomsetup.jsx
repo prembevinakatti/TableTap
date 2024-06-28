@@ -8,8 +8,8 @@ function Resroomsetup() {
 
   return (
     <>
-      <ResDetails />
       <Navigator pathname={pathname} />
+      <ResDetails />
     </>
   );
 }

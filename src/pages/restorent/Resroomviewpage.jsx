@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import RoomType from '../../components/RoomType/RoomType';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import profileService from "../../appwrite/profileservices";
+import Navigator from '../../components/others/Navigator';
 
 function Resroomviewpage({edit}) {
   const navigate = useNavigate();
@@ -36,8 +37,11 @@ function Resroomviewpage({edit}) {
     fetchRoomDetails();
   }, [profileData]);
 
+  const {pathname} = useLocation()
+
   return (
     <>
+    <Navigator pathname={pathname} />
       <RoomType roomData={roomData} loading={loading} error={error} />
       <div className="Buttons mt-10 flex items-center justify-center gap-20">
         <button

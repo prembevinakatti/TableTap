@@ -3,11 +3,13 @@ import { IoMdMenu } from "react-icons/io";
 import Button from "../Button/Button";
 import { useSelector } from "react-redux";
 import Logout from "../others/logout";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const verified = useSelector((state) => state.auth.verified);
   const profiledata = useSelector((state) => state.profile.profiledata);
-  console.log(profiledata)
+  const navigate = useNavigate();
+  console.log(profiledata);
   if (!verified) {
     return null;
   }
@@ -45,10 +47,13 @@ const Navbar = () => {
                     Close
                   </div>
                   <div>
-                    <Logout/>
+                    <Logout />
                   </div>
                   <div>
-                    <Button details="btn-wide" info="Bank Details" />
+                    <Button details="btn-wide" info="Bank Details" onClick={() => navigate(`/resbankdetailspage`)} />
+                  </div>
+                  <div>
+                    <Button details="btn-wide" info="Qr Scaner" onClick={() => navigate(`/rescodescaner`)} />
                   </div>
                 </ul>
               </div>
