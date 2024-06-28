@@ -32,6 +32,9 @@ import ResReservation from './components/ResReservation/ResReservation.jsx'
 import Userbookingpage from './pages/client/Userbookingpage.jsx'
 import { useElements } from '@stripe/react-stripe-js'
 import UserBookingPageWrapper from './pages/client/Userbookingpagewraper.jsx'
+import ResPayment from './components/ResPayment/ResPayment.jsx'
+import Respayments from './pages/restorent/Respayments.jsx'
+import Userpayments from './pages/client/userpayments.jsx'
 
 const stripePromise="pk_test_51PT4pOAM7tB5pG0HD581QBg3nRbKadN9taCSabrmIuQNCX08wF6GOrUFUlVMGx5PVsxoF99xAoE13PfXjkIFCiew004JzB7cCt"
 const router=createBrowserRouter(
@@ -58,7 +61,8 @@ const router=createBrowserRouter(
       <Route path='/resbankdetailspage' element={<Resbankdetailspage/>}/>
       <Route path='/fooddetailspage' element={<Foodmenu/>}/>
       <Route path="/userbookingpage/:slug" element={<UserBookingPageWrapper />} />
-   
+      <Route path="/Respayments" element={<Respayments />} />
+      <Route path="/Userpayments" element={<Userpayments/>} />
       
     </Route>
   )

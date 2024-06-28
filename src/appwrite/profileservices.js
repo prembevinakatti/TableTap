@@ -393,6 +393,24 @@ class ProfileServices {
       
     }
    }
+  async getpayments({query}){
+    try {
+        return await this.databases.listDocuments(
+        conf.databaseid,
+        conf.collectionid3,
+        query
+    
+          
+          
+           
+
+        )
+        
+    } catch (error) {
+       console.log(error)
+      
+    }
+   }
 
 
 
