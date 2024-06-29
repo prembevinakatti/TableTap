@@ -11,6 +11,7 @@ import profileService from "../../appwrite/profileservices";
 import RoomType from "../RoomType/RoomType";
 import { useSelector } from "react-redux";
 import StarRating from "../starratting";
+import { Query } from "appwrite";
 
 const ResProfilePage = () => {
   const [profileData, setProfileData] = useState("");
@@ -19,6 +20,7 @@ const ResProfilePage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isopen, setisopen] = useState(false);
+  const [reviews, setreviews] = useState([]);
   const navigate = useNavigate();
   const ownerid = useSelector((state) => state.profile.profiledata);
   const owner = ownerid.$id === slug;
@@ -37,6 +39,11 @@ const ResProfilePage = () => {
           if (profileData.isopen === true) {
             setisopen(true);
           }
+          const query = [Query.equal("resid", profileData.$id)]
+          const getreviews = await profileService.getreviews({ query: query });
+          if (getreviews) {
+            setreviews(getreviews.documents);
+          }
         } else {
           setRoomDetails([]);
         }
@@ -52,12 +59,13 @@ const ResProfilePage = () => {
   }, [slug]);
 
   const handleIsOpen = async (e) => {
-    
     try {
       const newStatus = e.target.checked;
-      if(newStatus===false){
-        const updateresesevation=await profileService.updatereservations({reservation:"[]",slug:slug})
-        
+      if (newStatus === false) {
+        await profileService.updatereservations({
+          reservation: "[]",
+          slug: slug,
+        });
       }
       const updatedData = await profileService.updatestatus({
         isopen: newStatus,
@@ -120,18 +128,11 @@ const ResProfilePage = () => {
                 Restaurant Contact: {profileData.phone || ""}
               </p>
               <div>
-              <StarRating numOfStars={profileData.ratings||4} />
+                <StarRating numOfStars={profileData.ratings || 4} />
               </div>
-              <p>
-                starttime:{profileData.opentime||"00:00"}
-                
-              </p>
-              <p>
-                closetime:{profileData.closetime||"00:00"}
-
-              </p>
-              <p>type:{profileData.type
-              }</p>
+              <p>Start Time: {profileData.opentime || "00:00"}</p>
+              <p>Close Time: {profileData.closetime || "00:00"}</p>
+              <p>Type: {profileData.type}</p>
             </div>
           </div>
         )}
@@ -148,20 +149,18 @@ const ResProfilePage = () => {
               onClick={() => navigate(`/restiming`)}
             />
             <div className="flex">
-              <p>close</p>
+              <p>Close</p>
               <input
                 type="checkbox"
                 checked={isopen}
                 className="toggle toggle-success"
                 onChange={handleIsOpen}
               />
-              <p>open</p>
+              <p>Open</p>
             </div>
             <button
               className="btn"
-              onClick={() =>
-                document.getElementById("my_modal_3").showModal()
-              }
+              onClick={() => document.getElementById("my_modal_3").showModal()}
             >
               {profileData.foodmenue ? "Edit foodmenue" : "Add foodmenue"}
             </button>
@@ -170,7 +169,6 @@ const ResProfilePage = () => {
                 <h3 className="font-bold text-lg">
                   Do you want to {profileData.foodmenue ? "Edit foodmenue" : "Add foodmenue"}
                 </h3>
-
                 <div className="modal-action">
                   <form method="dialog">
                     <Button
@@ -178,7 +176,9 @@ const ResProfilePage = () => {
                       info={profileData.foodmenue ? "Edit foodmenue" : "Add foodmenue"}
                       onClick={() => navigate(`/fooddetailspage`)}
                     />
-                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                      ✕
+                    </button>
                   </form>
                 </div>
               </div>
@@ -219,68 +219,70 @@ const ResProfilePage = () => {
       ) : (
         <Button
           details="lg:btn-wide absolute right-36"
-          info="book tabel"
+          info="Book Table"
           onClick={() => navigate(`/userbookingpage/${slug}`)}
         />
       )}
-            
-            <div>food data</div>
-        {
-            profileData&&JSON.parse(profileData.foodmenue)||[].map((food)=>{
-              <div>
-                {
-                  food.name
-                }
+
+      <div>
+        <h2 className="text-3xl text-tertiary w-full text-center my-5">
+          Food Menu
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {profileData.foodmenue &&
+            JSON.parse(profileData.foodmenue).map((food, index) => (
+              <div key={index} className="p-4 border rounded shadow-md">
+                <h3 className="text-xl font-semibold">{food.name}</h3>
+                <p className="text-lg">${food.price}</p>
               </div>
-            })
-        }
-
-
-
-      <h1 className="w-full text-center text-4xl mt-20 text-tertiary">
-        Analytics And Ratings
-      </h1>
-
-      <div className="Analytics w-full flex mt-5 items-center justify-center">
-        <div className="w-[80vw] lg:flex lg:flex-row flex flex-col items-start justify-center p-3 m-3 gap-5 lg:h-[30vw] rounded-lg border mt-5 shadow-md">
-          <div className="analytics lg:w-3/4 w-full rounded-lg shadow-sm h-[30vh] lg:h-full flex items-center justify-center border">
-            <p className="text-4xl font-semibold text-tertiary">Analytics</p>
-          </div>
-          <div className="ratings lg:w-1/4 w-full rounded-lg shadow-sm h-full flex flex-col gap-5 items-center justify-center border p-3">
-            <p className="text-3xl font-semibold text-tertiary">
-              Average Ratings
-            </p>
-            <div className="rating rating-lg">
-              <input
-                type="radio"
-                name="rating-8"
-                className="mask mask-star-2 bg-orange-400"
-              />
-              <input
-                type="radio"
-                name="rating-8"
-                className="mask mask-star-2 bg-orange-400"
-                checked
-              />
-              <input
-                type="radio"
-                name="rating-8"
-                className="mask mask-star-2 bg-orange-400"
-              />
-              <input
-                type="radio"
-                name="rating-8"
-                className="mask mask-star-2 bg-orange-400"
-              />
-              <input
-                type="radio"
-                name="rating-8"
-                className="mask mask-star-2 bg-orange-400"
-              />
-            </div>
-          </div>
+            ))}
         </div>
       </div>
+
+      <div className="review-section mt-10">
+        <h2 className="text-3xl text-tertiary w-full text-center my-5">
+          Reviews
+        </h2>
+        <div className="flex flex-col gap-4 items-center">
+          {reviews.map((singlereview) => (
+            <div key={singlereview.$id} className="review-card p-4 border rounded-lg shadow-md w-full max-w-2xl">
+              <div className="flex items-center justify-between mb-2">
+                <p
+                  className="cursor-pointer text-xl font-semibold text-primary"
+                  onClick={() => navigate(`/userprofilepage/${singlereview.userid}`)}
+                >
+                  {singlereview.userid || "Anonymous"}
+                </p>
+                <div className="flex items-center">
+                  <StarRating numOfStars={singlereview.rating || 4} />
+                </div>
+              </div>
+              <div className="mb-2">
+                <p className="text-secondary">
+                  <span className="font-semibold">Recommended Food: </span>
+                  {singlereview.recommendedfood || "No recommended food"}
+                </p>
+              </div>
+              <div>
+                <p className="text-secondary">
+                  <span className="font-semibold">Comment: </span>
+                  {singlereview.comment || "No comment"}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+   {
+    !owner&&(
+      <Button
+      details="btn-wide"
+      info="Add Feedback"
+      onClick={() => navigate(`/UserReviewPage/${slug}`)}
+    />
+    )
+   }
     </div>
   );
 };

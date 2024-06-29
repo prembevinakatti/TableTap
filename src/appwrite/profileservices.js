@@ -465,6 +465,24 @@ class ProfileServices {
       
     }
    }
+  async getreviews({query}){
+    try {
+        return await this.databases.listDocuments(
+        conf.databaseid,
+        conf.collectionid4,
+        query
+    
+          
+          
+           
+
+        )
+        
+    } catch (error) {
+       console.log(error)
+      
+    }
+   }
 
 
 
