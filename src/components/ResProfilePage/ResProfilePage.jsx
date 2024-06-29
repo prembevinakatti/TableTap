@@ -23,7 +23,7 @@ const ResProfilePage = () => {
   const [reviews, setreviews] = useState([]);
   const navigate = useNavigate();
   const ownerid = useSelector((state) => state.profile.profiledata);
-  const owner = ownerid.$id === slug;
+  const owner = ownerid?ownerid.$id:"fgfs"=== slug;
 
   useEffect(() => {
     const getCurrentUser = async () => {
