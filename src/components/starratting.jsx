@@ -7,7 +7,7 @@ const StarRating = ({ numOfStars }) => {
         <div
           key={index}
           className={`mask mask-star-2 ${index < numOfStars ? 'bg-orange-400' : 'bg-gray-400'}`}
-          style={{ display: 'inline-block', width: '24px', height: '24px' }}
+          style={{ display: 'inline-block', width: '25px', height: '24px' }}
         />
       ))}
     </div>
