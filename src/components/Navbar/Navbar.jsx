@@ -36,7 +36,8 @@ const Navbar = () => {
                   aria-label="close sidebar"
                   className="drawer-overlay"
                 ></label>
-                <ul className="menu p-4 w-80 flex flex-col items-center gap-3 min-h-full bg-base-200">
+               {
+                profiledata&&profiledata.resid===true?( <ul className="menu p-4 w-80 flex flex-col items-center gap-3 min-h-full bg-base-200">
                   {/* Sidebar content here */}
                   <div>
                     <Button details="btn-wide" info="Profile" />
@@ -55,7 +56,23 @@ const Navbar = () => {
                   <div>
                     <Button details="btn-wide" info="Qr Scaner" onClick={() => navigate(`/rescodescaner`)} />
                   </div>
-                </ul>
+                </ul>):(
+                   <ul className="menu p-4 w-80 flex flex-col items-center gap-3 min-h-full bg-base-200">
+                   {/* Sidebar content here */}
+                   <div>
+                     <Button details="btn-wide" info="Profile"   onClick={() => navigate(`/userprofilepage/${profiledata.$id}`)}/>
+                   </div>
+                  <div>
+                  <Button details="btn-wide" info="Your Reservation"   onClick={() => navigate("/userreservation")}/>
+                  </div>
+                   <div>
+                     <Logout />
+                   </div>
+                 
+                   
+                 </ul>
+                )
+               }
               </div>
             </div>
           ) : null}

@@ -51,8 +51,13 @@ const ResProfilePage = () => {
   }, [slug]);
 
   const handleIsOpen = async (e) => {
+    
     try {
       const newStatus = e.target.checked;
+      if(newStatus===false){
+        const updateresesevation=await profileService.updatereservations({reservation:"[]",slug:slug})
+        
+      }
       const updatedData = await profileService.updatestatus({
         isopen: newStatus,
         slug: profileData.$id,

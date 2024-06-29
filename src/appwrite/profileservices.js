@@ -298,12 +298,31 @@ class ProfileServices {
       throw error;
     }
   }
+  async updateratings(
+   
+    {  slug, ratings}
+  ) {
+    try {
+      return await this.databases.updateDocument(
+        conf.databaseid,
+        conf.collectionid,
+        slug,
+        {
+          ratings
+        }
+      );
+    } catch (error) {
+      console.log("Appwrite service :: updateProfile :: error", error);
+      throw error;
+    }
+  }
   async createpayment({
     slug,
     amount,
     userid,
     resid,
     paymentdetails,
+    date
     
 }) {
   try {
@@ -317,6 +336,41 @@ class ProfileServices {
         userid,
         resid,
         paymentdetails,
+        date
+        
+    
+        
+      }
+    );
+  } catch (error) {
+    console.log("Appwrite service :: createProfile :: error", error);
+    throw error;
+  }
+}
+  async creatreview({
+    resid,
+    rating,
+    userid,
+    recommendedfood,
+    slug,
+    comment
+    
+    
+    
+}) {
+  try {
+    return await this.databases.createDocument(
+      conf.databaseid,
+       conf.collectionid4,
+      slug,
+      {
+        rating,
+        
+        userid,
+        resid,
+        recommendedfood,
+        comment
+        
         
     
         
