@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import profileService from "../../appwrite/profileservices";
 import Navigator from '../../components/others/Navigator';
+import Button from '../../components/Button/Button';
 
 function Resroomviewpage({edit}) {
   const navigate = useNavigate();
@@ -44,18 +45,18 @@ function Resroomviewpage({edit}) {
     <Navigator pathname={pathname} />
       <RoomType roomData={roomData} loading={loading} error={error} />
       <div className="Buttons mt-10 flex items-center justify-center gap-20">
-        <button
+        <Button
           className="btn-wide border border-secondary bg-transparent text-secondary"
           onClick={() => navigate(-1)}
-        >
-          Go Back
-        </button>
-        <button
+        
+          info="Go Back"
+        />
+        <Button
           className="btn-wide border border-secondary bg-transparent text-secondary"
           onClick={() => edit?navigate(-1):navigate("/restiming")}
-        >
-          Save Changes
-        </button>
+        
+          info="Save Changes"
+        />
       </div>
     </>
   );
