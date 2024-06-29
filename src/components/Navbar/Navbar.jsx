@@ -37,7 +37,7 @@ const Navbar = () => {
                   className="drawer-overlay"
                 ></label>
                {
-                profiledata&&profiledata.resid===true?( <ul className="menu p-4 w-80 flex flex-col items-center gap-3 min-h-full bg-base-200">
+                profiledata&&profiledata.isres===true?( <ul className="menu p-4 w-80 flex flex-col items-center gap-3 min-h-full bg-base-200">
                   {/* Sidebar content here */}
                   <div>
                     <Button details="btn-wide" info="Profile" />
@@ -54,6 +54,9 @@ const Navbar = () => {
                     <Button details="btn-wide" info="Bank Details" onClick={() => navigate(`/resbankdetailspage`)} />
                   </div>
                   <div>
+                    <Button details="btn-wide" info="all feedbacks" onClick={() => navigate(`/Restorentfeedbackpage`)} />
+                  </div>
+                  <div>
                     <Button details="btn-wide" info="Qr Scaner" onClick={() => navigate(`/rescodescaner`)} />
                   </div>
                 </ul>):(
@@ -64,6 +67,9 @@ const Navbar = () => {
                    </div>
                   <div>
                   <Button details="btn-wide" info="Your Reservation"   onClick={() => navigate("/userreservation")}/>
+                  </div>
+                  <div>
+                  <Button details="btn-wide" info="Your feedbacks"   onClick={() => navigate("/Userfeedbackpage")}/>
                   </div>
                    <div>
                      <Logout />

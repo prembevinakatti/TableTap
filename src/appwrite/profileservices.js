@@ -22,7 +22,9 @@ class ProfileServices {
     isres,
     imageid,
     state="InitiationPhase",
-    type
+    type,
+    longitude,
+    latitude
   }) {
     try {
       return await this.databases.createDocument(
@@ -37,7 +39,9 @@ class ProfileServices {
           isres,
           imageid,
           state,
-          type
+          type,
+          longitude,
+          latitude
         }
       );
     } catch (error) {
@@ -54,6 +58,9 @@ class ProfileServices {
     isres,
     imageid,
     state="completed"
+    ,
+    longitude,
+    latitude
   }) {
     try {
       return await this.databases.createDocument(
@@ -67,7 +74,9 @@ class ProfileServices {
           UserId,
           isres,
           imageid,
-          state
+          state,
+    longitude,
+    latitude
           
         }
       );
@@ -84,7 +93,10 @@ class ProfileServices {
     phone,
     isres,
     imageid,
-    state
+    state,
+    longitude,
+    latitude
+
   }) {
     try {
       return await this.databases.updateDocument(
@@ -98,7 +110,9 @@ class ProfileServices {
           UserId,
           isres,
           imageid,
-          state
+          state,
+          longitude,
+          latitude
           
         }
       );
@@ -117,7 +131,9 @@ class ProfileServices {
     isres,
     imageid,
     state,
-    type
+    type,
+    longitude,
+    latitude
   }) {
     try {
       return await this.databases.updateDocument(
@@ -132,7 +148,9 @@ class ProfileServices {
           isres,
           imageid,
           state,
-          type
+          type,
+          longitude,
+          latitude
           
         }
       );

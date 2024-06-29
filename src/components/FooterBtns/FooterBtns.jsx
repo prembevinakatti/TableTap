@@ -15,7 +15,7 @@ const FooterBtns = (props) => {
   if (profiledata.isres && profiledata.state === "completed") {
     return (
       <div className="fixed w-full bottom-0 border-t flex items-center justify-between p-3 bg-white border-primary">
-        <Button details="xl:btn-wide" info="Reservations" />
+        <Button details="xl:btn-wide" info="Reservations" onClick={() => navigate(`/Resresrvationpage`)} />
         <Button details="xl:btn-wide" info="Payments"    onClick={() => navigate(`/Respayments`)} />
         <Button
           details="xl:btn-wide"

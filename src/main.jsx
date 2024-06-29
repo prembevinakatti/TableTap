@@ -37,6 +37,11 @@ import Respayments from './pages/restorent/Respayments.jsx'
 import Userpayments from './pages/client/userpayments.jsx'
 import Userreservation from './pages/client/Userreservationpage.jsx'
 import UserReviewPage from './pages/client/Userreviewpage.jsx'
+import Resresrvationpage from './pages/restorent/Resresevationpage.jsx'
+
+import Userfeedbackpage from './pages/client/Userfeedbackpage.jsx'
+import Restorentfeedbackpage from './pages/restorent/restorentfeedbackpage.jsx'
+
 
 
 const stripePromise="pk_test_51PT4pOAM7tB5pG0HD581QBg3nRbKadN9taCSabrmIuQNCX08wF6GOrUFUlVMGx5PVsxoF99xAoE13PfXjkIFCiew004JzB7cCt"
@@ -69,6 +74,9 @@ const router=createBrowserRouter(
       <Route path="/ResReservation" element={<ResReservation/>} />
       <Route path="/userreservation" element={<Userreservation/>} />
       <Route path="/UserReviewPage/:slug" element={<UserReviewPage/>} />
+      <Route path="/Resresrvationpage" element={<Resresrvationpage/>} />
+      <Route path="/Restorentfeedbackpage" element={<Restorentfeedbackpage/>} />
+      <Route path="/Userfeedbackpage" element={<Userfeedbackpage/>} />
    
     </Route>
   )

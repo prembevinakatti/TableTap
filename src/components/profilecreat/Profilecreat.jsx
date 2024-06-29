@@ -41,23 +41,23 @@ const ProfileDetails = ({ flag, edit }) => {
       if (fileData) {
         let createOrUpdateProfile;
         if (edit) {
-          if (flag === true) {
-            createOrUpdateProfile = await profileService.updateprofile({
+          if (flag) {
+            createOrUpdateProfile = await profileService.updateProfile({
               imageid: fileData.$id,
               isres: flag,
-              locaton: data.locaton,
+              location: data.location,
               name: userData.name,
               phone: data.phoneNumber,
               slug: userData.name,
               UserId: userData.$id,
               state: edit.state,
-              type:data.type
+              type: data.type,
             });
           } else {
-            createOrUpdateProfile = await profileService.updateuserProfile({
+            createOrUpdateProfile = await profileService.updateUserProfile({
               imageid: fileData.$id,
               isres: flag,
-              locaton: data.locaton,
+              location: data.location,
               name: userData.name,
               phone: data.phoneNumber,
               slug: userData.name,
@@ -66,22 +66,22 @@ const ProfileDetails = ({ flag, edit }) => {
             });
           }
         } else {
-          if (flag === true) {
+          if (flag) {
             createOrUpdateProfile = await profileService.createProfile({
               imageid: fileData.$id,
               isres: flag,
-              locaton: data.locaton,
+              location: data.location,
               name: userData.name,
               phone: data.phoneNumber,
               slug: userData.name,
               UserId: userData.$id,
-              type:data.type
+              type: data.type,
             });
           } else {
-            createOrUpdateProfile = await profileService.createuserProfile({
+            createOrUpdateProfile = await profileService.createUserProfile({
               imageid: fileData.$id,
               isres: flag,
-              locaton: data.locaton,
+              location: data.location,
               name: userData.name,
               phone: data.phoneNumber,
               slug: userData.name,
@@ -97,7 +97,7 @@ const ProfileDetails = ({ flag, edit }) => {
           if (edit) {
             navigate(flag ? `/resprofilepage/${edit.$id}` : `/userhomepage/${edit.$id}`);
           } else {
-            navigate(flag ? "/resphotouploedpage" : `/userprofilepage/${createOrUpdateProfile.$id}`);
+            navigate(flag ? "/resphotouploadpage" : `/userprofilepage/${createOrUpdateProfile.$id}`);
           }
         }
       }
@@ -164,7 +164,7 @@ const ProfileDetails = ({ flag, edit }) => {
 
           <InputBox
             info="w-full"
-            {...register("locaton", { required: "Location is required" })}
+            {...register("location", { required: "Location is required" })}
             placeholder="Location"
           />
           {errors.location && (
