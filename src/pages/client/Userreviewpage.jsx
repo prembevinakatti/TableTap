@@ -29,12 +29,14 @@ function UserReviewPage() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log(resid)
+    console.log(rating)
     try {
       const reviewData = await profileService.creatreview({
-        rating,
+        rating:rating,
         recommendedfood: recommendedFood,
         comment: review,
-        resid,
+        resid:resid,
         userid: profileData.$id,
         slug: ID.unique()
       });
@@ -44,8 +46,8 @@ function UserReviewPage() {
           no: resrating.no + 1
         };
         setResrating(updatedRating);
-
-        await profileService.updateratings({ ratings: updatedRating, slug: resid });
+          console.log(updatedRating)
+        await profileService.updateratings({ ratings: updatedRating.rating, slug: resid });
         console.log('Review submitted successfully');
       }
     } catch (error) {
@@ -59,7 +61,7 @@ function UserReviewPage() {
         const data = await profileService.getUser(slug);
         if (data) {
           setFood(JSON.parse(data.foodmenue || "[]"));
-          setResid(data.resid);
+          setResid(data.$id);
           setResrating(JSON.parse(data.ratings) || {rating: 0, no: 0});
         } 
       } catch (error) {

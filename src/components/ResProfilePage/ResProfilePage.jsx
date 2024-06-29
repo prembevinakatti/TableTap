@@ -10,6 +10,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import profileService from "../../appwrite/profileservices";
 import RoomType from "../RoomType/RoomType";
 import { useSelector } from "react-redux";
+import StarRating from "../starratting";
 
 const ResProfilePage = () => {
   const [profileData, setProfileData] = useState("");
@@ -118,6 +119,19 @@ const ResProfilePage = () => {
               <p className="text-2xl font-semibold m-2 text-secondary">
                 Restaurant Contact: {profileData.phone || ""}
               </p>
+              <div>
+              <StarRating numOfStars={profileData.ratings||4} />
+              </div>
+              <p>
+                starttime:{profileData.opentime||"00:00"}
+                
+              </p>
+              <p>
+                closetime:{profileData.closetime||"00:00"}
+
+              </p>
+              <p>type:{profileData.type
+              }</p>
             </div>
           </div>
         )}
@@ -209,6 +223,20 @@ const ResProfilePage = () => {
           onClick={() => navigate(`/userbookingpage/${slug}`)}
         />
       )}
+            
+            <div>food data</div>
+        {
+            profileData&&JSON.parse(profileData.foodmenue)||[].map((food)=>{
+              <div>
+                {
+                  food.name
+                }
+              </div>
+            })
+        }
+
+
+
       <h1 className="w-full text-center text-4xl mt-20 text-tertiary">
         Analytics And Ratings
       </h1>

@@ -343,7 +343,7 @@ class ProfileServices {
       }
     );
   } catch (error) {
-    console.log("Appwrite service :: createProfile :: error", error);
+    console.log("Appwrite service :: create payment :: error", error);
     throw error;
   }
 }
@@ -377,7 +377,7 @@ class ProfileServices {
       }
     );
   } catch (error) {
-    console.log("Appwrite service :: createProfile :: error", error);
+    console.log("Appwrite service :: createreview :: error", error);
     throw error;
   }
 }
