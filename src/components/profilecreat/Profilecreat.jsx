@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { FaPlus } from "react-icons/fa6";
 import Button from "../Button/Button";
@@ -12,7 +12,9 @@ const ProfileDetails = ({ flag, edit }) => {
   const userData = useSelector((state) => state.auth.userData);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+  const [error, setError] = useState(null);
   const {
     handleSubmit,
     register,
@@ -21,6 +23,27 @@ const ProfileDetails = ({ flag, edit }) => {
   } = useForm();
   const [profileImagePreview, setProfileImagePreview] = useState(null);
   const [profileImageFile, setProfileImageFile] = useState(null);
+  const locationRef = useRef();
+
+  useEffect(() => {
+    const getLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            setLatitude(JSON.stringify(position.coords.latitude));
+            setLongitude(JSON.stringify(position.coords.longitude));
+            setError(null);
+          },
+          (error) => {
+            setError(error.message);
+          }
+        );
+      } else {
+        setError("Geolocation is not supported by this browser.");
+      }
+    };
+    getLocation();
+  }, []);
 
   const onSubmit = async (data) => {
     try {
@@ -42,27 +65,31 @@ const ProfileDetails = ({ flag, edit }) => {
         let createOrUpdateProfile;
         if (edit) {
           if (flag) {
-            createOrUpdateProfile = await profileService.updateProfile({
+            createOrUpdateProfile = await profileService.updateprofile({
               imageid: fileData.$id,
               isres: flag,
-              location: data.location,
+              locaton: data.location,
               name: userData.name,
               phone: data.phoneNumber,
               slug: userData.name,
               UserId: userData.$id,
               state: edit.state,
               type: data.type,
+              latitude: edit.latitude ? edit.latitude : latitude,
+              longitude: edit.longitude ? edit.longitude : longitude,
             });
           } else {
-            createOrUpdateProfile = await profileService.updateUserProfile({
+            createOrUpdateProfile = await profileService.updateuserProfile({
               imageid: fileData.$id,
               isres: flag,
-              location: data.location,
+              locaton: data.location,
               name: userData.name,
               phone: data.phoneNumber,
               slug: userData.name,
               UserId: userData.$id,
               state: edit.state,
+              latitude: edit.latitude ? edit.latitude : latitude,
+              longitude: edit.longitude ? edit.longitude : longitude,
             });
           }
         } else {
@@ -70,22 +97,26 @@ const ProfileDetails = ({ flag, edit }) => {
             createOrUpdateProfile = await profileService.createProfile({
               imageid: fileData.$id,
               isres: flag,
-              location: data.location,
+              locaton: data.location,
               name: userData.name,
               phone: data.phoneNumber,
               slug: userData.name,
               UserId: userData.$id,
               type: data.type,
+              latitude: latitude,
+              longitude: longitude,
             });
           } else {
-            createOrUpdateProfile = await profileService.createUserProfile({
+            createOrUpdateProfile = await profileService.createuserProfile({
               imageid: fileData.$id,
               isres: flag,
-              location: data.location,
+              locaton: data.location,
               name: userData.name,
               phone: data.phoneNumber,
               slug: userData.name,
               UserId: userData.$id,
+              latitude: latitude,
+              longitude: longitude,
             });
           }
         }
@@ -163,6 +194,7 @@ const ProfileDetails = ({ flag, edit }) => {
           )}
 
           <InputBox
+            ref={locationRef}
             info="w-full"
             {...register("location", { required: "Location is required" })}
             placeholder="Location"
@@ -186,6 +218,7 @@ const ProfileDetails = ({ flag, edit }) => {
           <Button details="btn-wide" info="Next" type="submit" />
         </div>
       </form>
+      {error && <p className="text-red-500 mt-2">{error}</p>}
     </div>
   );
 };

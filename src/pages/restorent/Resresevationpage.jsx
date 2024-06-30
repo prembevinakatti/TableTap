@@ -27,7 +27,7 @@ function Resresrvationpage() {
     if (profileData && profileData.$id) {
       let query;
       if (showToday) {
-        query = [Query.equal("resid", profileData.$id), Query.equal("date", formattedDate)];
+        query = [Query.equal("resid", profileData.$id), Query.equal("dateonbook", formattedDate)];
       } else {
         query = [Query.equal("resid", profileData.$id)];
       }

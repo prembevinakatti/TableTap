@@ -4,19 +4,18 @@ import profileService from "../../appwrite/profileservices";
 import { Query } from "appwrite";
 import { useNavigate } from "react-router-dom";
 import QRCode from "react-qr-code";
+
 function Userpayments() {
   const [paymentdata, setPaymentdata] = useState([]);
-  const [currentTime, setCurrentTime] = useState(
-    new Date().toLocaleTimeString()
-  );
+  const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
+  const [selectedPayment, setSelectedPayment] = useState(null);
   const profiledata = useSelector((state) => state.profile.profiledata);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (profiledata && profiledata.$id) {
       const query = [Query.equal("userid", profiledata.$id)];
-      profileService
-        .getpayments({ queries: query })
+      profileService.getpayments({ queries: query })
         .then((response) => {
           if (response && response.documents) {
             setPaymentdata(response.documents);
@@ -36,10 +35,20 @@ function Userpayments() {
     return () => clearInterval(timer);
   }, []);
 
+  const handleShowQr = (payment) => {
+    setSelectedPayment(payment);
+    document.getElementById("my_modal_3").showModal();
+  };
+
+  const handleCloseQr = () => {
+    setSelectedPayment(null);
+    document.getElementById("my_modal_3").close();
+  };
+
   return (
     <div className="p-6 bg-gray-100 relative">
       <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">
-        your Payments
+        Your Payments
       </h1>
       <div className="absolute top-6 right-6 text-lg font-semibold text-gray-800">
         {currentTime}
@@ -47,10 +56,7 @@ function Userpayments() {
       {paymentdata.length > 0 ? (
         <div className="grid grid-cols-1 gap-6">
           {paymentdata.map((payment) => (
-            <div
-              key={payment.$id}
-              className="bg-white p-6 rounded-lg shadow-md"
-            >
+            <div key={payment.$id} className="bg-white p-6 rounded-lg shadow-md">
               <div className="mb-4">
                 <p className="text-lg text-gray-700">
                   To:{" "}
@@ -65,26 +71,21 @@ function Userpayments() {
                   Payment ID: {payment.slug}
                 </p>
                 <p className="text-lg text-gray-700">
-                  Date: {JSON.parse(payment.paymentdetails).date}
+                  Seat booked day: {JSON.parse(payment.paymentdetails).date}
                 </p>
                 <p className="text-lg text-gray-700">
                   Slot: {JSON.parse(payment.paymentdetails).slot}
                 </p>
                 <p className="text-lg text-gray-700">
-                  Number of Chairs:{" "}
-                  {JSON.parse(payment.paymentdetails).numberofchair}
+                  Number of Chairs: {JSON.parse(payment.paymentdetails).numberofchair}
                 </p>
                 <p className="text-lg text-gray-700">
-                  Reservation ID:{" "}
-                  {JSON.parse(payment.paymentdetails).reservationid}
+                  Reservation ID: {JSON.parse(payment.paymentdetails).reservationid}
                 </p>
                 <p className="text-lg text-gray-700">Chair Numbers:</p>
                 <div className="flex flex-wrap">
                   {JSON.parse(payment.paymentdetails).chairnumber.map((no) => (
-                    <p
-                      key={no}
-                      className="text-sm text-gray-600 bg-gray-200 px-2 py-1 rounded mr-2 mb-2"
-                    >
+                    <p key={no} className="text-sm text-gray-600 bg-gray-200 px-2 py-1 rounded mr-2 mb-2">
                       {no}
                     </p>
                   ))}
@@ -98,47 +99,37 @@ function Userpayments() {
               </p>
               <button
                 className="btn"
-                onClick={() =>
-                  document.getElementById("my_modal_3").showModal()
-                }
+                onClick={() => handleShowQr(payment)}
               >
-                getQr
+                Get QR
               </button>
-              <dialog id="my_modal_3" className="modal">
-                <div className="modal-box">
-                  <form method="dialog">
-                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-                      ✕
-                    </button>
-                  </form>
-                  <div
-                    style={{
-                      height: "400",
-                      margin: "0 auto",
-                      maxWidth: 800,
-                      width: "100%",
-                    }}
-                  >
-                    <QRCode
-                      size={500}
-                      style={{
-                        height: "10vw",
-                        maxWidth: "100%",
-                        width: "100%",
-                      }}
-                      value={`/paymentdetails/${payment.slug}`}
-                      viewBox={`0 0 256 256`}
-                    />
-                    <p className="w-full text-center text-2xl text-primary mt-10">Scan Qr Code For Details</p>
-                  </div>
-                  
-                </div>
-              </dialog>
             </div>
           ))}
         </div>
       ) : (
         <p className="text-center text-gray-600">No payment data available.</p>
+      )}
+      {selectedPayment && (
+        <dialog id="my_modal_3" className="modal">
+          <div className="modal-box">
+            <form method="dialog">
+              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={handleCloseQr}>
+                ✕
+              </button>
+            </form>
+            <div style={{ height: "400px", margin: "0 auto", maxWidth: 800, width: "100%" }}>
+              <QRCode
+                size={500}
+                style={{ height: "10vw", maxWidth: "100%", width: "100%" }}
+                value={`/paymentdetails/${selectedPayment.slug}`}
+                viewBox={`0 0 256 256`}
+              />
+              <p className="w-full text-center text-2xl text-primary mt-10">
+                Scan QR Code For Details
+              </p>
+            </div>
+          </div>
+        </dialog>
       )}
     </div>
   );

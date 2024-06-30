@@ -5,12 +5,14 @@ import { Query } from "appwrite";
 import { useNavigate } from "react-router-dom";
 import QRCode from "react-qr-code";
 import Button from "../../components/Button/Button";
-
+import { FaMapMarkerAlt } from "react-icons/fa";
 
 function Userreservation() {
   const [paymentData, setPaymentData] = useState([]);
   const [showToday, setShowToday] = useState(true);
-  const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
+  const [currentTime, setCurrentTime] = useState(
+    new Date().toLocaleTimeString()
+  );
   const profileData = useSelector((state) => state.profile.profiledata);
   const navigate = useNavigate();
 
@@ -23,13 +25,26 @@ function Userreservation() {
     return formattedDate;
   }
 
+  function handelnavigate(index) {
+    console.log("hi");
+    console.log(paymentData[index]);
+    profileService.getres({ slug: paymentData[index].resid }).then((res) => {
+      console.log(res);
+      const url = `https://www.google.com/maps/search/?api=1&query=${res.latitude},${res.longitude}`;
+      window.open(url, "_blank");
+    });
+  }
+
   let formattedDate = getCurrentDateFormatted();
 
   useEffect(() => {
     if (profileData && profileData.$id) {
       let query;
       if (showToday) {
-        query = [Query.equal("userid", profileData.$id), Query.equal("date", formattedDate)];
+        query = [
+          Query.equal("userid", profileData.$id),
+          Query.equal("dateonbook", formattedDate),
+        ];
       } else {
         query = [Query.equal("userid", profileData.$id)];
       }
@@ -38,14 +53,13 @@ function Userreservation() {
         .then((response) => {
           if (response && response.documents) {
             setPaymentData(response.documents);
-            console.log(response.documents);
           } else {
             console.log("No documents found in response");
           }
         })
         .catch((error) => console.log(error.message));
     }
-  }, [profileData, showToday]);
+  }, [profileData, showToday, formattedDate]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -55,7 +69,7 @@ function Userreservation() {
   }, []);
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
+    <div className="p-6 bg-gray-100 lg:h-[80vh] overflow-auto">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-gray-800">Your Reservations</h1>
         <div className="text-lg font-semibold text-gray-800">{currentTime}</div>
@@ -76,9 +90,18 @@ function Userreservation() {
       </div>
       {paymentData.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {paymentData.map((payment) => (
-            <div key={payment.$id} className="bg-white p-6 rounded-lg shadow-md">
+          {paymentData.map((payment, index) => (
+            <div
+              key={payment.$id}
+              className="bg-white p-6 rounded-lg shadow-md"
+            >
               <div className="mb-4">
+                <button
+                  className="w-full text-primary flex items-center justify-end gap-2 font-semibold"
+                  onClick={() => handelnavigate(index)}
+                >
+                  Direction <FaMapMarkerAlt />
+                </button>
                 <p className="text-lg text-gray-700">
                   Restaurant Name:{" "}
                   <span
@@ -88,11 +111,23 @@ function Userreservation() {
                     {payment.resid}
                   </span>
                 </p>
-                <p className="text-lg text-gray-700">Payment ID: {payment.slug}</p>
-                <p className="text-lg text-gray-700">Date: {JSON.parse(payment.paymentdetails).date}</p>
-                <p className="text-lg text-gray-700">Slot: {JSON.parse(payment.paymentdetails).slot}</p>
-                <p className="text-lg text-gray-700">Number of Chairs: {JSON.parse(payment.paymentdetails).numberofchair}</p>
-                <p className="text-lg text-gray-700">Reservation ID: {JSON.parse(payment.paymentdetails).reservationid}</p>
+                <p className="text-lg text-gray-700">
+                  Payment ID: {payment.slug}
+                </p>
+                <p className="text-lg text-gray-700">
+                  Date: {JSON.parse(payment.paymentdetails).date}
+                </p>
+                <p className="text-lg text-gray-700">
+                  Slot: {JSON.parse(payment.paymentdetails).slot}
+                </p>
+                <p className="text-lg text-gray-700">
+                  Number of Chairs:{" "}
+                  {JSON.parse(payment.paymentdetails).numberofchair}
+                </p>
+                <p className="text-lg text-gray-700">
+                  Reservation ID:{" "}
+                  {JSON.parse(payment.paymentdetails).reservationid}
+                </p>
                 <p className="text-lg text-gray-700">Chair Numbers:</p>
                 <div className="flex flex-wrap">
                   {JSON.parse(payment.paymentdetails).chairnumber.map((no) => (
@@ -104,39 +139,66 @@ function Userreservation() {
                     </p>
                   ))}
                 </div>
-                <p className="text-lg text-gray-700">Payment Status: Successful</p>
+                <p className="text-lg text-gray-700">
+                  Payment Status:{" "}
+                  <span className="text-green-500">Successful</span>
+                </p>
               </div>
-              <p className="text-2xl font-semibold text-primary-600">{payment.amount}</p>
-              <button
-                className="btn"
-                onClick={() => document.getElementById(`modal_${payment.$id}`).showModal()}
-              >
-                Get QR
-              </button>
-              <dialog id={`modal_${payment.$id}`} className="modal">
-                <div className="modal-box">
-                  <form method="dialog">
-                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                  </form>
-                  <div style={{ height: "auto", margin: "0 auto", maxWidth: 800, width: "100%" }}>
-                    <QRCode
-                      size={500}
-                      style={{ height: "10vw", maxWidth: "100%", width: "100%" }}
-                      value={`/paymentdetails/${payment.slug}`}
-                      viewBox={`0 0 256 256`}
-                    />
-                    <p className="w-full text-center text-2xl text-primary mt-10">
-                      Scan QR Code For Details
-                    </p>
-                  </div>
+              <p className="text-2xl border p-1 bg-primary rounded-md w-fit font-semibold text-primary-600">
+                Bill :{payment.amount}
+              </p>
+              <div className="flex mt-5  cursor-pointer items-center justify-between">
+                <div>
+                  <p
+                    className="text-primary font-semibold"
+                    onClick={() =>
+                      document
+                        .getElementById(`modal_${payment.$id}`)
+                        .showModal()
+                    }
+                  >
+                    Get QR
+                  </p>
+                  <dialog id={`modal_${payment.$id}`} className="modal">
+                    <div className="modal-box">
+                      <form method="dialog">
+                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                          ✕
+                        </button>
+                      </form>
+                      <div
+                        style={{
+                          height: "auto",
+                          margin: "0 auto",
+                          maxWidth: 800,
+                          width: "100%",
+                        }}
+                      >
+                        <QRCode
+                          size={500}
+                          style={{
+                            height: "10vw",
+                            maxWidth: "100%",
+                            width: "100%",
+                          }}
+                          value={`/paymentdetails/${payment.slug}`}
+                          viewBox={`0 0 256 256`}
+                        />
+                        <p className="w-full text-center text-2xl text-primary mt-10">
+                          Scan QR Code For Details
+                        </p>
+                      </div>
+                    </div>
+                  </dialog>
                 </div>
-              </dialog>
-              <div className="mt-4">
-                <Button
-                  details="btn-wide"
-                  info="Add Feedback"
-                  onClick={() => navigate(`/UserReviewPage/${payment.resid}`)}
-                />
+                <div>
+                  <p
+                    className="cursor-pointer text-primary font-semibold"
+                    onClick={() => navigate(`/UserReviewPage/${payment.resid}`)}
+                  >
+                    Add Feedback
+                  </p>
+                </div>
               </div>
             </div>
           ))}

@@ -13,6 +13,7 @@ function Userprofilepage() {
         const data = await profileService.getuseruser(slug);
         if (data) {
           setProfileData(data);
+          console.log(data);
         }
       } catch (error) {
         console.error("Error fetching profile data:", error);
@@ -34,10 +35,11 @@ function Userprofilepage() {
 
 
 
+
   return (
     <div>
       <div className="userProfile w-full h-full p-3">
-        <div className="w-full xl:h-[75vh] h-[80vh] border rounded-lg flex flex-col items-center justify-center gap-10 shadow">
+        <div className="w-full xl:h-[75vh]  h-[80vh] border rounded-lg flex flex-col items-center justify-center gap-10 shadow-lg">
           <div className="userProfileImg xl:w-[15vw] w-36 rounded-full mt-5 overflow-hidden">
           <img
                 className="w-56 h-56 rounded-full"
@@ -51,12 +53,6 @@ function Userprofilepage() {
               />
           </div>
           <div className="profileContent w-full flex flex-col items-center gap-5 lg:h-[40vh] xl:h-[40vh]">
-            <div className="flex items-center gap-5">
-              <div>
-                <p className="font-semibold w-full text-tertiary">{profileData.email}</p>
-                <DetailsBox />
-              </div>
-            </div>
             <div className="flex items-center gap-5">
               <div>
                 <p className="font-semibold text-tertiary">{profileData.name}</p>

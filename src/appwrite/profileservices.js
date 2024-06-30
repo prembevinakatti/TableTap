@@ -280,6 +280,21 @@ class ProfileServices {
       throw error;
     }
   }
+   
+    async updatesaved({ slug, saved }) {
+      try {
+        return await this.databases.updateDocument(
+          conf.databaseid,
+          conf.collectionid2,
+          slug,
+          { saved }
+        );
+      } catch (error) {
+        console.log('Appwrite service ::  :: error', error);
+        throw error;
+      }
+    
+  };
   async updatefoodmenue(
    
     {  slug, foodmenue}
@@ -340,7 +355,8 @@ class ProfileServices {
     userid,
     resid,
     paymentdetails,
-    date
+    date,
+    dateonbook
     
 }) {
   try {
@@ -354,7 +370,8 @@ class ProfileServices {
         userid,
         resid,
         paymentdetails,
-        date
+        date,
+        dateonbook
         
     
         
@@ -448,11 +465,20 @@ class ProfileServices {
       throw error;
     }
   }
-  async getres(){
+  async getres({ query }) {
+    try {
+      return await this.databases.listDocuments(conf.databaseid, conf.collectionid, query);
+    } catch (error) {
+      console.log("Appwrite service :: getres :: error", error);
+      throw error;
+    }
+  }
+  async getqueryres({query}){
     try {
         return await this.databases.listDocuments(
         conf.databaseid,
         conf.collectionid,
+        query
     
           
           
