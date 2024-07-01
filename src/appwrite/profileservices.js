@@ -541,7 +541,7 @@ class ProfileServices {
         slug,
         {
           vehicaldetails,
-          canprovidevehicalc
+          canprovidevehical
         }
       );
     } catch (error) {
