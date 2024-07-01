@@ -44,7 +44,16 @@ function Userreservation() {
         }
     });
   }
+  function handelcancel(reservationid,resid,slug){
+      profileService.getres({slug:resid}).then((data)=>{
+          const reservation=JSON.parse(data.paymentdetails)
+         const newreservation= reservation||[].filter((rev)=>(rev!=reservationid))
+          profileService.updatereservations({reservation:JSON.stringify(newreservation),slug:resid}).then(()=>{
+            profileService.updatetypeofpayment({slug:slug,type:1})
+          })
+      })
 
+  }
   let formattedDate = getCurrentDateFormatted();
 
   useEffect(() => {
@@ -147,17 +156,28 @@ function Userreservation() {
                 <p className="text-lg text-gray-700">Chair Numbers:</p>
                 <div className="flex flex-wrap">
                   {JSON.parse(payment.paymentdetails).chairnumber.map((no) => (
+                    <div>
                     <p
                       key={no}
                       className="text-sm text-gray-600 bg-gray-200 px-2 py-1 rounded mr-2 mb-2"
                     >
                       {no}
                     </p>
+                      {
+                        payment.type===0&&(
+                          <p
+                        className="cursor-pointer text-primary font-semibold"
+                        onClick={() => (handelcancel(no.reservationid,payment.resid,payment.slug))}
+                      >cancelresrevation
+                      </p>
+                        )
+                      }
+                    </div>
                   ))}
                 </div>
                 <p className="text-lg text-gray-700">
                   Payment Status:{" "}
-                  <span className="text-green-500">Successful</span>
+                  <span className={`text-${payment.type==0?"green":"red"}-500`}>{payment.type}||not found</span>
                 </p>
               </div>
               <p className="text-2xl border p-1 bg-primary rounded-md w-fit font-semibold text-primary-600">
@@ -214,6 +234,7 @@ function Userreservation() {
                   >
                     Add Feedback
                   </p>
+                
                 </div>
               </div>
             </div>

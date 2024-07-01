@@ -357,7 +357,8 @@ class ProfileServices {
     resid,
     paymentdetails,
     date,
-    dateonbook
+    dateonbook,
+    type
     
 }) {
   try {
@@ -372,8 +373,8 @@ class ProfileServices {
         resid,
         paymentdetails,
         date,
-        dateonbook
-        
+        dateonbook,
+        type
     
         
       }
@@ -542,6 +543,24 @@ class ProfileServices {
         {
           vehicaldetails,
           canprovidevehical
+        }
+      );
+    } catch (error) {
+      console.log("Appwrite service :: updateProfile :: error", error);
+      throw error;
+    }
+  }
+   async updatetypeofpayment(
+   
+    {  slug, type}
+  ) {
+    try {
+      return await this.databases.updateDocument(
+        conf.databaseid,
+        conf.collectionid3,
+        slug,
+        {
+        type
         }
       );
     } catch (error) {

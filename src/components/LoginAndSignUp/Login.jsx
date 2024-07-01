@@ -16,6 +16,7 @@ const Login = ({ flag }) => {
   async function handleLogin(data) {
     try {
       const userData = await authService.login({ email: data.email, password: data.password });
+      window.location.reload()
       if (userData.emailVerification===true) {
         dispatch(varifed({ userData })); // Correct the typo if any
         navigate(`resprofilepage/${userData.name}`);

@@ -163,6 +163,7 @@ function UserBookingPage() {
             userid: userdata.$id,
             date: getCurrentDateFormatted(),
             dateonbook: newReservation.date,
+            type:0
           });
         }
       });
