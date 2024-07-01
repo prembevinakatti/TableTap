@@ -108,6 +108,7 @@ function UserHomePage() {
               <option value="Chennai">Chennai</option>
               <option value="Mysore">Mysore</option>
               <option value="Laxmeshwar">Laxmeshwar</option>
+              <option value="Bagalkot">Bagalkot</option>
             </select>
           </div>
           <div className="btn w-44 bg-primary text-secondary">
