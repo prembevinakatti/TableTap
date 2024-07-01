@@ -13,9 +13,11 @@ function UserBookingPageWrapper() {
   const { slug } = useParams();
 
   return (
-    <Elements stripe={stripePromise}>
+    <div className='h-[70vh] overflow-auto'>
+      <Elements stripe={stripePromise}>
       <UserBookingPage slug={slug} />
     </Elements>
+    </div>
   );
 }
 

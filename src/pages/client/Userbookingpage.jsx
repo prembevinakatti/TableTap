@@ -227,7 +227,7 @@ function UserBookingPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-4">
+    <div className="flex h-[70vh] overflow-auto flex-col items-center justify-center p-4">
       <div>
         <select
           className="m-1 p-2 border border-gray-300 rounded bg-secondary text-primary"

@@ -81,7 +81,7 @@ const MapComponent = ({ bike, car }) => {
   };
 
   return (
-    <div>
+    <div className="h-[80vh] overflow-auto">
       <MapContainer
         center={[37.7749, -122.4194]}
         zoom={6}
