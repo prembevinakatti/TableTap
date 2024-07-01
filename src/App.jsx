@@ -82,7 +82,7 @@ function App() {
     if (!loading) {
       navigate(location.pathname);
     }
-  }, [loading, navigate, location.pathname]);
+  }, [loading, navigate, location]);
 
   if (loading) {
     return (
