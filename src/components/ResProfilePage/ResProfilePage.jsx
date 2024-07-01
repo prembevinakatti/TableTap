@@ -342,39 +342,6 @@ const ResProfilePage = () => {
           </div>
         </div>
 
-        {/* <div className="review-section h-[30vh] my-20">
-          <h2 className="text-3xl text-tertiary w-full flex text-center my-5">
-            Reviews
-          </h2>
-          <Slider {...reviewSettings} className="reviews-slider flex">
-            {reviews.map((singlereview) => (
-              <div
-                key={singlereview.$id}
-                className="review-card flex p-4 rounded-lg shadow-md"
-              >
-                <p
-                  className="cursor-pointer text-xl font-semibold text-primary mb-2"
-                  onClick={() =>
-                    navigate(`/userprofilepage/${singlereview.userid}`)
-                  }
-                >
-                  {singlereview.userid || "Anonymous"}
-                </p>
-                <div className="flex items-center mb-2">
-                  <StarRating numOfStars={singlereview.rating || 4} />
-                </div>
-                <p className="text-secondary mb-2">
-                  <span className="font-semibold">Recommended Food: </span>
-                  {singlereview.recommendedfood || "No recommended food"}
-                </p>
-                <p className="text-secondary">
-                  <span className="font-semibold">Comment: </span>
-                  {singlereview.comment || "No comment"}
-                </p>
-              </div>
-            ))}
-          </Slider>
-        </div> */}
 
         <div className=" w-full px-20 flex lg:h-[40vh] overflow-hidden flex-col justify-center">
 
