@@ -105,6 +105,7 @@ const ProfileDetails = ({ flag, edit }) => {
               type: data.type,
               latitude: latitude,
               longitude: longitude,
+            
             });
           } else {
             createOrUpdateProfile = await profileService.createuserProfile({
