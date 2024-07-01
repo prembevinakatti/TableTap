@@ -53,7 +53,7 @@ const router=createBrowserRouter(
       <Route path='/resloginpage' element={<Resloginpage/>}/>
       <Route path='/Resverification' element={<Resverification/>}/>
       <Route path='/resprofilecreatepage' element={<Resprofilecreatepage/>}/>
-      <Route path='/resphotouploedpage' element={<Resphotouploed/>}/>
+      <Route path='/resphotouploadpage' element={<Resphotouploed/>}/>
       <Route path='/resroomviewpage' element={<Resroomviewpage/>}/>
       <Route path='/restiming' element={<ResTiming/>}/>
       <Route path='/resprofilepage/:slug' element={<ResProfilePage/>}/>
