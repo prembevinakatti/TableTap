@@ -64,9 +64,11 @@ function UserReviewPage() {
 
         await profileService.updateratings({ ratings: updatedRating.rating, hygienePoints: JSON.parse(updatedHygiene.points), slug: resid });
         console.log('Review submitted successfully');
+        navigate(-1)
       }
     } catch (error) {
       console.error("Error submitting review:", error);
+      navigate(-1)
     }
   };
 
@@ -75,7 +77,9 @@ function UserReviewPage() {
       try {
         const data = await profileService.getUser(slug);
         if (data) {
-          setFood(JSON.parse(data.foodmenu || "[]"));
+          setFood(JSON.parse(data.foodmenue || "[]"));
+          console.log(food)
+          console.log(data)
           setResid(data.$id);
           setResrating(JSON.parse(data.ratings) || {rating: 0, no: 0});
           setResHygiene(JSON.parse(data.hygienePoints) || { points: 0, no: 0 });
