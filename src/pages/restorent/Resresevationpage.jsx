@@ -31,6 +31,7 @@ function Resresrvationpage() {
       } else {
         query = [Query.equal("resid", profileData.$id)];
       }
+      console.log(query); // Debug the query
       profileService
         .getpayments({ queries: query })
         .then((response) => {

@@ -465,9 +465,9 @@ class ProfileServices {
       throw error;
     }
   }
-  async getres({ query }) {
+  async getres({ slug }) {
     try {
-      return await this.databases.listDocuments(conf.databaseid, conf.collectionid, query);
+      return await this.databases.getDocument(conf.databaseid, conf.collectionid, slug);
     } catch (error) {
       console.log("Appwrite service :: getres :: error", error);
       throw error;
@@ -487,19 +487,19 @@ class ProfileServices {
       
     }
    }
-  async getpayments({query}){
+   async  getpayments({ queries }) {
     try {
-        return await this.databases.listDocuments(
+      console.log(queries); // Debug the queries
+      return await this.databases.listDocuments(
         conf.databaseid,
         conf.collectionid3,
-        query
-        )
-        
+        queries
+      );
     } catch (error) {
-       console.log(error)
-      
+      console.log(error);
     }
-   }
+  }
+  
   async getreviews({query}){
     try {
         return await this.databases.listDocuments(
