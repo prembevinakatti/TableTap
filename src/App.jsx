@@ -12,6 +12,7 @@ function App() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const location = useLocation();
+
   useEffect(() => {
     const getCurrentUser = async () => {
       try {
@@ -76,6 +77,12 @@ function App() {
 
     getCurrentUser();
   }, [dispatch, navigate]);
+
+  useEffect(() => {
+    if (!loading) {
+      navigate(location.pathname);
+    }
+  }, [loading, navigate, location.pathname]);
 
   if (loading) {
     return (
