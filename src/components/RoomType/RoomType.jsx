@@ -29,7 +29,7 @@ const RoomType = ({ roomData, loading, error }) => {
           value={selectedType}
         >
           {selectData.map((data, index) => (
-            <option key={index} value={data} className="text-black">
+            <option key={index} value={data} className="text-white">
               {data}
             </option>
           ))}
@@ -59,7 +59,7 @@ const RoomType = ({ roomData, loading, error }) => {
                     value={selectedRoom}
                   >
                     {[...Array(numRooms)].map((_, index) => (
-                      <option key={index} value={index + 1} className="text-black">
+                      <option key={index} value={index + 1} className="text-white">
                         {subgroup.name.split(" ")[2]} Room {index + 1}
                       </option>
                     ))}
