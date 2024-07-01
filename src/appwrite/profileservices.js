@@ -479,10 +479,6 @@ class ProfileServices {
         conf.databaseid,
         conf.collectionid,
         query
-    
-          
-          
-           
 
         )
         
@@ -497,11 +493,6 @@ class ProfileServices {
         conf.databaseid,
         conf.collectionid3,
         query
-    
-          
-          
-           
-
         )
         
     } catch (error) {
@@ -515,10 +506,6 @@ class ProfileServices {
         conf.databaseid,
         conf.collectionid4,
         query
-    
-          
-          
-           
 
         )
         
