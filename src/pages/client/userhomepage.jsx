@@ -159,21 +159,25 @@ function UserHomePage() {
                   />
                 </div>
                 <div>
-                  <div className="w-full flex items-center gap-36">
-                    <p className="font-semibold text-4xl w-full mt-2">
-                      {doc.name}
-                    </p>
-                    <StarRating numOfStars={doc.ratings} />
-                  </div>
+                <div className="w-full flex items-center gap-28">
+                   <p className="font-semibold text-4xl w-full mt-2">
+                     {doc.name}
+                   </p>
+                 <div>
+                   <StarRating numOfStars={doc.ratings} color="orange" />
+                   <StarRating numOfStars={doc.hygienePoints} color="blue" />
+                 </div>
+               </div>
+
                   <div>
                     <div>
-                      <p className="text-lg my-1 font-semibold">{doc.location}</p>
+                      <p className="text-lg my-1 font-semibold">{doc.locaton}</p>
                     </div>
-                    <div>
+                    {/* <div>
                       <p className="text-lg my-1 font-semibold">
                         {doc.addres || "this is the address"}
                       </p>
-                    </div>
+                    </div> */}
                     <div>
                       <p className="text-lg my-1 font-semibold">{doc.type}</p>
                     </div>
@@ -188,7 +192,7 @@ function UserHomePage() {
                         {doc.timings}
                       </p>
                       <p className="text-tertiary mt-10 font-semibold">
-                      <StarRating numOfStars={doc.hygienePoints} />
+                      
                       </p>
                     </div>
                   </div>
@@ -213,7 +217,7 @@ function UserHomePage() {
                           fillRule="evenodd"
                         ></path>
                       </svg>
-                      <span className="text-sm text-lime-400 font-bold pr-1">
+                      <span className=" text-sm text-lime-400 font-bold pr-1">
                         Save Post
                       </span>
                     </button>

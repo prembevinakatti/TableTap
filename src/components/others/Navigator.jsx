@@ -7,7 +7,7 @@ function Navigator({ pathname }) {
     {
       index: 1,
       location: "/Ressinguppage",
-      name: "Authentication",
+      name: "Account Creation",
     },
     {
       index: 2,
@@ -37,8 +37,8 @@ function Navigator({ pathname }) {
   ];
 
   return (
-    <div className="count flex items-center justify-center m-2 gap-1">
-      <ul className="steps steps-vertical lg:steps-horizontal">
+    <div className="count flex items-center justify-center m-2 gap-2">
+      <ul className="steps mx-1 text-sm  lg:steps-horizontal">
         {steps.map((step, idx) => (
           <li
             key={step.index}
