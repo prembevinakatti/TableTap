@@ -40,7 +40,7 @@ function Userreservation() {
     console.log(paymentData[index]);
     profileService.getres({ slug: paymentData[index].resid }).then((res) => {
         if(res.hasVehicles){
-              navigate("/")
+              navigate(`/UsertravelBookingPageWrapper${res.$id}`)
         }
     });
   }
