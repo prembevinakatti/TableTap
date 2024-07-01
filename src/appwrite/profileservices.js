@@ -516,7 +516,25 @@ class ProfileServices {
     }
    }
 
-
+   async updatevehicaldetails(
+   
+    {  slug, vehicaldetails,canprovidevehical}
+  ) {
+    try {
+      return await this.databases.updateDocument(
+        conf.databaseid,
+        conf.collectionid,
+        slug,
+        {
+          vehicaldetails,
+          canprovidevehical
+        }
+      );
+    } catch (error) {
+      console.log("Appwrite service :: updateProfile :: error", error);
+      throw error;
+    }
+  }
 
 
 
