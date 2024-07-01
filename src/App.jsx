@@ -54,7 +54,7 @@ function App() {
               } else {
                 console.log(profileData);
                 dispatch(updateProfile({ profiledata: profileData }));
-                navigate(`/resprofilepage${profileData.$id}`);
+                navigate(`/resprofilepage/${profileData.$id}`);
               }
             } else {
               setLoading(false);
