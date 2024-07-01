@@ -15,6 +15,7 @@ function Userpayments() {
   useEffect(() => {
     if (profiledata && profiledata.$id) {
       const query = [Query.equal("userid", profiledata.$id)];
+      console.log(query); // Debug the query
       profileService.getpayments({ queries: query })
         .then((response) => {
           if (response && response.documents) {

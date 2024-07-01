@@ -333,7 +333,7 @@ class ProfileServices {
   }
   async updateratings(
    
-    {  slug, ratings}
+    {  slug, ratings,hygienePoints}
   ) {
     try {
       return await this.databases.updateDocument(
@@ -341,7 +341,8 @@ class ProfileServices {
         conf.collectionid,
         slug,
         {
-          ratings
+          ratings,
+          hygienePoints
         }
       );
     } catch (error) {
@@ -388,7 +389,8 @@ class ProfileServices {
     userid,
     recommendedfood,
     slug,
-    comment
+    comment,
+    
     
     
     
@@ -400,11 +402,10 @@ class ProfileServices {
       slug,
       {
         rating,
-        
+        comment,
         userid,
         resid,
         recommendedfood,
-        comment
         
         
     

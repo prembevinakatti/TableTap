@@ -13,6 +13,8 @@ function UserReviewPage() {
   const [food, setFood] = useState([]);
   const [resid, setResid] = useState(null);
   const [resrating, setResrating] = useState({rating: 0, no: 0});
+  const [hygienePoints, setHygienePoints] = useState(5); // Default to 5 hygiene points
+  const [reshygiene, setResHygiene] = useState({ points: 0, no: 0 });
   const { slug } = useParams();
 
   const handleRatingChange = (event) => {
@@ -27,27 +29,40 @@ function UserReviewPage() {
     setRecommendedFood(event.target.value);
   };
 
+  const handleHygienePointsChange = (event) => {
+    setHygienePoints(parseFloat(event.target.value));
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(resid)
-    console.log(rating)
     try {
       const reviewData = await profileService.creatreview({
-        rating:rating,
+        rating: rating,
         recommendedfood: recommendedFood,
         comment: review,
-        resid:resid,
+        resid: resid,
         userid: profileData.$id,
-        slug: ID.unique()
+        slug: ID.unique(),
+        hygeinepoints: hygienePoints,
       });
+
       if (reviewData) {
         const updatedRating = {
           rating: (resrating.rating * resrating.no + rating) / (resrating.no + 1),
           no: resrating.no + 1
         };
+
+        const updatedHygiene = {
+          points: (reshygiene.points * reshygiene.no + hygienePoints) / (reshygiene.no + 1),
+          no: reshygiene.no + 1
+        };
+
         setResrating(updatedRating);
-          console.log(updatedRating)
-        await profileService.updateratings({ ratings: updatedRating.rating, slug: resid });
+        setResHygiene(updatedHygiene);
+        console.log(updatedHygiene)
+        console.log(updatedRating)
+
+        await profileService.updateratings({ ratings: updatedRating.rating, hygienePoints: JSON.parse(updatedHygiene.points), slug: resid });
         console.log('Review submitted successfully');
       }
     } catch (error) {
@@ -60,9 +75,10 @@ function UserReviewPage() {
       try {
         const data = await profileService.getUser(slug);
         if (data) {
-          setFood(JSON.parse(data.foodmenue || "[]"));
+          setFood(JSON.parse(data.foodmenu || "[]"));
           setResid(data.$id);
           setResrating(JSON.parse(data.ratings) || {rating: 0, no: 0});
+          setResHygiene(JSON.parse(data.hygienePoints) || { points: 0, no: 0 });
         } 
       } catch (error) {
         console.error("Error fetching profile data:", error);
@@ -120,6 +136,23 @@ function UserReviewPage() {
               </option>
             ))}
           </select>
+        </div>
+        <div className="mb-4">
+          <label className="block text-lg font-medium mb-2">Hygiene Points</label>
+          <div className="rating rating-lg rating-half">
+            <input type="radio" name="hygiene-10" className="rating-hidden" />
+            {[...Array(10)].map((_, i) => (
+              <input
+                key={i}
+                type="radio"
+                name="hygiene-10"
+                className={`mask mask-star-2 ${i % 2 === 0 ? 'mask-half-1' : 'mask-half-2'} bg-blue-500`}
+                value={(i + 1) / 2}
+                checked={hygienePoints === (i + 1) / 2}
+                onChange={handleHygienePointsChange}
+              />
+            ))}
+          </div>
         </div>
         <button
           type="submit"

@@ -194,6 +194,9 @@ const ResProfilePage = () => {
                     <p className="text-2xl font-semibold m-2 text-tertiary">
                       Type: <span className="text-secondary">{profileData.type}</span>
                     </p>
+                    <p className="text-2xl font-semibold m-2 text-tertiary">
+                    hygienePoints based on user out of 5: <span className="text-secondary">{profileData.hygienePoints}</span>
+                    </p>
                   </div>
                 </div>
                 <div className="w-full flex flex-col gap-5 items-center justify-center my-5">

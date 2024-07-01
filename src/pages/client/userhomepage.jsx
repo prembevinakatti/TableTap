@@ -187,6 +187,9 @@ function UserHomePage() {
                       <p className="text-tertiary mt-10 font-semibold">
                         {doc.timings}
                       </p>
+                      <p className="text-tertiary mt-10 font-semibold">
+                      <StarRating numOfStars={doc.hygienePoints} />
+                      </p>
                     </div>
                   </div>
                   <div>
