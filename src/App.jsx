@@ -5,13 +5,13 @@ import { updateProfile } from "./store/profileslice";
 import authService from "./appwrite/authservices";
 import profileService from "./appwrite/profileservices";
 import Layout from "./components/others/outlet";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-
+  const location = useLocation();
   useEffect(() => {
     const getCurrentUser = async () => {
       try {
