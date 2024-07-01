@@ -1,24 +1,17 @@
 import React, { useState } from 'react';
 import profileService from '../../appwrite/profileservices';
 import { useSelector } from 'react-redux';
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-import StripeCheckout from "react-stripe-checkout";
-
-// Initialize Stripe with your publishable key
-const stripePromise = loadStripe(
-  "pk_test_51PT4pOAM7tB5pG0HD581QBg3nRbKadN9taCSabrmIuQNCX08wF6GOrUFUlVMGx5PVsxoF99xAoE13PfXjkIFCiew004JzB7cCt"
-);
+import { useNavigate } from 'react-router-dom';
 
 const ResTravelSetup = () => {
   const [hasVehicles, setHasVehicles] = useState(null);
   const [hasBike, setHasBike] = useState(null);
   const [hasCar, setHasCar] = useState(null);
-  const profiledata = useSelector((state) => state.profile.profiledata);
   const [vehicleData, setVehicleData] = useState({
     Bike: { name: 'Bike', costPerKm: '', seats: 1 },
     Car: { name: 'Car', costPerKm: '', seats: 4 },
   });
+  const navigate=useNavigate()
 
   const handleHasVehiclesChange = (e) => {
     setHasVehicles(e.target.value === 'yes');
@@ -27,6 +20,8 @@ const ResTravelSetup = () => {
       setHasCar(null);
     }
   };
+
+  const profiledata = useSelector((state) => state.profile.profiledata);
 
   const handleHasBikeChange = (e) => {
     setHasBike(e.target.value === 'yes');
@@ -42,49 +37,33 @@ const ResTravelSetup = () => {
     setVehicleData(newVehicleData);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const providedVehicles = {
       Bike: hasBike ? vehicleData.Bike : null,
       Car: hasCar ? vehicleData.Car : null,
     };
-
+    console.log('Vehicle Data:', providedVehicles);
     profileService.updatevehicaldetails({
+      canprovidevehical: true,
       slug: profiledata.$id,
-      vehicaldetails: JSON.stringify(providedVehicles),
-      canprovidevehical: hasVehicles === "yes" ? true : false
-    }).then(() => {
-      console.log("updated the vehical details");
-    });
-  };
-
-  const handleToken = async (token) => {
-    console.log("Stripe Token:", token);
-    // Here you can make a request to your server to create a payment intent
-    // and complete the payment using the received token.
-
-    alert("Payment Successful!");
-  };
-
-  const calculatePayment = () => {
-    let totalPayment = 0;
-    if (hasBike) {
-      totalPayment += parseFloat(vehicleData.Bike.costPerKm) * 10; // Example calculation
-    }
-    if (hasCar) {
-      totalPayment += parseFloat(vehicleData.Car.costPerKm) * 10; // Example calculation
-    }
-    return totalPayment;
+      vehicaldetails: JSON.stringify(providedVehicles)
+    }).then(()=>{
+      navigate(-1)
+    })
   };
 
   return (
-    <div>
-      <h1>Travel Setup</h1>
+    <div className="p-6 max-w-md mx-auto bg-white rounded-xl shadow-md space-y-4">
+      <h1 className="text-2xl font-bold">Travel Setup</h1>
 
       <div>
-        <label>
+        <label className="block mb-2">
           Do you have vehicles?
-          <select onChange={handleHasVehiclesChange} style={{ marginLeft: '10px' }}>
+          <select 
+            onChange={handleHasVehiclesChange}
+            className="ml-2 p-1 border border-gray-300 rounded"
+          >
             <option value="no">No</option>
             <option value="yes">Yes</option>
           </select>
@@ -92,11 +71,14 @@ const ResTravelSetup = () => {
       </div>
 
       {hasVehicles && (
-        <div>
-          <div style={{ marginTop: '10px' }}>
-            <label>
+        <div className="space-y-4">
+          <div>
+            <label className="block mb-2">
               Do you have a Bike?
-              <select onChange={handleHasBikeChange} style={{ marginLeft: '10px' }}>
+              <select 
+                onChange={handleHasBikeChange}
+                className="ml-2 p-1 border border-gray-300 rounded"
+              >
                 <option value="no">No</option>
                 <option value="yes">Yes</option>
               </select>
@@ -104,29 +86,33 @@ const ResTravelSetup = () => {
           </div>
 
           {hasBike && (
-            <div style={{ marginBottom: '10px' }}>
-              <h2>Bike Details</h2>
+            <div className="space-y-2">
+              <h2 className="text-xl font-semibold">Bike Details</h2>
               <input
                 type="number"
                 placeholder="Cost per KM"
                 value={vehicleData.Bike.costPerKm}
                 onChange={(e) => handleVehicleChange('Bike', 'costPerKm', e.target.value)}
-                style={{ marginRight: '10px' }}
+                className="p-2 border border-gray-300 rounded w-full"
               />
               <input
                 type="number"
-                placeholder="Seats"
-                value={vehicleData.Bike.seats}
+                placeholder="Number Of Seats 1"
+                disabled
+                // value={vehicleData.Bike.seats}
                 readOnly
-                style={{ marginRight: '10px' }}
+                className="p-2 border border-gray-300 rounded w-full"
               />
             </div>
           )}
 
-          <div style={{ marginTop: '10px' }}>
-            <label>
+          <div>
+            <label className="block mb-2">
               Do you have a Car?
-              <select onChange={handleHasCarChange} style={{ marginLeft: '10px' }}>
+              <select 
+                onChange={handleHasCarChange}
+                className="ml-2 p-1 border border-gray-300 rounded"
+              >
                 <option value="no">No</option>
                 <option value="yes">Yes</option>
               </select>
@@ -134,66 +120,42 @@ const ResTravelSetup = () => {
           </div>
 
           {hasCar && (
-            <div style={{ marginBottom: '10px' }}>
-              <h2>Car Details</h2>
+            <div className="space-y-2">
+              <h2 className="text-xl font-semibold">Car Details</h2>
               <input
                 type="number"
                 placeholder="Cost per KM"
                 value={vehicleData.Car.costPerKm}
                 onChange={(e) => handleVehicleChange('Car', 'costPerKm', e.target.value)}
-                style={{ marginRight: '10px' }}
+                className="p-2 border border-gray-300 rounded w-full"
               />
               <input
                 type="number"
-                placeholder="Seats"
-                value={vehicleData.Car.seats}
+                placeholder="Number Of Seats 4"
+                disabled
+                // value={vehicleData.Car.seats}
                 readOnly
-                style={{ marginRight: '10px' }}
+                className="p-2 border border-gray-300 rounded w-full"
               />
             </div>
           )}
 
           {(hasBike || hasCar) && (
-            <form onSubmit={handleSubmit}>
-              <button type="submit" style={{ marginTop: '10px' }}>Submit</button>
+            <form onSubmit={handleSubmit} className="space-y-2">
+              <button 
+                type="submit"
+                className="px-4 py-2 bg-blue-500 text-white rounded"
+              >
+                Submit
+              </button>
             </form>
           )}
-
-          <div className="my-10 flex flex-col items-center">
-            <div >
-              <div>
-                <h3 className="text-lg font-semibold">
-                  Total Payment: ${calculatePayment()}
-                </h3>
-              </div>
-            </div>
-            <div className="mb-10">
-              <Elements stripe={stripePromise}>
-                <StripeCheckout
-                  stripeKey="pk_test_51PT4pOAM7tB5pG0HD581QBg3nRbKadN9taCSabrmIuQNCX08wF6GOrUFUlVMGx5PVsxoF99xAoE13PfXjkIFCiew004JzB7cCt"
-                  token={handleToken}
-                  amount={calculatePayment() * 100}
-                  currency="USD"
-                  billingAddress={true}
-                  zipCode={false}
-                >
-                  <button
-                    type="button"
-                    className="p-2 mt-4 bg-blue-500 text-white rounded-md"
-                  >
-                    Pay ${calculatePayment()}
-                  </button>
-                </StripeCheckout>
-              </Elements>
-            </div>
-          </div>
-
         </div>
       )}
 
       {hasVehicles === false && (
         <div>
-          <p>You cannot proceed without providing vehicles.</p>
+          <p className="text-red-500">You cannot proceed without providing vehicles.</p>
         </div>
       )}
     </div>

@@ -89,7 +89,7 @@ const ResTiming = () => {
                 )}
               </div>
             </div>
-            <div className="w-[70vw] shadow-lg flex flex-col gap-10 items-center justify-center h-[30vh] p-5 border rounded-lg">
+            <div className="w-[70vw] shadow-lg flex flex-col gap-10 items-center justify-center h-fit p-5 border rounded-lg">
               <div className="flex flex-col gap-2">
                 {fields.map((field, index) => (
                   <div key={field.id} className="flex items-center gap-2">

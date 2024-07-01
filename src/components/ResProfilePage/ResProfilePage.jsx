@@ -62,15 +62,18 @@ const ResProfilePage = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-      const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
-      const clientHeight = document.documentElement.clientHeight || window.innerHeight;
+      const scrollTop =
+        document.documentElement.scrollTop || document.body.scrollTop;
+      const scrollHeight =
+        document.documentElement.scrollHeight || document.body.scrollHeight;
+      const clientHeight =
+        document.documentElement.clientHeight || window.innerHeight;
       const scrolled = (scrollTop / (scrollHeight - clientHeight)) * 100;
       setScrollProgress(scrolled);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleIsOpen = async (e) => {
@@ -106,10 +109,8 @@ const ResProfilePage = () => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 3, // Number of reviews visible at once
     slidesToScroll: 1,
-    // autoplay: true,
-    // autoplaySpeed: 3000,
     responsive: [
       {
         breakpoint: 1024,
@@ -133,12 +134,12 @@ const ResProfilePage = () => {
   const images = JSON.parse(profileData.gropimg || "[]");
 
   return (
-    <div className="relative">
+    <div className="relative h-[70vh] overflow-auto">
       <div className="fixed top-0 left-0 w-full h-2 bg-gray-200 z-50">
-        <div
+        {/* <div
           className="h-2 bg-blue-500"
           style={{ width: `${scrollProgress}%` }}
-        ></div>
+        ></div> */}
       </div>
       <div className="overflow-x-hidden">
         <div className="profilePage overflow-x-hidden flex flex-col items-center justify-center gap-5">
@@ -172,30 +173,48 @@ const ResProfilePage = () => {
                   <div>
                     <p className="text-2xl font-semibold m-2 text-tertiary">
                       Restaurant Name:{" "}
-                      <span className="text-secondary">{profileData.name || ""}</span>
+                      <span className="text-secondary">
+                        {profileData.name || ""}
+                      </span>
                     </p>
                     <p className="text-2xl font-semibold m-2 text-tertiary">
                       Restaurant Location:{" "}
-                      <span className="text-secondary">{profileData.locaton || ""}</span>
+                      <span className="text-secondary">
+                        {profileData.locaton || ""}
+                      </span>
                     </p>
                     <p className="text-2xl font-semibold m-2 text-tertiary">
                       Restaurant Contact:{" "}
-                      <span className="text-secondary">{profileData.phone || ""}</span>
+                      <span className="text-secondary">
+                        {profileData.phone || ""}
+                      </span>
                     </p>
                   </div>
 
                   <div>
                     <p className="text-2xl font-semibold m-2 text-tertiary">
-                      Start Time: <span className="text-secondary">{profileData.opentime || "00:00"}</span>
+                      Start Time:{" "}
+                      <span className="text-secondary">
+                        {profileData.opentime || "00:00"}
+                      </span>
                     </p>
                     <p className="text-2xl font-semibold m-2 text-tertiary">
-                      Close Time: <span className="text-secondary">{profileData.closetime || "00:00"}</span>
+                      Close Time:{" "}
+                      <span className="text-secondary">
+                        {profileData.closetime || "00:00"}
+                      </span>
                     </p>
                     <p className="text-2xl font-semibold m-2 text-tertiary">
-                      Type: <span className="text-secondary">{profileData.type}</span>
+                      Type:{" "}
+                      <span className="text-secondary">{profileData.type}</span>
                     </p>
                     <p className="text-2xl font-semibold m-2 text-tertiary">
-                    hygienePoints based on user out of 5: <span className="text-secondary">{profileData.hygienePoints}</span>
+                      Hygiene Score out of 5:{" "}
+                      <span className="text-secondary">
+                        {profileData.hygienePoints
+                          ? profileData.hygienePoints
+                          : "Null"}
+                      </span>
                     </p>
                   </div>
                 </div>
@@ -230,7 +249,9 @@ const ResProfilePage = () => {
               </div>
               <button
                 className="btn"
-                onClick={() => document.getElementById("my_modal_3").showModal()}
+                onClick={() =>
+                  document.getElementById("my_modal_3").showModal()
+                }
               >
                 {profileData.foodmenue ? "Edit foodmenue" : "Add foodmenue"}
               </button>
@@ -321,44 +342,72 @@ const ResProfilePage = () => {
           </div>
         </div>
 
-        <div className="review-section h-[30vh] my-20">
-          <h2 className="text-3xl text-tertiary w-full text-center my-5">
+        {/* <div className="review-section h-[30vh] my-20">
+          <h2 className="text-3xl text-tertiary w-full flex text-center my-5">
             Reviews
           </h2>
-          <Slider {...reviewSettings} className="w-full  px-10">
+          <Slider {...reviewSettings} className="reviews-slider flex">
             {reviews.map((singlereview) => (
               <div
                 key={singlereview.$id}
-                className="review-card p-4  border rounded-lg shadow-md "
+                className="review-card flex p-4 rounded-lg shadow-md"
               >
-                <div className="flex items-center justify-between mb-2">
-                  <p
-                    className="cursor-pointer text-xl font-semibold text-primary"
-                    onClick={() =>
-                      navigate(`/userprofilepage/${singlereview.userid}`)
-                    }
-                  >
-                    {singlereview.userid || "Anonymous"}
-                  </p>
-                  <div className="flex items-center">
-                    <StarRating numOfStars={singlereview.rating || 4} />
-                  </div>
+                <p
+                  className="cursor-pointer text-xl font-semibold text-primary mb-2"
+                  onClick={() =>
+                    navigate(`/userprofilepage/${singlereview.userid}`)
+                  }
+                >
+                  {singlereview.userid || "Anonymous"}
+                </p>
+                <div className="flex items-center mb-2">
+                  <StarRating numOfStars={singlereview.rating || 4} />
                 </div>
-                <div className="mb-2">
-                  <p className="text-secondary">
-                    <span className="font-semibold">Recommended Food: </span>
-                    {singlereview.recommendedfood || "No recommended food"}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-secondary">
-                    <span className="font-semibold">Comment: </span>
-                    {singlereview.comment || "No comment"}
-                  </p>
-                </div>
+                <p className="text-secondary mb-2">
+                  <span className="font-semibold">Recommended Food: </span>
+                  {singlereview.recommendedfood || "No recommended food"}
+                </p>
+                <p className="text-secondary">
+                  <span className="font-semibold">Comment: </span>
+                  {singlereview.comment || "No comment"}
+                </p>
               </div>
             ))}
           </Slider>
+        </div> */}
+
+        <div className=" w-full px-20 flex lg:h-[40vh] overflow-hidden flex-col justify-center">
+
+          <div className="review">
+            <p className="w-full text-3xl text-center">Reviews</p>
+          {reviews.map((singlereview) => (
+              <div
+                key={singlereview.$id}
+                className="review-card w-fit flex flex-col p-4 rounded-lg shadow-md"
+              >
+                <p
+                  className="cursor-pointer text-xl font-semibold text-primary mb-2"
+                  onClick={() =>
+                    navigate(`/userprofilepage/${singlereview.userid}`)
+                  }
+                >
+                  {singlereview.userid || "Anonymous"}
+                </p>
+                <div className="flex items-center mb-2">
+                  <StarRating numOfStars={singlereview.rating || 4} />
+                </div>
+                <p className="text-secondary mb-2">
+                  <span className="font-semibold">Recommended Food: </span>
+                  {singlereview.recommendedfood || "No recommended food"}
+                </p>
+                <p className="text-secondary">
+                  <span className="font-semibold">Comment: </span>
+                  {singlereview.comment || "No comment"}
+                </p>
+              </div>
+            ))}
+          </div>
+          
         </div>
 
         {!owner && (
