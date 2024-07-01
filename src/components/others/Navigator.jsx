@@ -16,7 +16,7 @@ function Navigator({ pathname }) {
     },
     {
       index: 3,
-      location: "/resphotouploedpage",
+      location: "/resphotouploadpage",
       name: "Restaurant Photos",
     },
     {
@@ -25,12 +25,12 @@ function Navigator({ pathname }) {
       name: "Room Setup",
     },
     {
-      index: 4,
+      index: 5,
       location: "/resroomviewpage",
       name: "Room View",
     },
     {
-      index: 4,
+      index: 6,
       location: "/restiming",
       name: "Restaurant Timing",
     },
