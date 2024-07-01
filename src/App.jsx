@@ -47,8 +47,7 @@ function App() {
 
   return (
     <>
-      <Layout />
-      {/* <Map /> */}
+      <Layout />     
     </>
   );
 }

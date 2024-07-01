@@ -42,6 +42,8 @@ import Resresrvationpage from './pages/restorent/Resresevationpage.jsx'
 import Userfeedbackpage from './pages/client/Userfeedbackpage.jsx'
 import Restorentfeedbackpage from './pages/restorent/restorentfeedbackpage.jsx'
 import Map from './components/Map/Map.jsx'
+import ResTravelSetup from './pages/restorent/Restravelsetup.jsx'
+import UsertravelBookingPageWrapper from './pages/client/usertravelbookingpage.jsx'
 
 
 
@@ -78,7 +80,9 @@ const router=createBrowserRouter(
       <Route path="/Resresrvationpage" element={<Resresrvationpage/>} />
       <Route path="/Restorentfeedbackpage" element={<Restorentfeedbackpage/>} />
       <Route path="/Userfeedbackpage" element={<Userfeedbackpage/>} />
-      {/* <Route path="/map" element={<Map/>} /> */}
+      <Route path="/restravelsetup" element={<ResTravelSetup/>} />
+      <Route path="/UsertravelBookingPageWrapper/:slug" element={<UsertravelBookingPageWrapper/>} />
+     
    
     </Route>
   )

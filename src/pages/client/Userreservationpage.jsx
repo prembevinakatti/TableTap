@@ -35,6 +35,16 @@ function Userreservation() {
     });
   }
 
+  function handelnavigate(index) {
+    console.log("hi");
+    console.log(paymentData[index]);
+    profileService.getres({ slug: paymentData[index].resid }).then((res) => {
+        if(res.hasVehicles){
+              navigate(`/UsertravelBookingPageWrapper${res.$id}`)
+        }
+    });
+  }
+
   let formattedDate = getCurrentDateFormatted();
 
   useEffect(() => {
@@ -101,6 +111,12 @@ function Userreservation() {
                   onClick={() => handelnavigate(index)}
                 >
                   Direction <FaMapMarkerAlt />
+                </button>
+                <button
+                  className="w-full text-primary flex items-center justify-end gap-2 font-semibold"
+                  onClick={() => handelride(index)}
+                >
+                  cheack for raid <FaMapMarkerAlt />
                 </button>
                 <p className="text-lg text-gray-700">
                   Restaurant Name:{" "}

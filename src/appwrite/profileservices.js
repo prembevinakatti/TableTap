@@ -500,6 +500,20 @@ class ProfileServices {
       console.log(error);
     }
   }
+   async  getpayment({ slug }) {
+    try {
+      console.log(queries); // Debug the queries
+      return await this.databases.getDocument(
+        conf.databaseid,
+        conf.collectionid3,
+       {
+        slug
+       }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
   
   async getreviews({query}){
     try {
@@ -516,9 +530,61 @@ class ProfileServices {
     }
    }
 
+   async updatevehicaldetails(
+   
+    {  slug, vehicaldetails,canprovidevehical}
+  ) {
+    try {
+      return await this.databases.updateDocument(
+        conf.databaseid,
+        conf.collectionid,
+        slug,
+        {
+          vehicaldetails,
+          canprovidevehicalc
+        }
+      );
+    } catch (error) {
+      console.log("Appwrite service :: updateProfile :: error", error);
+      throw error;
+    }
+  }
 
+  async createtravelpayments({
+    slug,
+    amount,
+    userid,
+    resid,
+    userlatitude,
+    userlogitude,
+    istraveled
+  
 
-
+    
+}) {
+  try {
+    return await this.databases.createDocument(
+      conf.databaseid,
+       conf.collectionid3,
+      slug,
+      {
+        slug,
+        amount,
+        userid,
+        resid,
+        userlatitude,
+        userlogitude,
+        istraveled
+        
+    
+        
+      }
+    );
+  } catch (error) {
+    console.log("Appwrite service :: create payment :: error", error);
+    throw error;
+  }
+}
 
 }
 

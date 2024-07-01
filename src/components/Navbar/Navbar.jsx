@@ -59,6 +59,9 @@ const Navbar = () => {
                   <div>
                     <Button details="btn-wide" info="Qr Scaner" onClick={() => navigate(`/rescodescaner`)} />
                   </div>
+                  <div>
+                    <Button details="btn-wide" info="Set up cab or bike" onClick={() => navigate(`/restravelsetup`)} />
+                  </div>
                 </ul>):(
                    <ul className="menu p-4 w-80 flex flex-col items-center gap-3 min-h-full bg-base-200">
                    {/* Sidebar content here */}
