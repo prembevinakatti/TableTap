@@ -6,6 +6,7 @@ import authService from "./appwrite/authservices";
 import profileService from "./appwrite/profileservices";
 import Layout from "./components/others/outlet";
 import { useNavigate } from "react-router-dom";
+import Map from "./components/Map/Map";
 
 function App() {
   const dispatch = useDispatch();
@@ -46,7 +47,8 @@ function App() {
 
   return (
     <>
-      <Layout />
+      {/* <Layout /> */}
+      <Map />
     </>
   );
 }

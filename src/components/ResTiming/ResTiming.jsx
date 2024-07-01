@@ -51,7 +51,7 @@ const ResTiming = () => {
 
   return (
     <>
-      <div className="h-[70vh] overflow-auto">
+      <div className="h-[80vh] overflow-auto">
         <form onSubmit={handleSubmit(handleTimeData)}>
           <Navigator pathname={pathname} />
           <div className="flex gap-5 w-full h-fit flex-col items-center justify-center">
