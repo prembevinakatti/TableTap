@@ -6,8 +6,13 @@ const StarRating = ({ numOfStars, color }) => {
       {[...Array(5)].map((_, index) => (
         <div
           key={index}
-          className={`mask mask-star-2 ${index < numOfStars ? `bg-${color}-400` : 'bg-gray-400'}`}
-          style={{ display: 'inline-block', width: '25px', height: '24px' }}
+          className={`mask mask-star-2`}
+          style={{
+            display: 'inline-block',
+            width: '25px',
+            height: '24px',
+            backgroundColor: index < numOfStars ? color : '#D1D5DB' // Tailwind's gray-400 color
+          }}
         />
       ))}
     </div>
