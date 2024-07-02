@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import profileService from '../../appwrite/profileservices';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const ResTravelSetup = () => {
   const [hasVehicles, setHasVehicles] = useState(null);
@@ -49,6 +50,7 @@ const ResTravelSetup = () => {
       slug: profiledata.$id,
       vehicaldetails: JSON.stringify(providedVehicles)
     }).then(()=>{
+      toast.success("Submit Successfully !")
       navigate(-1)
     })
   };

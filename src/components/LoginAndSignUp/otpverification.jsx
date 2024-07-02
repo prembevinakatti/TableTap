@@ -4,6 +4,7 @@ import OTPBox from "../OTPBox/OTPBox";
 import authService from "../../appwrite/authservices";
 import { varifed } from "../../store/authslice";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 function Otpverify({flag}) {
   const dispatch = useDispatch();
@@ -49,10 +50,11 @@ function Otpverify({flag}) {
       if (session) {
         dispatch(varifed({ userData: session }));
         if(flag===true){
-
+          toast.success("OTP Verified Successfully !")
           navigate('/resprofilecreatepage')
         }
         else{
+          toast.success("OTP Verified Successfully !")
           navigate('/userprofilecreatepage')
         } 
         
