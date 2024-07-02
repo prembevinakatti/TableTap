@@ -47,9 +47,11 @@ const SignUp = ({flag}) => {
         dispatch(login({ userData: signUpData }));
           if(flag==true){
             navigate('/Resverification');
+           
           }
           else{
             navigate('/userverification');
+            
           }
       }
     } catch (error) {

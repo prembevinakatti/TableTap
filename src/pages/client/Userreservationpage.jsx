@@ -47,6 +47,7 @@ function Userreservation() {
       const newreservation = reservation ? reservation.filter((rev) => rev !== reservationid) : [];
       profileService.updatereservations({ reservation: JSON.stringify(newreservation), slug: resid }).then(() => {
         profileService.updatetypeofpayment({ slug, type: 1 });
+        window.location.reload()
       });
     });
   }

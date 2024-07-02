@@ -52,10 +52,12 @@ function Otpverify({flag}) {
         if(flag===true){
           toast.success("OTP Verified Successfully !")
           navigate('/resprofilecreatepage')
+          window.location.reload()
         }
         else{
           toast.success("OTP Verified Successfully !")
           navigate('/userprofilecreatepage')
+          window.location.reload()
         } 
         
       }

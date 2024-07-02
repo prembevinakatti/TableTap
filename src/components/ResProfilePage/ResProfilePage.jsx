@@ -201,7 +201,7 @@ const ResProfilePage = () => {
                 </div>
                 <div className="w-full flex flex-col gap-5 items-center justify-center my-5">
                   <p className="text-2xl text-tertiary">Average Ratings</p>
-                  <StarRating numOfStars={profileData.ratings || 4} />
+                  <StarRating numOfStars={profileData.ratings || 4} color={yellow}/>
                 </div>
               </div>
             </div>
