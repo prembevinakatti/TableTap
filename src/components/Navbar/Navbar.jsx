@@ -4,7 +4,7 @@ import Button from "../Button/Button";
 import { useSelector } from "react-redux";
 import Logout from "../others/logout";
 import { useNavigate } from "react-router-dom";
-import Logo from "../../assets/Logo.png"
+import Logo from "../../assets/Logo.png";
 
 const Navbar = () => {
   const verified = useSelector((state) => state.auth.verified);
@@ -43,58 +43,6 @@ const Navbar = () => {
                   aria-label="close sidebar"
                   className="drawer-overlay"
                 ></label>
-<<<<<<< HEAD
-               {
-                profiledata&&profiledata.isres===true?( <ul className="menu p-4 w-80 flex flex-col items-center gap-3 min-h-full bg-base-200">
-                  {/* Sidebar content here */}
-                  <div>
-                    <Button details="btn-wide" info="Profile" />
-                  </div>
-                  <div className="flex btn btn-wide bg-secondary text-primary hover:text-primary hover:bg-secondary">
-                    Open
-                    <input type="checkbox" className="toggle toggle-warning z-10" />
-                    Close
-                  </div>
-                  <div>
-                    <Logout />
-                  </div>
-                  <div>
-                    <Button details="btn-wide" info="Bank Details" onClick={() => navigate(`/resbankdetailspage`)} />
-                  </div>
-                  <div>
-                    <Button details="btn-wide" info="all feedbacks" onClick={() => navigate(`/Restorentfeedbackpage`)} />
-                  </div>
-                  <div>
-                    <Button details="btn-wide" info="Qr Scaner" onClick={() => navigate(`/rescodescaner`)} />
-                  </div>
-                  <div>
-                    <Button details="btn-wide" info="Set up cab or bike" onClick={() => navigate(`/restravelsetup`)} />
-                  </div>
-                  <div>
-        <Button details="btn-wide" info="Travel Bookings" onClick={() => navigate("/Resalltravlingbookingpage")} />
-      </div>
-                </ul>):(
-                   <ul className="menu p-4 w-80 flex flex-col items-center gap-3 min-h-full bg-base-200">
-                   {/* Sidebar content here */}
-                   <div>
-                     <Button details="btn-wide" info="Profile"   onClick={() => navigate(`/userprofilepage/${profiledata.$id}`)}/>
-                   </div>
-                  <div>
-                  <Button details="btn-wide" info="Your Reservation"   onClick={() => navigate("/userreservation")}/>
-                  </div>
-                  <div>
-                  <Button details="btn-wide" info="Your feedbacks"   onClick={() => navigate("/Userfeedbackpage")}/>
-                  </div>
-                  <Button details="btn-wide" info="User Traveling Booked Page" onClick={() => navigate("/Usertravlingbookedpage")} />
-                   <div>
-                     <Logout />
-                   </div>
-                 
-                   
-                 </ul>
-                )
-               }
-=======
                 {profiledata && profiledata.isres === true ? (
                   <ul className="menu p-4 w-80 flex flex-col items-center gap-3 min-h-full bg-base-200">
                     {/* Sidebar content here */}
@@ -140,6 +88,13 @@ const Navbar = () => {
                         onClick={() => navigate(`/restravelsetup`)}
                       />
                     </div>
+                    <div>
+                      <Button
+                        details="btn-wide"
+                        info="Travel Bookings"
+                        onClick={() => navigate("/Resalltravlingbookingpage")}
+                      />
+                    </div>
                   </ul>
                 ) : (
                   <ul className="menu p-4 w-80 flex flex-col items-center gap-3 min-h-full bg-base-200">
@@ -167,12 +122,16 @@ const Navbar = () => {
                         onClick={() => navigate("/Userfeedbackpage")}
                       />
                     </div>
+                    <Button
+                      details="btn-wide"
+                      info="User Traveling Booked Page"
+                      onClick={() => navigate("/Usertravlingbookedpage")}
+                    />
                     <div>
                       <Logout />
                     </div>
                   </ul>
                 )}
->>>>>>> 9f0229417ddcc86a47b7aca22d95b280e4781310
               </div>
             </div>
           ) : null}
