@@ -203,7 +203,7 @@ function Userreservation() {
                             maxWidth: "100%",
                             width: "100%",
                           }}
-                          value={`/paymentdetails/${payment.slug}`}
+                          value={`/https://table-tap.vercel.app/${selectedPayment.slug}`}
                           viewBox={`0 0 256 256`}
                         />
                         <p className="w-full text-center text-2xl text-primary mt-10">
