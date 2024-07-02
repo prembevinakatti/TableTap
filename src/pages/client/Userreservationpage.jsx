@@ -167,7 +167,10 @@ function Userreservation() {
                     >
                       {no}
                     </p>
-                      {
+                      
+                    </div>
+                  ))}
+                  {
                         payment.type===0&&(
                           <p
                         className="cursor-pointer text-primary font-semibold"
@@ -176,8 +179,6 @@ function Userreservation() {
                       </p>
                         )
                       }
-                    </div>
-                  ))}
                 </div>
                 <p className="text-lg text-gray-700">
                   reservation Status:{" "}
