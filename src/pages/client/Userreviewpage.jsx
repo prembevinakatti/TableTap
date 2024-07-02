@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import profileService from "../../appwrite/profileservices";
 import { ID } from "appwrite";
+import toast from "react-hot-toast";
 
 function UserReviewPage() {
   const navigate = useNavigate();
@@ -63,7 +64,7 @@ function UserReviewPage() {
         console.log(updatedRating)
 
         await profileService.updateratings({ ratings: updatedRating.rating, hygienePoints: JSON.parse(updatedHygiene.points), slug: resid });
-        console.log('Review submitted successfully');
+        toast.success('Review submitted successfully');
         navigate(-1)
       }
     } catch (error) {
