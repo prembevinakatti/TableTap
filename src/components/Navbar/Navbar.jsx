@@ -49,17 +49,7 @@ const Navbar = () => {
                     <div>
                       <Button details="btn-wide" info="Profile" />
                     </div>
-                    <div className="flex btn btn-wide bg-secondary text-primary hover:text-primary hover:bg-secondary">
-                      Open
-                      <input
-                        type="checkbox"
-                        className="toggle toggle-warning z-10"
-                      />
-                      Close
-                    </div>
-                    <div>
-                      <Logout />
-                    </div>
+                    
                     <div>
                       <Button
                         details="btn-wide"
@@ -74,13 +64,7 @@ const Navbar = () => {
                         onClick={() => navigate(`/Restorentfeedbackpage`)}
                       />
                     </div>
-                    <div>
-                      <Button
-                        details="btn-wide"
-                        info="Qr Scaner"
-                        onClick={() => navigate(`/rescodescaner`)}
-                      />
-                    </div>
+                    
                     <div>
                       <Button
                         details="btn-wide"
@@ -94,6 +78,9 @@ const Navbar = () => {
                         info="Travel Bookings"
                         onClick={() => navigate("/Resalltravlingbookingpage")}
                       />
+                    </div>
+                    <div>
+                      <Logout />
                     </div>
                   </ul>
                 ) : (
