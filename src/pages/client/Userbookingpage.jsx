@@ -229,7 +229,7 @@ function UserBookingPage() {
   };
 
   return (
-    <div className="flex h-[70vh] overflow-auto lg:pt-72 relative top-[10vw] pt-[30vw] flex-col items-center justify-center p-4">
+    <div className="flex lg:h-[80vh] overflow-auto lg:pt-72 relative sm:top-[10vw] mt-[30vw] flex-col items-center justify-center p-4">
       <div>
         <select
           className="m-1 p-2 border border-gray-300 rounded bg-secondary text-primary"
