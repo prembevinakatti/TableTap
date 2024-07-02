@@ -287,16 +287,7 @@ function UserBookingPage() {
                     </div>
                     {selectedRoom !== null && (
                       <>
-                        <div className="mt-4">
-                          <h3 className="text-lg font-semibold">
-                            Select Date:
-                          </h3>
-                          <DatePicker
-                            selected={selectedDate}
-                            onChange={handleDateChange}
-                            className="m-1 p-2 border border-gray-300 rounded bg-secondary text-primary"
-                          />
-                        </div>
+                        
                         <div className="mt-4">
                           <h3 className="text-lg font-semibold">
                             Select Slot:
