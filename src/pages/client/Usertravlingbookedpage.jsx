@@ -126,7 +126,7 @@ const Usertravlingbookedpage = React.memo(() => {
                   Bill: {payment.amount}
                 </p>
                 <div className="flex mt-5 cursor-pointer items-center justify-between">
-                  <QRCode value={`/https://table-tap.vercel.app/${selectedPayment.slug}`} size={64} />
+                  <QRCode value={`/https://table-tap.vercel.app/paymentdetails/${selectedPayment.slug}`} size={64} />
                 </div>
               </div>
             );

@@ -160,7 +160,7 @@ function Userpayments() {
               <QRCode
                 size={500}
                 style={{ height: "10vw", maxWidth: "100%", width: "100%" }}
-                value={`/https://table-tap.vercel.app/${selectedPayment.slug}`}
+                value={`/https://table-tap.vercel.app/paymentdetails/${selectedPayment.slug}`}
                 viewBox={`0 0 256 256`}
               />
             </div>

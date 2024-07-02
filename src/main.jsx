@@ -46,6 +46,7 @@ import ResTravelSetup from './pages/restorent/Restravelsetup.jsx'
 import UsertravelBookingPageWrapper from './pages/client/usertravelbookingpage.jsx'
 import Usertravlingbookedpage from './pages/client/Usertravlingbookedpage.jsx'
 import Resalltravlingbookingpage from './pages/restorent/Resalltravlingbookingpage.jsx'
+import Paymentdetails from './pages/paymentdetails.jsx'
 
 
 
@@ -86,6 +87,7 @@ const router=createBrowserRouter(
       <Route path="/UsertravelBookingPageWrapper/:slug" element={<UsertravelBookingPageWrapper/>} />
       <Route path="/Usertravlingbookedpage" element={<Usertravlingbookedpage/>} />
       <Route path="/Resalltravlingbookingpage" element={<Resalltravlingbookingpage/>} />
+      <Route path="/Paymentdetails/:slug" element={<Paymentdetails/>} />
      
    
     </Route>
