@@ -5,13 +5,12 @@ import { updateProfile } from "./store/profileslice";
 import authService from "./appwrite/authservices";
 import profileService from "./appwrite/profileservices";
 import Layout from "./components/others/outlet";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const location = useLocation();
 
   useEffect(() => {
     const getCurrentUser = async () => {
@@ -63,7 +62,7 @@ function App() {
         } else {
           dispatch(login({ userData }));
           if (userData.name.includes("-user")) {
-            navigate("/userverification");
+            
           } else {
             navigate("/Resverification");
           }
@@ -77,12 +76,6 @@ function App() {
 
     getCurrentUser();
   }, [dispatch, navigate]);
-
-  useEffect(() => {
-    if (!loading) {
-      navigate(location.pathname);
-    }
-  }, [loading, navigate, location]);
 
   if (loading) {
     return (

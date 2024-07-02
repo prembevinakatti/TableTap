@@ -1,8 +1,8 @@
+import { Query } from "appwrite";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import profileService from "../../appwrite/profileservices";
-import { Query } from "appwrite";
 import Button from "../../components/Button/Button";
 
 function Resresrvationpage() {
@@ -104,6 +104,7 @@ function Resresrvationpage() {
                   ))}
                 </div>
                 <p className="text-lg text-gray-700">Payment Status: Successful</p>
+                <p className="text-lg text-gray-700">reservation status : {payment.type===0?"reserved":"reservation cancled by user"}</p>
               </div>
               <p className="text-2xl font-semibold text-primary-600">{payment.amount}</p>
             </div>

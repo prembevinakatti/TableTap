@@ -2,34 +2,43 @@ import React, { useEffect, useState } from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import MapComponent from '../../components/Map/Map';
 import profileService from '../../appwrite/profileservices';
-import { useSelector } from 'react-redux';
 
 const stripePromise = loadStripe('pk_test_51PT4pOAM7tB5pG0HD581QBg3nRbKadN9taCSabrmIuQNCX08wF6GOrUFUlVMGx5PVsxoF99xAoE13PfXjkIFCiew004JzB7cCt');
 
 function UsertravelBookingPageWrapper() {
   const profiledata = useSelector((state) => state.profile.profiledata);
   const { slug } = useParams();
-  const [carprice, setcarprice] = useState(0);
-  const [bikeprice, setbikeprice] = useState(0);
-  const [to, setTo] = useState({});
+  const [carprice, setCarPrice] = useState(0);
+  const [bikeprice, setBikePrice] = useState(0);
+  const [to, setTo] = useState(null);
+
+  const from = { lat: profiledata.latitude, lng: profiledata.longitude}; 
 
   useEffect(() => {
-    profileService.getpayment({ slug: slug }).then((data) => {
-      const leta = JSON.parse(data.vehicaldetails);
-      setbikeprice(leta.Car.costPerKm);
-      setcarprice(leta.Bike.costPerKm);
-      setTo({
-        lng: leta.longitude,
-        lat: leta.latitude,
-      });
-    });
+    const fetchPaymentDetails = async () => {
+      try {
+        const data = await profileService.getres({ slug });
+        const vehicleDetails = JSON.parse(data.vehicaldetails);
+        setBikePrice(vehicleDetails.Bike.costPerKm);
+        setCarPrice(vehicleDetails.Car.costPerKm);
+        setTo({
+          lat: data.latitude,
+          lng: data.longitude,
+        });
+      } catch (error) {
+        console.error("Error fetching payment details:", error);
+      }
+    };
+
+    fetchPaymentDetails();
   }, [slug]);
 
   return (
     <Elements stripe={stripePromise}>
-      <MapComponent bike={bikeprice} car={carprice} />
+      {to && <MapComponent from={from} to={to} bike={bikeprice} car={carprice} resid={slug} userid={profiledata.$id}/>}
     </Elements>
   );
 }

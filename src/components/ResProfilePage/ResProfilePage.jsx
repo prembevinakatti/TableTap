@@ -133,15 +133,15 @@ const ResProfilePage = () => {
   const images = JSON.parse(profileData.gropimg || "[]");
 
   return (
-    <div className="relative">
+    <div className="relative h-[80vh] overflow-auto">
       <div className="fixed top-0 left-0 w-full h-2 bg-gray-200 z-50">
         <div
           className="h-2 bg-blue-500"
           style={{ width: `${scrollProgress}%` }}
         ></div>
       </div>
-      <div className="overflow-x-hidden">
-        <div className="profilePage overflow-x-hidden flex flex-col items-center justify-center gap-5">
+      <div className="overflow-hidden">
+        <div className="profilePage overflow-hidden flex flex-col items-center justify-center gap-5">
           {loading ? (
             <div className="flex flex-col gap-4 w-52">
               <div className="flex gap-4 items-center">
@@ -293,7 +293,7 @@ const ResProfilePage = () => {
           />
         ) : (
           <Button
-            details="lg:btn-wide absolute right-36"
+            details="lg:btn-wide w-full relative lg:left-[70vw]"
             info="Book Table"
             onClick={() => navigate(`/userbookingpage/${slug}`)}
           />
@@ -321,11 +321,11 @@ const ResProfilePage = () => {
           </div>
         </div>
 
-        <div className="review-section h-[30vh] my-20">
+        <div className="review-section h-[30vh] overflow-auto overflow-x-hidden my-20">
           <h2 className="text-3xl text-tertiary w-full text-center my-5">
             Reviews
           </h2>
-          <Slider {...reviewSettings} className="w-full  px-10">
+          <Slider {...reviewSettings} className="w-full flex  px-10">
             {reviews.map((singlereview) => (
               <div
                 key={singlereview.$id}
@@ -361,13 +361,13 @@ const ResProfilePage = () => {
           </Slider>
         </div>
 
-        {!owner && (
+        {/* {!owner && (
           <Button
             details="btn-wide"
             info="Add Feedback"
             onClick={() => navigate(`/UserReviewPage/${slug}`)}
           />
-        )}
+        )} */}
       </div>
     </div>
   );
