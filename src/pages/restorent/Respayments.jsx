@@ -17,7 +17,7 @@ function Respayments() {
         .getpayments({ queries: query })
         .then((response) => {
           if (response && response.documents) {
-            setPaymentdata(response.documents);
+            setPaymentdata(response.documents.reverse()); // Reverse the array here
             console.log(response.documents)
           } else {
             console.log('No documents found in response');

@@ -11,9 +11,7 @@ import toast from "react-hot-toast";
 function Userreservation() {
   const [paymentData, setPaymentData] = useState([]);
   const [showToday, setShowToday] = useState(true);
-  const [currentTime, setCurrentTime] = useState(
-    new Date().toLocaleTimeString()
-  );
+  const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
   const profileData = useSelector((state) => state.profile.profiledata);
   const navigate = useNavigate();
 
@@ -27,37 +25,32 @@ function Userreservation() {
   }
 
   function handelnavigate(index) {
-    console.log("hi");
-    console.log(paymentData[index]);
     profileService.getres({ slug: paymentData[index].resid }).then((res) => {
-      console.log(res);
       const url = `https://www.google.com/maps/search/?api=1&query=${res.latitude},${res.longitude}`;
       window.open(url, "_blank");
     });
   }
 
   function handelride(index) {
-    console.log("hi");
-    console.log(paymentData[index]);
     profileService.getres({ slug: paymentData[index].resid }).then((res) => {
-        if(res.canprovidevehical){
-              navigate(`/UsertravelBookingPageWrapper/${res.$id}`)
-        }else{
-        toast.error("the current seleted user is not having the  services of transportation")  
-        }
+      if (res.canprovidevehical) {
+        navigate(`/UsertravelBookingPageWrapper/${res.$id}`);
+      } else {
+        toast.error("The current selected user does not have transportation services.");
+      }
     });
   }
-  function handelcancel(reservationid,resid,slug){
-      profileService.getres({slug:resid}).then((data)=>{
-        console.log(data);
-          const reservation=JSON.parse(data.reservation)
-          const newreservation = reservation ? reservation.filter(rev => rev !== reservationid) : [];
-          profileService.updatereservations({reservation:JSON.stringify(newreservation),slug:resid}).then(()=>{
-            profileService.updatetypeofpayment({slug:slug,type:1})
-          })
-      })
 
+  function handelcancel(reservationid, resid, slug) {
+    profileService.getres({ slug: resid }).then((data) => {
+      const reservation = JSON.parse(data.reservation);
+      const newreservation = reservation ? reservation.filter((rev) => rev !== reservationid) : [];
+      profileService.updatereservations({ reservation: JSON.stringify(newreservation), slug: resid }).then(() => {
+        profileService.updatetypeofpayment({ slug, type: 1 });
+      });
+    });
   }
+
   let formattedDate = getCurrentDateFormatted();
 
   useEffect(() => {
@@ -75,7 +68,7 @@ function Userreservation() {
         .getpayments({ queries: query })
         .then((response) => {
           if (response && response.documents) {
-            setPaymentData(response.documents);
+            setPaymentData(response.documents.reverse());
           } else {
             console.log("No documents found in response");
           }
@@ -114,23 +107,24 @@ function Userreservation() {
       {paymentData.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {paymentData.map((payment, index) => (
-            <div
-              key={payment.$id}
-              className="bg-white p-6 rounded-lg shadow-md"
-            >
+            <div key={payment.$id} className="bg-white p-6 rounded-lg shadow-md">
               <div className="mb-4">
-                <button
-                  className="w-full text-primary flex items-center justify-end gap-2 font-semibold"
-                  onClick={() => handelnavigate(index)}
-                >
-                  Direction <FaMapMarkerAlt />
-                </button>
-                <button
-                  className="w-full text-primary flex items-center justify-end gap-2 font-semibold"
-                  onClick={() => handelride(index)}
-                >
-                  Book a Ride <FaMapMarkerAlt />
-                </button>
+                {payment.type === 0 && (
+                  <>
+                    <button
+                      className="w-full text-primary flex items-center justify-end gap-2 font-semibold"
+                      onClick={() => handelnavigate(index)}
+                    >
+                      Direction <FaMapMarkerAlt />
+                    </button>
+                    <button
+                      className="w-full text-primary flex items-center justify-end gap-2 font-semibold"
+                      onClick={() => handelride(index)}
+                    >
+                      Book a Ride <FaMapMarkerAlt />
+                    </button>
+                  </>
+                )}
                 <p className="text-lg text-gray-700">
                   Restaurant Name:{" "}
                   <span
@@ -140,9 +134,7 @@ function Userreservation() {
                     {payment.resid}
                   </span>
                 </p>
-                <p className="text-lg text-gray-700">
-                  Payment ID: {payment.slug}
-                </p>
+                <p className="text-lg text-gray-700">Payment ID: {payment.slug}</p>
                 <p className="text-lg text-gray-700">
                   Date: {JSON.parse(payment.paymentdetails).date}
                 </p>
@@ -150,53 +142,42 @@ function Userreservation() {
                   Slot: {JSON.parse(payment.paymentdetails).slot}
                 </p>
                 <p className="text-lg text-gray-700">
-                  Number of Chairs:{" "}
-                  {JSON.parse(payment.paymentdetails).numberofchair}
+                  Number of Chairs: {JSON.parse(payment.paymentdetails).numberofchair}
                 </p>
                 <p className="text-lg text-gray-700">
-                  Reservation ID:{" "}
-                  {JSON.parse(payment.paymentdetails).reservationid}
+                  Reservation ID: {JSON.parse(payment.paymentdetails).reservationid}
                 </p>
                 <p className="text-lg text-gray-700">Chair Numbers:</p>
                 <div className="flex flex-wrap">
                   {JSON.parse(payment.paymentdetails).chairnumber.map((no) => (
-                    <div>
-                    <p
-                      key={no}
-                      className="text-sm text-gray-600 bg-gray-200 px-2 py-1 rounded mr-2 mb-2"
-                    >
+                    <p key={no} className="text-sm text-gray-600 bg-gray-200 px-2 py-1 rounded mr-2 mb-2">
                       {no}
                     </p>
-                      
-                    </div>
                   ))}
-                  {
-                        payment.type===0&&(
-                          <p
-                        className="cursor-pointer text-primary font-semibold"
-                        onClick={() => (handelcancel(no.reservationid,payment.resid,payment.slug))}
-                      >Cancel Reservation
-                      </p>
-                        )
-                      }
                 </div>
+                {payment.type === 0 && (
+                  <p
+                    className="cursor-pointer text-primary font-semibold"
+                    onClick={() => handelcancel(JSON.parse(payment.paymentdetails).reservationid, payment.resid, payment.slug)}
+                  >
+                    Cancel Reservation
+                  </p>
+                )}
                 <p className="text-lg text-gray-700">
-                  reservation Status:{" "}
-                  <span className={`text-${payment.type===0?"green":"red"}-500`}>{payment.type===1?"canceled by user":"succceful payment"}</span>
+                  Reservation Status:{" "}
+                  <span className={`text-${payment.type === 0 ? "green" : "red"}-500`}>
+                    {payment.type === 1 ? "Canceled by user" : "Successful payment"}
+                  </span>
                 </p>
               </div>
               <p className="text-2xl border p-1 bg-primary rounded-md w-fit font-semibold text-primary-600">
                 Bill :{payment.amount}
               </p>
-              <div className="flex mt-5  cursor-pointer items-center justify-between">
+              <div className="flex mt-5 cursor-pointer items-center justify-between">
                 <div>
                   <p
                     className="text-primary font-semibold"
-                    onClick={() =>
-                      document
-                        .getElementById(`modal_${payment.$id}`)
-                        .showModal()
-                    }
+                    onClick={() => document.getElementById(`modal_${payment.$id}`).showModal()}
                   >
                     Get QR
                   </p>
@@ -239,7 +220,6 @@ function Userreservation() {
                   >
                     Add Feedback
                   </p>
-                
                 </div>
               </div>
             </div>
