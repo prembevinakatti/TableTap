@@ -62,6 +62,9 @@ const Navbar = () => {
                   <div>
                     <Button details="btn-wide" info="Set up cab or bike" onClick={() => navigate(`/restravelsetup`)} />
                   </div>
+                  <div>
+        <Button details="btn-wide" info="Travel Bookings" onClick={() => navigate("/Resalltravlingbookingpage")} />
+      </div>
                 </ul>):(
                    <ul className="menu p-4 w-80 flex flex-col items-center gap-3 min-h-full bg-base-200">
                    {/* Sidebar content here */}
@@ -74,6 +77,7 @@ const Navbar = () => {
                   <div>
                   <Button details="btn-wide" info="Your feedbacks"   onClick={() => navigate("/Userfeedbackpage")}/>
                   </div>
+                  <Button details="btn-wide" info="User Traveling Booked Page" onClick={() => navigate("/Usertravlingbookedpage")} />
                    <div>
                      <Logout />
                    </div>
