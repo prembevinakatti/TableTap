@@ -6,6 +6,7 @@ import { Query } from "appwrite";
 import StarRating from "../../components/starratting";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
 
 function UserHomePage() {
   const { register, handleSubmit, watch } = useForm();
@@ -76,10 +77,10 @@ function UserHomePage() {
     let updatedSaved = [...usersaved];
     if (updatedSaved.includes(resid)) {
       updatedSaved = updatedSaved.filter(id => id !== resid);
-      alert("Saved removed successfully");
+      toast.success("Saved removed successfully");
     } else {
       updatedSaved.push(resid);
-      alert("Saved successfully");
+      toast.success("Saved successfully");
     }
     setUsersaved(updatedSaved);
     profileService.updatesaved({ saved: JSON.stringify(updatedSaved), slug: users });

@@ -9,6 +9,7 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import StripeCheckout from "react-stripe-checkout";
 import { useSelector } from "react-redux";
 import { ID } from "appwrite";
+import toast from "react-hot-toast";
 
 // Initialize Stripe with your publishable key
 const stripePromise = loadStripe(
@@ -102,7 +103,7 @@ function UserBookingPage() {
     selectedSlotTime.setHours(hours, minutes);
 
     if (selectedSlotTime < currentDateTime) {
-      alert("Cannot select a slot before the current date and time.");
+      toast.error("Cannot select a slot before the current date and time.");
       return;
     }
 
@@ -167,7 +168,7 @@ function UserBookingPage() {
           });
         }
       });
-    alert("Payment Successful!");
+    toast.success("Payment Successful!");
   };
 
   const handleSubmit = async (event) => {
@@ -213,12 +214,12 @@ function UserBookingPage() {
     maxDate.setDate(currentDate.getDate() + 7);
 
     if (date < currentDate) {
-      alert("Cannot select a date before the current date.");
+      toast.error("Cannot select a date before the current date.");
       return;
     }
 
     if (date > maxDate) {
-      alert("Cannot book more than 7 days in advance.");
+      toast.error("Cannot book more than 7 days in advance.");
       return;
     }
 

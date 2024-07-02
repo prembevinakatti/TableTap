@@ -10,6 +10,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import StripeCheckout from "react-stripe-checkout";
 import profileService from "../../appwrite/profileservices";
 import { ID } from "appwrite";
+import toast from "react-hot-toast";
 
 // Initialize Stripe with your publishable key
 const stripePromise = loadStripe("pk_test_51PT4pOAM7tB5pG0HD581QBg3nRbKadN9taCSabrmIuQNCX08wF6GOrUFUlVMGx5PVsxoF99xAoE13PfXjkIFCiew004JzB7cCt");
@@ -50,7 +51,7 @@ const MapComponent = ({ from, to, bike, car ,resid,userid}) => {
       numPersons:numPersons
     }
     profileService.createtravelpayments({amount:JSON.stringify(paymentAmount),isvehicalbooked:true,resid:resid,userid:userid,userlogitude:to.lng,userlatitude:to.lat,paymentdetails:JSON.stringify(paymentdetails),slug:ID.unique(),date:JSON.stringify(date),dateonbook:""})
-    alert("Payment Successful!");
+    toast.success("Payment Successful!");
   };
 
   const Routing = ({ from, to }) => {
