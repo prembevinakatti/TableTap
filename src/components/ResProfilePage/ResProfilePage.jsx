@@ -218,7 +218,7 @@ const ResProfilePage = () => {
                 info="Edit Time"
                 onClick={() => navigate(`/restiming`)}
               />
-              <div className="flex">
+              <div className="flex btn bg-primary">
                 <p>Close</p>
                 <input
                   type="checkbox"
