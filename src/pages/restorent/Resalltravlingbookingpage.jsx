@@ -135,7 +135,7 @@ function Resalltravlingbookingpage() {
                 </p>
                 <div className="flex mt-5 cursor-pointer items-center justify-between">
                   <div>
-                    <QRCode value={`/https://table-tap.vercel.app/paymentdetails/${selectedPayment.slug}`} size={64} />
+                    <QRCode value={`https://table-tap.vercel.app/paymentdetails/${selectedPayment.slug}`} size={64} />
                   </div>
                 </div>
               </div>

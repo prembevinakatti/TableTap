@@ -87,7 +87,7 @@ const router=createBrowserRouter(
       <Route path="/UsertravelBookingPageWrapper/:slug" element={<UsertravelBookingPageWrapper/>} />
       <Route path="/Usertravlingbookedpage" element={<Usertravlingbookedpage/>} />
       <Route path="/Resalltravlingbookingpage" element={<Resalltravlingbookingpage/>} />
-      <Route path="/Paymentdetails/:slug" element={<Paymentdetails/>} />
+      <Route path="/paymentdetails/:slug" element={<Paymentdetails/>} />
      
    
     </Route>
