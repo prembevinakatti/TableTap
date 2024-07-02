@@ -18,7 +18,7 @@ const Navbar = () => {
     <div>
       <div className="navbar border-b border-primary px-3 p-2 flex items-center justify-between">
         <div className="w-[5vw] overflow-hidden">
-          <img className="w-full h-full object-cover" src="./public/Logo.png" alt="" />
+          <img className="w-full h-full object-cover" src="src/assets/Logo.png" alt="" />
         </div>
         <div>
           {profiledata && profiledata.state === "completed" ? (
