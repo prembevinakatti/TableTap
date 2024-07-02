@@ -199,10 +199,10 @@ const ResProfilePage = () => {
                     </p>
                   </div>
                 </div>
-                <div className="w-full flex flex-col gap-5 items-center justify-center my-5">
+                {/* <div className="w-full flex flex-col gap-5 items-center justify-center my-5">
                   <p className="text-2xl text-tertiary">Average Ratings</p>
-                  <StarRating numOfStars={profileData.ratings || 4} color={"yellow"}/>
-                </div>
+                  <StarRating numOfStars={profileData.ratings || 4} color="yellow"/>
+                </div> */}
               </div>
             </div>
           )}
@@ -218,7 +218,7 @@ const ResProfilePage = () => {
                 info="Edit Time"
                 onClick={() => navigate(`/restiming`)}
               />
-              <div className="flex btn bg-primary">
+              <div className="flex btn bg-secondary text-primary">
                 <p>Close</p>
                 <input
                   type="checkbox"
@@ -229,7 +229,7 @@ const ResProfilePage = () => {
                 <p>Open</p>
               </div>
               <button
-                className="btn"
+                className="btn bg-secondary text-primary"
                 onClick={() => document.getElementById("my_modal_3").showModal()}
               >
                 {profileData.foodmenue ? "Edit foodmenue" : "Add foodmenue"}
