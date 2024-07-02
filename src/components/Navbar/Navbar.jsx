@@ -4,6 +4,7 @@ import Button from "../Button/Button";
 import { useSelector } from "react-redux";
 import Logout from "../others/logout";
 import { useNavigate } from "react-router-dom";
+import Logo from "../../assets/Logo.png"
 
 const Navbar = () => {
   const verified = useSelector((state) => state.auth.verified);
@@ -18,7 +19,7 @@ const Navbar = () => {
     <div>
       <div className="navbar border-b border-primary px-3 p-2 flex items-center justify-between">
         <div className="w-[5vw] overflow-hidden">
-          <img className="w-full h-full object-cover" src="src/assets/Logo.png" alt="" />
+          <img className="w-full h-full object-cover" src={Logo} alt="" />
         </div>
         <div>
           {profiledata && profiledata.state === "completed" ? (
