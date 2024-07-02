@@ -56,58 +56,91 @@ function Userpayments() {
       </div>
       {paymentdata.length > 0 ? (
         <div className="grid grid-cols-1 gap-6">
-          {paymentdata.map((payment) => (
-            <div key={payment.$id} className="bg-white p-6 rounded-lg shadow-md">
-              <div className="mb-4">
-                <p className="text-lg text-gray-700">
-                  To:{" "}
-                  <span
-                    onClick={() => navigate(`/resprofilepage/${payment.resid}`)}
-                    className="text-blue-500 cursor-pointer"
-                  >
-                    {payment.resid}
-                  </span>
-                </p>
-                <p className="text-lg text-gray-700">
-                 <span className="font-semibold"> Payment ID:</span> {payment.slug}
-                </p>
-                <p className="text-lg text-gray-700">
-                  <span className="font-semibold">Seat booked day:</span> {JSON.parse(payment.paymentdetails).date}
-                </p>
-                <p className="text-lg text-gray-700">
-                 <span className="font-semibold"> Slot:</span> {JSON.parse(payment.paymentdetails).slot}
-                </p>
-                <p className="text-lg text-gray-700">
-                  <span className="font-semibold">Number of Chairs:</span> {JSON.parse(payment.paymentdetails).numberofchair}
-                </p>
-                <p className="text-lg text-gray-700">
-                  <span className="font-semibold">Reservation ID:</span> {JSON.parse(payment.paymentdetails).reservationid}
-                </p>
-                <p className="text-lg text-gray-700 font-semibold">Chair Numbers:</p>
-                <div className="flex flex-wrap">
-                  {JSON.parse(payment.paymentdetails).chairnumber.map((no) => (
-                    <p key={no} className="text-sm text-gray-600 bg-gray-200 px-2 py-1 rounded mr-2 mb-2">
-                      {no}
-                    </p>
-                  ))}
+          {paymentdata.map((payment) => {
+            // Parse paymentdetails safely
+            let paymentDetails = {};
+            try {
+              paymentDetails = JSON.parse(payment.paymentdetails);
+            } catch (error) {
+              console.error("Error parsing payment details:", error);
+              // Handle error parsing JSON, perhaps set paymentDetails to an empty object or handle differently
+            }
+
+            return (
+              <div key={payment.$id} className="bg-white p-6 rounded-lg shadow-md">
+                <div className="mb-4">
+                  <p className="text-lg text-gray-700">
+                    To:{" "}
+                    <span
+                      onClick={() => navigate(`/resprofilepage/${payment.resid}`)}
+                      className="text-blue-500 cursor-pointer"
+                    >
+                      {payment.resid}
+                    </span>
+                  </p>
+                  <p className="text-lg text-gray-700">
+                    <span className="font-semibold">Payment ID:</span> {payment.slug}
+                  </p>
+                  {payment.isvehicalbooked ? (
+                    <>
+                      <p className="text-lg text-gray-700">
+                        <span className="font-semibold">Reservation ID:</span> {paymentDetails.reservationid}
+                      </p>
+                      <p className="text-lg text-gray-700 font-semibold">Chair Numbers:</p>
+                      <div className="flex flex-wrap">
+                        {/* Check if paymentDetails is an array */}
+                        {Array.isArray(paymentDetails) && paymentDetails.map((details, index) => (
+                          <p key={`${details}-${index}`} className="text-sm text-gray-600 mr-2 mb-2">
+                            {details}
+                          </p>
+                        ))}
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <p className="text-lg text-gray-700">
+                        <span className="font-semibold">Seat booked day:</span> {paymentDetails.date}
+                      </p>
+                      <p className="text-lg text-gray-700">
+                        <span className="font-semibold">Slot:</span> {paymentDetails.slot}
+                      </p>
+                      <p className="text-lg text-gray-700">
+                        <span className="font-semibold">Number of Chairs:</span> {paymentDetails.numberofchair}
+                      </p>
+                      <p className="text-lg text-gray-700">
+                        <span className="font-semibold">Reservation ID:</span> {paymentDetails.reservationid}
+                      </p>
+                      <p className="text-lg text-gray-700 font-semibold">Chair Numbers:</p>
+                      <div className="flex flex-wrap">
+                        {/* Check if chairnumber is an array */}
+                        {paymentDetails.chairnumber && paymentDetails.chairnumber.map((no, index) => (
+                          <p key={`${no}-${index}`} className="text-sm text-gray-600 bg-gray-200 px-2 py-1 rounded mr-2 mb-2">
+                            {no}
+                          </p>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                  <p className="text-lg text-gray-700">
+                    <span className="font-semibold">Payment Status:</span> <span className="text-green-500">Successful</span>
+                  </p>
                 </div>
-                <p className="text-lg text-gray-700">
-                  <span className="font-semibold">Payment Status:</span> <span className="text-green-500">Successful</span>
-                </p>
+                <div className="w-full flex items-center justify-between">
+                  <p className="text-2xl border bg-primary text-tertiary p-2 rounded-md font-semibold text-primary-600">
+                    Bill : {payment.amount}
+                  </p>
+                  {!payment.isvehicalbooked && (
+                    <button
+                      className="btn lg:btn-wide bg-primary text-tertiary lg:text-2xl p-2 rounded-md"
+                      onClick={() => handleShowQr(payment)}
+                    >
+                      Get QR
+                    </button>
+                  )}
+                </div>
               </div>
-              <div className="w-full flex items-center justify-between">
-              <p className="text-2xl border bg-primary text-tertiary p-2 rounded-md font-semibold text-primary-600">
-                Bill : {payment.amount}
-              </p>
-              <button
-                className="btn btn-wide bg-primary text-tertiary text-2xl p-2 rounded-md"
-                onClick={() => handleShowQr(payment)}
-              >
-                Get QR
-              </button>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       ) : (
         <p className="text-center text-gray-600">No payment data available.</p>
@@ -121,7 +154,7 @@ function Userpayments() {
               </button>
             </form>
             <div style={{ height: "400px", margin: "0 auto", maxWidth: 800, width: "100%" }}>
-            <p className="w-full text-center mb-10 text-2xl text-primary mt-10">
+              <p className="w-full text-center mb-10 text-2xl text-primary mt-10">
                 Scan QR Code For Details
               </p>
               <QRCode
@@ -130,7 +163,6 @@ function Userpayments() {
                 value={`/paymentdetails/${selectedPayment.slug}`}
                 viewBox={`0 0 256 256`}
               />
-              
             </div>
           </div>
         </dialog>

@@ -503,7 +503,6 @@ class ProfileServices {
   }
    async  getpayment({ slug }) {
     try {
-      console.log(queries); // Debug the queries
       return await this.databases.getDocument(
         conf.databaseid,
         conf.collectionid3,
@@ -576,7 +575,10 @@ class ProfileServices {
     resid,
     userlatitude,
     userlogitude,
-    istraveled
+    isvehicalbooked,
+    paymentdetails,
+    date,
+    dateonbook
   
 
     
@@ -593,7 +595,10 @@ class ProfileServices {
         resid,
         userlatitude,
         userlogitude,
-        istraveled
+        isvehicalbooked,
+        paymentdetails,
+        date,
+        dateonbook
         
     
         

@@ -160,7 +160,7 @@ function UserHomePage() {
                   />
                 </div>
                 <div>
-                <div className="w-full flex items-center gap-28">
+                <div className="w-full flex items-center justify-between">
                    <p className="font-semibold text-4xl w-full mt-2">
                      {doc.name}
                    </p>

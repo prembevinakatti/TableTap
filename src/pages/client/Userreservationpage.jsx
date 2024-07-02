@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import profileService from "../../appwrite/profileservices";
 import { Query } from "appwrite";
-import { useNavigate } from "react-router-dom";
-import QRCode from "react-qr-code";
-import Button from "../../components/Button/Button";
+import React, { useEffect, useState } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
+import QRCode from "react-qr-code";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import profileService from "../../appwrite/profileservices";
+import Button from "../../components/Button/Button";
+import toast from "react-hot-toast";
 
 function Userreservation() {
   const [paymentData, setPaymentData] = useState([]);
@@ -41,13 +42,16 @@ function Userreservation() {
     profileService.getres({ slug: paymentData[index].resid }).then((res) => {
         if(res.canprovidevehical){
               navigate(`/UsertravelBookingPageWrapper/${res.$id}`)
+        }else{
+        toast.error("the current seleted user is not having the  services of transportation")  
         }
     });
   }
   function handelcancel(reservationid,resid,slug){
       profileService.getres({slug:resid}).then((data)=>{
-          const reservation=JSON.parse(data.paymentdetails)
-         const newreservation= reservation||[].filter((rev)=>(rev!=reservationid))
+        console.log(data);
+          const reservation=JSON.parse(data.reservation)
+          const newreservation = reservation ? reservation.filter(rev => rev !== reservationid) : [];
           profileService.updatereservations({reservation:JSON.stringify(newreservation),slug:resid}).then(()=>{
             profileService.updatetypeofpayment({slug:slug,type:1})
           })
@@ -125,7 +129,7 @@ function Userreservation() {
                   className="w-full text-primary flex items-center justify-end gap-2 font-semibold"
                   onClick={() => handelride(index)}
                 >
-                  cheack for raid <FaMapMarkerAlt />
+                  Book a Ride <FaMapMarkerAlt />
                 </button>
                 <p className="text-lg text-gray-700">
                   Restaurant Name:{" "}
@@ -163,21 +167,22 @@ function Userreservation() {
                     >
                       {no}
                     </p>
-                      {
+                      
+                    </div>
+                  ))}
+                  {
                         payment.type===0&&(
                           <p
                         className="cursor-pointer text-primary font-semibold"
                         onClick={() => (handelcancel(no.reservationid,payment.resid,payment.slug))}
-                      >cancelresrevation
+                      >Cancel Reservation
                       </p>
                         )
                       }
-                    </div>
-                  ))}
                 </div>
                 <p className="text-lg text-gray-700">
-                  Payment Status:{" "}
-                  <span className={`text-${payment.type==0?"green":"red"}-500`}>{payment.type}||not found</span>
+                  reservation Status:{" "}
+                  <span className={`text-${payment.type===0?"green":"red"}-500`}>{payment.type===1?"canceled by user":"succceful payment"}</span>
                 </p>
               </div>
               <p className="text-2xl border p-1 bg-primary rounded-md w-fit font-semibold text-primary-600">
