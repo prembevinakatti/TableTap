@@ -18,7 +18,7 @@ const Navbar = () => {
   return (
     <div>
       <div className="navbar border-b border-primary px-3 p-2 flex items-center justify-between">
-        <div className="w-[15vw] overflow-hidden">
+        <div className="w-[5vw] overflow-hidden">
           <img className="w-full h-full object-cover" src={Logo} alt="" />
         </div>
         <div>
@@ -124,7 +124,7 @@ const Navbar = () => {
                     </div>
                     <Button
                       details="btn-wide"
-                      info="User Traveling Booked Page"
+                      info="Travel Booked Details"
                       onClick={() => navigate("/Usertravlingbookedpage")}
                     />
                     <div>

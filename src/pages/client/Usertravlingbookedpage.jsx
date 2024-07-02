@@ -24,15 +24,7 @@ const Usertravlingbookedpage = React.memo(() => {
       .catch((err) => setError("Failed to fetch restaurant details."));
   }, [paymentData]);
 
-  const handleRide = useCallback((index) => {
-    profileService.getres({ slug: paymentData[index].resid })
-      .then((res) => {
-        if (res.canprovidevehical) {
-          navigate(`/UsertravelBookingPageWrapper/${res.$id}`);
-        }
-      })
-      .catch((err) => setError("Failed to fetch restaurant details."));
-  }, [paymentData, navigate]);
+
 
   const getCurrentDateFormatted = () => {
     const date = new Date();
@@ -120,14 +112,14 @@ const Usertravlingbookedpage = React.memo(() => {
                   </p>
                   <p className="text-lg text-gray-700">Chair Numbers:</p>
                   <div className="flex flex-wrap">
-                    {paymentDetails.chairNumbers.map((no) => (
+                    {paymentDetails.chairNumbers?.map((no) => (
                       <p
                         key={no}
                         className="text-sm text-gray-600 bg-gray-200 px-2 py-1 rounded mr-2 mb-2"
                       >
                         {no}
                       </p>
-                    ))}
+                    )) || <p className="text-sm text-gray-600">No chair numbers available.</p>}
                   </div>
                 </div>
                 <p className="text-2xl border p-1 bg-primary rounded-md w-fit font-semibold text-primary-600">

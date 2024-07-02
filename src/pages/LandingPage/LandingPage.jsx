@@ -8,9 +8,7 @@ const LandingPage = () => {
   return (
     <div className="landing w-full h-[100vh] xl:flex items-center justify-center">
       <div className="xl:w-[8vw] h-[10vh] flex xl:flex-col items-center justify-between xl:h-full bg-black p-3">
-        <div className="w-[7vw]">
-          <img className="w-full h-full object-cover" src={Logo} alt="" />
-        </div>
+        <h1 className="text-white text-xl font-semibold">TABLETAP</h1>
         <h1 className="text-white xl:text-3xl xl:mb-40 md:w-[20vw] w-[30vw] xl:-rotate-90 font-semibold">
           Effortless Dining Reservations
         </h1>

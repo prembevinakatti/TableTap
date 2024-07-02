@@ -35,7 +35,7 @@ function Respayments() {
   }, []);
 
   return (
-    <div className="p-6 bg-gray-100 relative">
+    <div className="p-6 h-[80vh] overflow-auto bg-gray-100 relative">
       <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">Respayments</h1>
       <div className="absolute top-6 right-6 text-lg font-semibold text-gray-800">{currentTime}</div>
       {paymentdata.length > 0 ? (
@@ -59,7 +59,7 @@ function Respayments() {
                 </div>
                 <p className="text-lg text-gray-700">Payment Status: Successful</p>
               </div>
-              <p className="text-2xl font-semibold text-primary-600">{payment.amount}</p>
+              <p className="text-2xl bg-primary rounded-md w-fit p-2 font-semibold text-primary-600">Bill :{payment.amount}</p>
             </div>
           ))}
         </div>
