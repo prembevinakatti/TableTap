@@ -129,7 +129,7 @@ function Userreservation() {
                   className="w-full text-primary flex items-center justify-end gap-2 font-semibold"
                   onClick={() => handelride(index)}
                 >
-                  cheack for raid <FaMapMarkerAlt />
+                  Book a Ride <FaMapMarkerAlt />
                 </button>
                 <p className="text-lg text-gray-700">
                   Restaurant Name:{" "}
@@ -172,7 +172,7 @@ function Userreservation() {
                           <p
                         className="cursor-pointer text-primary font-semibold"
                         onClick={() => (handelcancel(no.reservationid,payment.resid,payment.slug))}
-                      >cancelresrevation
+                      >Cancel Reservation
                       </p>
                         )
                       }

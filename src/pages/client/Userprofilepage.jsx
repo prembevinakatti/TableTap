@@ -52,20 +52,20 @@ function Userprofilepage() {
           <div className="profileContent w-full flex flex-col items-center gap-5 lg:h-[40vh] xl:h-[40vh]">
             <div className="flex items-center gap-5">
               <div>
-                <p className="font-semibold border shadow-lg rounded-lg w-[30vw] text-center  p-3 px-10 text-2xl capitalize text-tertiary">
+                <p className="font-semibold border shadow-lg rounded-lg lg:w-[30vw] text-center  p-3 px-10 text-2xl capitalize text-tertiary">
                   Name : {profileData.name}
                 </p>
               </div>
             </div>
             <div className="flex items-center gap-5">
               <div>
-                <p className="font-semibold border shadow-lg rounded-lg w-[30vw] text-center  p-3 px-10 text-2xl text-tertiary">
+                <p className="font-semibold border shadow-lg rounded-lg lg:w-[30vw] text-center  p-3 px-10 text-2xl text-tertiary">
                   Contact :{profileData.phone}
                 </p>
               </div>
             </div>
             <div>
-              <p className="font-semibold border shadow-lg rounded-lg w-[30vw] text-center p-3 px-10 text-2xl text-tertiary">
+              <p className="font-semibold border shadow-lg rounded-lg lg:w-[30vw] text-center p-3 px-10 text-2xl text-tertiary">
                 Location :{profileData.locaton}
               </p>
             </div>
