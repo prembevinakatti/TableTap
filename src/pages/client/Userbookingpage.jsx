@@ -102,10 +102,10 @@ function UserBookingPage() {
     const [hours, minutes] = slot.starttime.split(":").map(Number);
     selectedSlotTime.setHours(hours, minutes);
 
-    if (selectedSlotTime < currentDateTime) {
-      toast.error("Cannot select a slot before the current date and time.");
-      return;
-    }
+    // if (selectedSlotTime < currentDateTime) {
+    //   toast.error("Cannot select a slot before the current date and time.");
+    //   return;
+    // }
 
     setSelectedSlot(slot);
     setSelectedChairs([]);
